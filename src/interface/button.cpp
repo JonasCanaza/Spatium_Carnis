@@ -13,7 +13,7 @@ namespace Button
 
 		if (IsMouseOverButton(button))
 		{
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+			if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
 			{
 				button.state = ButtonState::Pressed;
 			}
