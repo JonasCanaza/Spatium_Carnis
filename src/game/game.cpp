@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include "screens/main_menu_screen.h"
+
 #include "raylib.h"
 
 #include <iostream>
@@ -40,29 +42,106 @@ namespace SpatiumCarnis
 
 	static void Input()
 	{
-		std::cout << "Game Input!" << std::endl;
+		switch (currentScene)
+		{
+		case SpatiumCarnis::Scenes::MainMenu:
+
+			MainMenu::Input();
+
+			break;
+		case SpatiumCarnis::Scenes::Gameplay:
+
+			
+
+			break;
+		case SpatiumCarnis::Scenes::HowToPlay:
+
+			
+
+			break;
+		case SpatiumCarnis::Scenes::Credits:
+
+			
+
+			break;
+		default:
+
+			// THERE ARE NO OTHER SCENES
+
+			break;
+		}
 	}
 
 	static void Update()
 	{
 		std::cout << "Game Update!" << std::endl;
+
+		switch (currentScene)
+		{
+		case SpatiumCarnis::Scenes::MainMenu:
+
+			MainMenu::Update();
+
+			break;
+		case SpatiumCarnis::Scenes::Gameplay:
+
+
+
+			break;
+		case SpatiumCarnis::Scenes::HowToPlay:
+
+
+
+			break;
+		case SpatiumCarnis::Scenes::Credits:
+
+
+
+			break;
+		default:
+
+			// THERE ARE NO OTHER SCENES
+
+			break;
+		}
 	}
 
 	static void Draw()
 	{
-		std::cout << "Game Draw!" << std::endl;
+		switch (currentScene)
+		{
+		case SpatiumCarnis::Scenes::MainMenu:
 
-		BeginDrawing();
+			MainMenu::Draw();
 
-		ClearBackground(BLACK);
+			break;
+		case SpatiumCarnis::Scenes::Gameplay:
 
-		DrawText("Spatium Carnis", 0, 0, 20, WHITE);
 
-		EndDrawing();
+
+			break;
+		case SpatiumCarnis::Scenes::HowToPlay:
+
+
+
+			break;
+		case SpatiumCarnis::Scenes::Credits:
+
+
+
+			break;
+		default:
+
+			// THERE ARE NO OTHER SCENES
+
+			break;
+		}
 	}
 
 	static void Close()
 	{
 		std::cout << "Game Close!" << std::endl;
+
+		MainMenu::Close();
 	}
 }
