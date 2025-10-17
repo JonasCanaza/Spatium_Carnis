@@ -37,7 +37,7 @@ namespace SpatiumCarnis
 
 	static void Init()
 	{
-		std::cout << "Game Init!" << std::endl;
+		MainMenu::Init();
 	}
 
 	static void Input()
@@ -74,8 +74,6 @@ namespace SpatiumCarnis
 
 	static void Update()
 	{
-		std::cout << "Game Update!" << std::endl;
-
 		switch (currentScene)
 		{
 		case SpatiumCarnis::Scenes::MainMenu:
