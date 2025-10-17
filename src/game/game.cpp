@@ -6,6 +6,12 @@
 
 namespace SpatiumCarnis
 {
+	const int SCREEN_WIDTH = 1024;
+	const int SCREEN_HEIGHT = 768;
+
+	Scenes currentScene = Scenes::MainMenu;
+	bool isRunning = true;
+
 	static void Init();
 	static void Input();
 	static void Update();
@@ -14,12 +20,6 @@ namespace SpatiumCarnis
 
 	void Play()
 	{
-		const int SCREEN_WIDTH = 1024;
-		const int SCREEN_HEIGHT = 768;
-
-		Scenes currentScene = Scenes::MainMenu;
-		bool isRunning = true;
-
 		InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Spatium Carnis");
 		Init();
 
