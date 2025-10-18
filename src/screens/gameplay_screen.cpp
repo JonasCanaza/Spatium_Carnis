@@ -13,7 +13,6 @@ namespace Gameplay
 
 	void Input()
 	{
-		// TEST!!!
 		if (IsKeyPressed(KEY_ESCAPE))
 		{
 			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::MainMenu;
@@ -29,9 +28,6 @@ namespace Gameplay
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
-
-		// TEST!!!
-		DrawText("Gameplay Screen", 0, 0, 25, WHITE);
 
 		EndDrawing();
 	}
