@@ -22,7 +22,7 @@ namespace Button
     struct Button
     {
         ButtonState state = ButtonState::Normal;
-        Layout layout;
+        Layout layout = {};
         std::string text = "No text";
         bool clicked = false;
     };

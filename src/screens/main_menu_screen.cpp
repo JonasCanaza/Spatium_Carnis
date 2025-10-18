@@ -1,19 +1,32 @@
 #include "main_menu_screen.h"
 
-#include "interface/button.h"
+#include <iostream>
 
 #include "raylib.h"
 
-#include <iostream>
+#include "game/game.h"
+#include "interface/button.h"
+#include "utilities/constants.h"
 
 namespace MainMenu
 {
-	static Button::Button testButton;
+	static const int MAX_BUTTONS = 4;
+	static Button::Button buttons[MAX_BUTTONS];
+	static std::string buttonNames[MAX_BUTTONS] = { "Play", "How To Play", "Credits", "Exit" };
+
+	enum ButtonID
+	{
+		Play,
+		HowToPlay,
+		Credits,
+		Exit,
+	};
+
+	static void InitButtons();
 
 	void Init()
 	{
-		// TEST!!!
-		testButton = Button::Create(0.0f, 0.0f, 250.0f, 75.0f, "Test Button");
+		InitButtons();
 	}
 
 	void Input()
@@ -23,23 +36,41 @@ namespace MainMenu
 
 	void Update()
 	{
-		Button::Update(testButton);
-
-		if (testButton.clicked)
+		for (int i = 0; i < MAX_BUTTONS; i++)
 		{
-			std::cout << "Click!" << std::endl;
+			Button::Update(buttons[i]);
+		}
+
+		if (buttons[Play].clicked)
+		{
+			std::cout << "Play!" << std::endl;
+		}
+
+		if (buttons[HowToPlay].clicked)
+		{
+			std::cout << "How to play!" << std::endl;
+		}
+
+		if (buttons[Credits].clicked)
+		{
+			std::cout << "Credits!" << std::endl;
+		}
+
+		if (buttons[Exit].clicked)
+		{
+			SpatiumCarnis::isRunning = false;
 		}
 	}
 
 	void Draw()
 	{
 		BeginDrawing();
-
 		ClearBackground(BLACK);
 
-		DrawText("Main menu", 0, 100, 20, WHITE);
-
-		Button::Draw(testButton);
+		for (int i = 0; i < MAX_BUTTONS; i++)
+		{
+			Button::Draw(buttons[i]);
+		}
 
 		EndDrawing();
 	}
@@ -47,5 +78,21 @@ namespace MainMenu
 	void Close()
 	{
 
+	}
+
+	static void InitButtons()
+	{
+		float btnWidth = 300.0f;
+		float btnHeight = 50.0f;
+		float marginBetween = 10.0f;
+		float marginTop = 300.0f;
+
+		for (int i = 0; i < MAX_BUTTONS; i++)
+		{
+			float x = 0.0f;
+			float y = marginTop + (btnHeight + marginBetween) * i;
+
+			buttons[i] = Button::Create(x, y, btnWidth, btnHeight, buttonNames[i]);
+		}
 	}
 }
