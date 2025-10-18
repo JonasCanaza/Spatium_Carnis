@@ -43,17 +43,17 @@ namespace MainMenu
 
 		if (buttons[Play].clicked)
 		{
-			std::cout << "Play!" << std::endl;
+			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::Gameplay;
 		}
 
 		if (buttons[HowToPlay].clicked)
 		{
-			std::cout << "How to play!" << std::endl;
+			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::HowToPlay;
 		}
 
 		if (buttons[Credits].clicked)
 		{
-			std::cout << "Credits!" << std::endl;
+			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::Credits;
 		}
 
 		if (buttons[Exit].clicked)
