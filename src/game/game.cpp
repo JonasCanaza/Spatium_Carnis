@@ -1,16 +1,12 @@
 #include "game.h"
 
-#include "screens/main_menu_screen.h"
-
 #include "raylib.h"
 
-#include <iostream>
+#include "screens/main_menu_screen.h"
+#include "utilities/constants.h"
 
 namespace SpatiumCarnis
 {
-	const int SCREEN_WIDTH = 1024;
-	const int SCREEN_HEIGHT = 768;
-
 	Scenes currentScene = Scenes::MainMenu;
 	bool isRunning = true;
 
@@ -22,10 +18,10 @@ namespace SpatiumCarnis
 
 	void Play()
 	{
-		InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Spatium Carnis");
+		InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, PROGRAM_NAME.c_str());
 		Init();
 
-		while (!WindowShouldClose())
+		while (!WindowShouldClose() && isRunning)
 		{
 			Input();
 			Update();
@@ -138,8 +134,6 @@ namespace SpatiumCarnis
 
 	static void Close()
 	{
-		std::cout << "Game Close!" << std::endl;
-
 		MainMenu::Close();
 	}
 }
