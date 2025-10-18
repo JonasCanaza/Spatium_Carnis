@@ -1,7 +1,19 @@
 #include "button.h"
 
+#include "raylib.h"
+
 namespace Button
 {
+	// TEST!!!
+
+	static Color normalColor = { 100, 80, 130, 255 };
+	static Color hoverColor = { 135, 95, 175, 255 };
+	static Color pressedColor = { 80, 65, 100, 255 };
+
+	// ================
+
+	static bool IsMouseOverButton(Button button);
+
 	void Init()
 	{
 
@@ -35,23 +47,23 @@ namespace Button
 
 	void Draw(Button button)
 	{
-		Color color = button.normalColor;
+		Color color = normalColor;
 
 		switch (button.state)
 		{
 		case ButtonState::Normal:
 
-			color = button.normalColor;
+			color = normalColor;
 
 			break;
 		case ButtonState::Hover:
 
-			color = button.hoverColor;
+			color = hoverColor;
 
 			break;
 		case ButtonState::Pressed:
 
-			color = button.pressedColor;
+			color = pressedColor;
 
 			break;
 		default:
@@ -61,23 +73,22 @@ namespace Button
 			break;
 		}
 
-		DrawRectangleRec(button.rect, color);
-		DrawRectangleLinesEx(button.rect, 2, WHITE);
+		Rectangle rect = { button.layout.x, button.layout.y, button.layout.width, button.layout.height };
+
+		DrawRectangleRec(rect, color);
+		DrawRectangleLinesEx(rect, 2, WHITE);
 
 		int fontSize = 20;
 		int textWidth = MeasureText(button.text.c_str(), fontSize);
 
-		DrawText(button.text.c_str(), static_cast<int>(button.rect.x + (button.rect.width - textWidth) / 2), static_cast<int>(button.rect.y + (button.rect.height - fontSize) / 2), fontSize, WHITE);
+		DrawText(button.text.c_str(), static_cast<int>(button.layout.x + (button.layout.width - textWidth) / 2), static_cast<int>(button.layout.y + (button.layout.height - fontSize) / 2), fontSize, WHITE);
 	}
 
-	Button Create(float x, float y, float width, float height, const std::string& text)
+	Button Create(float x, float y, float width, float height, std::string text)
 	{
 		Button button;
 
-		button.rect = { x, y, width, height };
-		button.normalColor = { 100, 80, 130, 255 };
-		button.hoverColor = { 135, 95, 175, 255 };
-		button.pressedColor = { 80, 65, 100, 255 };
+		button.layout = { x, y, width, height };
 		button.text = text;
 		button.state = ButtonState::Normal;
 		button.clicked = false;
@@ -85,13 +96,13 @@ namespace Button
 		return button;
 	}
 
-	bool IsMouseOverButton(Button button)
+	static bool IsMouseOverButton(Button button)
 	{
 		Vector2 mouse = GetMousePosition();
 
-		return (mouse.x >= button.rect.x &&
-			mouse.x <= button.rect.x + button.rect.width &&
-			mouse.y >= button.rect.y &&
-			mouse.y <= button.rect.y + button.rect.height);
+		return (mouse.x >= button.layout.x &&
+			mouse.x <= button.layout.x + button.layout.width &&
+			mouse.y >= button.layout.y &&
+			mouse.y <= button.layout.y + button.layout.height);
 	}
 }
