@@ -11,6 +11,7 @@ namespace Nave
 {
 	static void UpdateRotation(Nave& nave);
 	static void Move(Nave& nave, float deltaTime);
+	static void WrapAroundScreen(Nave& nave);
 
 	static bool accelerate = false;
 
@@ -28,6 +29,7 @@ namespace Nave
 	{
 		UpdateRotation(nave);
 		Move(nave, deltaTime);
+		WrapAroundScreen(nave);
 	}
 
 	void Draw(Nave nave)
@@ -111,5 +113,26 @@ namespace Nave
 
 		nave.x += nave.velocityX * deltaTime;
 		nave.y += nave.velocityY * deltaTime;
+	}
+
+	static void WrapAroundScreen(Nave& nave)
+	{
+		if (nave.x + nave.radius < 0)
+		{
+			nave.x = SCREEN_WIDTH + nave.radius;
+		}
+		else if (nave.x - nave.radius > SCREEN_WIDTH)
+		{
+			nave.x = -nave.radius;
+		}
+
+		if (nave.y + nave.radius < 0)
+		{
+			nave.y = SCREEN_HEIGHT + nave.radius;
+		}
+		else if (nave.y - nave.radius > SCREEN_HEIGHT)
+		{
+			nave.y = -nave.radius;
+		}
 	}
 }
