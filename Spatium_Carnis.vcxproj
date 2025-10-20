@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\entities\nave.cpp" />
+    <ClCompile Include="src\entities\projectile.cpp" />
     <ClCompile Include="src\entities\specimen.cpp" />
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\interface\button.cpp" />
@@ -31,6 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entities\nave.h" />
+    <ClInclude Include="src\entities\projectile.h" />
     <ClInclude Include="src\entities\specimen.h" />
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\interface\button.h" />

@@ -12,11 +12,8 @@ namespace Nave
 	static void UpdateRotation(Nave& nave);
 	static void Move(Nave& nave, float deltaTime);
 	static void WrapAroundScreen(Nave& nave);
-	static void Shoot(Nave& nave, float deltaTime);
 
 	static bool accelerate = false;
-	static bool shoot = false;
-	static float reloadTarget = 0.3f;
 
 	void Init()
 	{
@@ -26,7 +23,6 @@ namespace Nave
 	void Input()
 	{
 		accelerate = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
-		shoot = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
 	}
 
 	void Update(Nave& nave, float deltaTime)
@@ -34,7 +30,6 @@ namespace Nave
 		UpdateRotation(nave);
 		Move(nave, deltaTime);
 		WrapAroundScreen(nave);
-		Shoot(nave, deltaTime);
 	}
 
 	void Draw(Nave nave)
@@ -139,23 +134,6 @@ namespace Nave
 		else if (nave.y - nave.radius > SCREEN_HEIGHT)
 		{
 			nave.y = -nave.radius;
-		}
-	}
-
-	static void Shoot(Nave& nave, float deltaTime)
-	{
-		if (!shoot)
-		{
-			nave.reload = 0.0f;
-			return;
-		}
-
-		nave.reload += deltaTime;
-
-		if (nave.reload >= reloadTarget)
-		{
-			std::cout << "Shoot!" << std::endl;
-			nave.reload = 0.0f;
 		}
 	}
 }
