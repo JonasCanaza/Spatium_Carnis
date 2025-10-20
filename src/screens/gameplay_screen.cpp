@@ -9,6 +9,8 @@ namespace Gameplay
 {
 	static Nave::Nave nave;
 
+	static float deltaTime;
+
 	void Init()
 	{
 		Nave::Init();
@@ -28,7 +30,9 @@ namespace Gameplay
 
 	void Update()
 	{
-		Nave::Update(nave);
+		deltaTime = GetFrameTime();
+
+		Nave::Update(nave, deltaTime);
 	}
 
 	void Draw()

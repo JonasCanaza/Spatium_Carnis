@@ -7,18 +7,18 @@ namespace Nave
 		float x;
 		float y;
 		float radius;
-		float speed;
+		float speedMax;
 		float acceleration;
 		float rotation;
 		float velocityX;
 		float velocityY;
 		int lives;
-		bool active;
+		bool isActive;
 	};
 
 	void Init();
 	void Input();
-	void Update(Nave& nave);
+	void Update(Nave& nave, float deltaTime);
 	void Draw(Nave nave);
 	void Close();
 

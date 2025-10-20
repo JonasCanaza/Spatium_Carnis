@@ -10,7 +10,9 @@
 namespace Nave
 {
 	static void UpdateRotation(Nave& nave);
-	static void Move();
+	static void Move(Nave& nave, float deltaTime);
+
+	static bool accelerate = false;
 
 	void Init()
 	{
@@ -19,13 +21,13 @@ namespace Nave
 
 	void Input()
 	{
-
+		accelerate = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
 	}
 
-	void Update(Nave& nave)
+	void Update(Nave& nave, float deltaTime)
 	{
 		UpdateRotation(nave);
-		Move();
+		Move(nave, deltaTime);
 	}
 
 	void Draw(Nave nave)
@@ -35,7 +37,7 @@ namespace Nave
 
 		DrawCircle(navePosX, navePosY, nave.radius, RED); // COLLISION
 
-		Rectangle body = { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, nave.radius * 2.0f, nave.radius * 2.0f };
+		Rectangle body = { nave.x, nave.y, nave.radius * 2.0f, nave.radius * 2.0f };
 		Vector2 originBody = { body.width / 2.0f, body.height / 2.0f };
 		DrawRectanglePro(body, originBody, nave.rotation, WHITE);
 	}
@@ -52,6 +54,13 @@ namespace Nave
 		newNave.x = static_cast<float>(SCREEN_WIDTH / 2);
 		newNave.y = static_cast<float>(SCREEN_HEIGHT / 2);
 		newNave.radius = 30.0f;
+		newNave.speedMax = 250.0f;
+		newNave.acceleration = 250.0f;
+		newNave.rotation = 0.0f;
+		newNave.velocityX = 0.0f;
+		newNave.velocityY = 0.0f;
+		newNave.lives = 3;
+		newNave.isActive = true;
 
 		return newNave;
 	}
@@ -71,11 +80,36 @@ namespace Nave
 
 		//std::cout << "Mouse X:" << mousePosX << "          Y: " << mousePosY << std::endl;
 		//std::cout << "Nave X:" << navePivotX << "          Y: " << navePivotY << std::endl;
-		std::cout << "Rotation: " << nave.rotation << std::endl;
+		//std::cout << "Rotation: " << nave.rotation << std::endl;
 	}
 
-	static void Move()
+	static void Move(Nave& nave, float deltaTime)
 	{
+		if (accelerate)
+		{
+			Vector2 direction = { GetMouseX() - nave.x, GetMouseY() - nave.y };
 
+			float length = sqrt(direction.x * direction.x + direction.y * direction.y);
+
+			if (length != 0.0f)
+			{
+				direction.x /= length;
+				direction.y /= length;
+			}
+
+			nave.velocityX += direction.x * nave.acceleration * deltaTime;
+			nave.velocityY += direction.y * nave.acceleration * deltaTime;
+		}
+
+		float speed = sqrt(nave.velocityX * nave.velocityX + nave.velocityY * nave.velocityY);
+
+		if (speed > nave.speedMax)
+		{
+			nave.velocityX = (nave.velocityX / speed) * nave.speedMax;
+			nave.velocityY = (nave.velocityY / speed) * nave.speedMax;
+		}
+
+		nave.x += nave.velocityX * deltaTime;
+		nave.y += nave.velocityY * deltaTime;
 	}
 }
