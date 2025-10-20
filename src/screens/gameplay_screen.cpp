@@ -2,13 +2,18 @@
 
 #include "raylib.h"
 
+#include "entities/nave.h"
 #include "game/game.h"
 
 namespace Gameplay
 {
+	static Nave::Nave nave;
+
 	void Init()
 	{
+		Nave::Init();
 
+		nave = Nave::Create();
 	}
 
 	void Input()
@@ -17,11 +22,13 @@ namespace Gameplay
 		{
 			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::MainMenu;
 		}
+
+		Nave::Input();
 	}
 
 	void Update()
 	{
-
+		Nave::Update(nave);
 	}
 
 	void Draw()
@@ -29,11 +36,13 @@ namespace Gameplay
 		BeginDrawing();
 		ClearBackground(BLACK);
 
+		Nave::Draw(nave);
+
 		EndDrawing();
 	}
 
 	void Close()
 	{
-
+		Nave::Close();
 	}
 }

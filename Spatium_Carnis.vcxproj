@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\entities\nave.cpp" />
+    <ClCompile Include="src\entities\specimen.cpp" />
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\interface\button.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -28,6 +30,8 @@
     <ClCompile Include="src\screens\main_menu_screen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\entities\nave.h" />
+    <ClInclude Include="src\entities\specimen.h" />
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\interface\button.h" />
     <ClInclude Include="src\screens\credits_screen.h" />
