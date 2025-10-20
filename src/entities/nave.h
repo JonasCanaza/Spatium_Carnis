@@ -12,6 +12,7 @@ namespace Nave
 		float rotation;
 		float velocityX;
 		float velocityY;
+		float reload;
 		int lives;
 		bool isActive;
 	};
