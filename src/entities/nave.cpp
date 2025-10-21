@@ -14,7 +14,7 @@ namespace Nave
 	static void CalculateDirectionToMouse(Nave& nave, float& directionX, float& directionY);
 	static void ApplyAcceleration(Nave& nave, float directionX, float directionY, float deltaTime);
 	static void LimitSpeed(Nave& nave);
-	static void ApplyMovement(Nave& nave, float deltaTime);
+	static void Move(Nave& nave, float deltaTime);
 	static void WrapAroundScreen(Nave& nave);
 
 	void Init()
@@ -27,7 +27,7 @@ namespace Nave
 		UpdateRotation(nave);
 		AccelerateTowardsMouse(nave, deltaTime, isAccelerating);
 		LimitSpeed(nave);
-		ApplyMovement(nave, deltaTime);
+		Move(nave, deltaTime);
 		WrapAroundScreen(nave);
 	}
 
@@ -133,7 +133,7 @@ namespace Nave
 		}
 	}
 
-	static void ApplyMovement(Nave& nave, float deltaTime)
+	static void Move(Nave& nave, float deltaTime)
 	{
 		nave.x += nave.velocityX * deltaTime;
 		nave.y += nave.velocityY * deltaTime;
