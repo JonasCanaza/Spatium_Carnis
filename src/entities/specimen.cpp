@@ -62,7 +62,7 @@ namespace Specimen
 
 		switch (type)
 		{
-		case Type::Small:
+		case Type::Big:
 
 			newSpecimen.radius = 50.0f;
 
@@ -72,7 +72,7 @@ namespace Specimen
 			newSpecimen.radius = 35.0f;
 
 			break;
-		case Type::Big:
+		case Type::Small:
 
 			newSpecimen.radius = 20.0f;
 
