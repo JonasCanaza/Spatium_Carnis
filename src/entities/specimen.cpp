@@ -10,6 +10,8 @@ namespace Specimen
 	static const float VELOCITY_MIN = 50.0f;
 	static const float VELOCITY_MAX = 150.0f;
 
+	static void WrapAroundScreen(Specimen& specimen);
+
 	void Init()
 	{
 
@@ -24,6 +26,8 @@ namespace Specimen
 
 		specimen.x += specimen.velocityX * deltaTime;
 		specimen.y += specimen.velocityY * deltaTime;
+
+		WrapAroundScreen(specimen);
 	}
 
 	void Draw(Specimen specimen)
@@ -127,5 +131,26 @@ namespace Specimen
 		}
 
 		return Create(spawnX, spawnY, velocityX, velocityY, type);
+	}
+
+	static void WrapAroundScreen(Specimen& specimen)
+	{
+		if (specimen.x + specimen.radius < 0)
+		{
+			specimen.x = SCREEN_WIDTH + specimen.radius;
+		}
+		else if (specimen.x - specimen.radius > SCREEN_WIDTH)
+		{
+			specimen.x = -specimen.radius;
+		}
+
+		if (specimen.y + specimen.radius < 0)
+		{
+			specimen.y = SCREEN_HEIGHT + specimen.radius;
+		}
+		else if (specimen.y - specimen.radius > SCREEN_HEIGHT)
+		{
+			specimen.y = -specimen.radius;
+		}
 	}
 }
