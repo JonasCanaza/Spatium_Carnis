@@ -18,8 +18,7 @@ namespace Nave
 	};
 
 	void Init();
-	void Input();
-	void Update(Nave& nave, float deltaTime);
+	void Update(Nave& nave, float deltaTime, bool isAccelerating);
 	void Draw(Nave nave);
 	void Close();
 

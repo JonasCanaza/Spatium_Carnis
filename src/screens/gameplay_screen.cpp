@@ -15,8 +15,9 @@ namespace Gameplay
 
 	static float deltaTime;
 
-	static float fireRate = 0.25f;
-	static float timeSinceLastShot = 0.0f;
+	static bool isAccelerating;
+	static float fireRate;
+	static float timeSinceLastShot;
 
 	static void CreateProjectile();
 	static void UpdateAllProjectiles();
@@ -24,6 +25,10 @@ namespace Gameplay
 
 	void Init()
 	{
+		isAccelerating = false;
+		fireRate = 0.25f;
+		timeSinceLastShot = 0.0f;
+
 		Nave::Init();
 		Projectile::Init();
 
@@ -37,7 +42,7 @@ namespace Gameplay
 			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::MainMenu;
 		}
 
-		Nave::Input();
+		isAccelerating = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
 
 		if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && timeSinceLastShot >= fireRate)
 		{
@@ -51,7 +56,7 @@ namespace Gameplay
 		deltaTime = GetFrameTime();
 		timeSinceLastShot += deltaTime;
 
-		Nave::Update(nave, deltaTime);
+		Nave::Update(nave, deltaTime, isAccelerating);
 		UpdateAllProjectiles();
 	}
 

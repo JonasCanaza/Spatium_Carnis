@@ -10,25 +10,24 @@
 namespace Nave
 {
 	static void UpdateRotation(Nave& nave);
-	static void Move(Nave& nave, float deltaTime);
+	static void AccelerateTowardsMouse(Nave& nave, float deltaTime, bool isAccelerating);
+	static void CalculateDirectionToMouse(Nave& nave, float& directionX, float& directionY);
+	static void ApplyAcceleration(Nave& nave, float directionX, float directionY, float deltaTime);
+	static void LimitSpeed(Nave& nave);
+	static void ApplyMovement(Nave& nave, float deltaTime);
 	static void WrapAroundScreen(Nave& nave);
-
-	static bool accelerate = false;
 
 	void Init()
 	{
 
 	}
 
-	void Input()
-	{
-		accelerate = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
-	}
-
-	void Update(Nave& nave, float deltaTime)
+	void Update(Nave& nave, float deltaTime, bool isAccelerating)
 	{
 		UpdateRotation(nave);
-		Move(nave, deltaTime);
+		AccelerateTowardsMouse(nave, deltaTime, isAccelerating);
+		LimitSpeed(nave);
+		ApplyMovement(nave, deltaTime);
 		WrapAroundScreen(nave);
 	}
 
@@ -86,24 +85,45 @@ namespace Nave
 		//std::cout << "Rotation: " << nave.rotation << std::endl;
 	}
 
-	static void Move(Nave& nave, float deltaTime)
+	static void AccelerateTowardsMouse(Nave& nave, float deltaTime, bool isAccelerating)
 	{
-		if (accelerate)
+		if (!isAccelerating)
 		{
-			Vector2 direction = { GetMouseX() - nave.x, GetMouseY() - nave.y };
-
-			float length = sqrt(direction.x * direction.x + direction.y * direction.y);
-
-			if (length != 0.0f)
-			{
-				direction.x /= length;
-				direction.y /= length;
-			}
-
-			nave.velocityX += direction.x * nave.acceleration * deltaTime;
-			nave.velocityY += direction.y * nave.acceleration * deltaTime;
+			return;
 		}
 
+		float directionX = 0.0f;
+		float directionY = 0.0f;
+
+		CalculateDirectionToMouse(nave, directionX, directionY);
+		ApplyAcceleration(nave, directionX, directionY, deltaTime);
+	}
+
+	static void CalculateDirectionToMouse(Nave& nave, float& directionX, float& directionY)
+	{
+		float mouseX = static_cast<float>(GetMouseX());
+		float mouseY = static_cast<float>(GetMouseY());
+
+		directionX = mouseX - nave.x;
+		directionY = mouseY - nave.y;
+
+		float distance = sqrt(directionX * directionX + directionY * directionY);
+
+		if (distance != 0.0f)
+		{
+			directionX /= distance;
+			directionY /= distance;
+		}
+	}
+
+	static void ApplyAcceleration(Nave& nave, float directionX, float directionY, float deltaTime)
+	{
+		nave.velocityX += directionX * nave.acceleration * deltaTime;
+		nave.velocityY += directionY * nave.acceleration * deltaTime;
+	}
+
+	static void LimitSpeed(Nave& nave)
+	{
 		float speed = sqrt(nave.velocityX * nave.velocityX + nave.velocityY * nave.velocityY);
 
 		if (speed > nave.speedMax)
@@ -111,7 +131,10 @@ namespace Nave
 			nave.velocityX = (nave.velocityX / speed) * nave.speedMax;
 			nave.velocityY = (nave.velocityY / speed) * nave.speedMax;
 		}
+	}
 
+	static void ApplyMovement(Nave& nave, float deltaTime)
+	{
 		nave.x += nave.velocityX * deltaTime;
 		nave.y += nave.velocityY * deltaTime;
 	}
