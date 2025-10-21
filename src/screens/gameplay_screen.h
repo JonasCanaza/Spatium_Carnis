@@ -7,4 +7,6 @@ namespace Gameplay
 	void Update();
 	void Draw();
 	void Close();
+
+	void CreateInitialSpecimen();
 }

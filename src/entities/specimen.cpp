@@ -1,6 +1,131 @@
 #include "specimen.h"
 
+#include "raylib.h"
+
+#include "utilities/constants.h"
+
 namespace Specimen
 {
+	static const float SCREEN_BUFFER = 50.0f;
+	static const float VELOCITY_MIN = 50.0f;
+	static const float VELOCITY_MAX = 150.0f;
 
+	void Init()
+	{
+
+	}
+
+	void Update(Specimen& specimen, float deltaTime)
+	{
+		if (!specimen.isActive)
+		{
+			return;
+		}
+
+		specimen.x += specimen.velocityX * deltaTime;
+		specimen.y += specimen.velocityY * deltaTime;
+	}
+
+	void Draw(Specimen specimen)
+	{
+		if (!specimen.isActive)
+		{
+			return;
+		}
+
+		int x = static_cast<int>(specimen.x);
+		int y = static_cast<int>(specimen.y);
+
+		DrawCircle(x, y, specimen.radius, GRAY);
+	}
+
+	void Close()
+	{
+
+	}
+
+	Specimen Create(float x, float y, float velocityX, float velocityY, Type type)
+	{
+		Specimen newSpecimen{};
+
+		newSpecimen.x = x;
+		newSpecimen.y = y;
+		newSpecimen.velocityX = velocityX;
+		newSpecimen.velocityY = velocityY;
+		newSpecimen.rotation = 0.0f;
+		newSpecimen.isActive = true;
+		newSpecimen.type = type;
+
+		switch (type)
+		{
+		case Type::Small:
+
+			newSpecimen.radius = 50.0f;
+
+			break;
+		case Type::Medium:
+
+			newSpecimen.radius = 35.0f;
+
+			break;
+		case Type::Big:
+
+			newSpecimen.radius = 20.0f;
+
+			break;
+		default:
+
+			// THERE ARE NO MORE TYPES OF SPECIMENS
+
+			break;
+		}
+
+		return newSpecimen;
+	}
+
+	Specimen SpawnAtSide(SpawnSide side, Type type)
+	{
+		float spawnX = 0.0f;
+		float spawnY = 0.0f;
+		float velocityX = 0.0f;
+		float velocityY = 0.0f;
+
+		switch (side)
+		{
+		case SpawnSide::Left:
+
+			spawnX = -SCREEN_BUFFER;
+			spawnY = static_cast<float>(rand() % SCREEN_HEIGHT);
+			velocityX = VELOCITY_MIN + rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
+			velocityY = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
+
+			break;
+		case SpawnSide::Right:
+
+			spawnX = SCREEN_WIDTH + SCREEN_BUFFER;
+			spawnY = static_cast<float>(rand() % SCREEN_HEIGHT);
+			velocityX = -VELOCITY_MIN - rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
+			velocityY = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
+
+			break;
+		case SpawnSide::Top:
+
+			spawnX = static_cast<float>(rand() % SCREEN_WIDTH);
+			spawnY = -SCREEN_BUFFER;
+			velocityX = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
+			velocityY = VELOCITY_MIN + rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
+
+			break;
+		case SpawnSide::Bottom:
+
+			spawnX = static_cast<float>(rand() % SCREEN_WIDTH);
+			spawnY = SCREEN_HEIGHT + SCREEN_BUFFER;
+			velocityX = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
+			velocityY = -VELOCITY_MIN - rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
+
+			break;
+		}
+
+		return Create(spawnX, spawnY, velocityX, velocityY, type);
+	}
 }

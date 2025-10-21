@@ -4,14 +4,18 @@
 
 #include "entities/nave.h"
 #include "entities/projectile.h"
+#include "entities/specimen.h"
 #include "game/game.h"
 
 namespace Gameplay
 {
-	static const int MAX_PROJECTILE = 20;
-
 	static Nave::Nave nave;
+
+	static const int MAX_PROJECTILE = 20;
 	static Projectile::Projectile projectiles[MAX_PROJECTILE] = {};
+
+	static const int MAX_SPECIMENS = 10;
+	static Specimen::Specimen specimens[MAX_SPECIMENS];
 
 	static float deltaTime;
 
@@ -19,9 +23,16 @@ namespace Gameplay
 	static float fireRate;
 	static float timeSinceLastShot;
 
+	// FUNCTIONS OF PROJECTILES
+
 	static void CreateProjectile();
 	static void UpdateAllProjectiles();
 	static void DrawAllProjectiles();
+
+	// FUNCTIONS OF SPECIMENS
+
+	static void UpdateAllSpecimens();
+	static void DrawAllSpecimens();
 
 	void Init()
 	{
@@ -31,8 +42,11 @@ namespace Gameplay
 
 		Nave::Init();
 		Projectile::Init();
+		Specimen::Init();
 
 		nave = Nave::Create();
+
+		CreateInitialSpecimen();
 	}
 
 	void Input()
@@ -58,6 +72,7 @@ namespace Gameplay
 
 		Nave::Update(nave, deltaTime, isAccelerating);
 		UpdateAllProjectiles();
+		UpdateAllSpecimens();
 	}
 
 	void Draw()
@@ -67,6 +82,7 @@ namespace Gameplay
 
 		Nave::Draw(nave);
 		DrawAllProjectiles();
+		DrawAllSpecimens();
 
 		EndDrawing();
 	}
@@ -74,6 +90,13 @@ namespace Gameplay
 	void Close()
 	{
 		Nave::Close();
+	}
+
+	void CreateInitialSpecimen()
+	{
+		specimens[0] = Specimen::SpawnAtSide(Specimen::SpawnSide::Left, Specimen::Type::Big);
+		specimens[1] = Specimen::SpawnAtSide(Specimen::SpawnSide::Top, Specimen::Type::Medium);
+		specimens[2] = Specimen::SpawnAtSide(Specimen::SpawnSide::Right, Specimen::Type::Small);
 	}
 
 	static void CreateProjectile()
@@ -101,6 +124,22 @@ namespace Gameplay
 		for (int i = 0; i < MAX_PROJECTILE; i++)
 		{
 			Projectile::Draw(projectiles[i]);
+		}
+	}
+
+	static void UpdateAllSpecimens()
+	{
+		for (int i = 0; i < MAX_SPECIMENS; i++)
+		{
+			Specimen::Update(specimens[i], deltaTime);
+		}
+	}
+
+	static void DrawAllSpecimens()
+	{
+		for (int i = 0; i < MAX_SPECIMENS; i++)
+		{
+			Specimen::Draw(specimens[i]);
 		}
 	}
 }

@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <ctime>
+
 #include "raylib.h"
 
 #include "screens/main_menu_screen.h"
@@ -21,6 +23,8 @@ namespace SpatiumCarnis
 
 	void Play()
 	{
+		srand(static_cast<unsigned int>(time(0)));
+
 		InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, PROGRAM_NAME.c_str());
 		Init();
 		SetExitKey(KEY_NULL);
