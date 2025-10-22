@@ -158,7 +158,7 @@ namespace MainMenu
 
 		if (buttons[Exit].clicked)
 		{
-			SpatiumCarnis::isRunning = false;
+			ExitPanel::isActive = true;
 		}
 	}
 
