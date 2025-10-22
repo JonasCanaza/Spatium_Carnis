@@ -1,5 +1,7 @@
 #include "screens/gameplay_screen.h"
 
+#include <stdlib.h>
+
 #include "raylib.h"
 
 #include "entities/nave.h"
@@ -14,7 +16,8 @@ namespace Gameplay
 	static const int MAX_PROJECTILE = 20;
 	static Projectile::Projectile projectiles[MAX_PROJECTILE] = {};
 
-	static const int MAX_SPECIMENS = 10;
+	static const int INITIAL_SPECIMENS = 10;
+	static const int MAX_SPECIMENS = 50;
 	static Specimen::Specimen specimens[MAX_SPECIMENS];
 
 	static float deltaTime;
@@ -94,9 +97,16 @@ namespace Gameplay
 
 	void CreateInitialSpecimen()
 	{
-		specimens[0] = Specimen::SpawnAtSide(Specimen::SpawnSide::Left, Specimen::Type::Big);
-		specimens[1] = Specimen::SpawnAtSide(Specimen::SpawnSide::Top, Specimen::Type::Medium);
-		specimens[2] = Specimen::SpawnAtSide(Specimen::SpawnSide::Right, Specimen::Type::Small);
+		for (int i = 0; i < INITIAL_SPECIMENS; i++)
+		{
+			int sideRandom = rand() % static_cast<int>(Specimen::SpawnSide::Left) + static_cast<int>(Specimen::SpawnSide::Top);
+			int typeRandom = rand() % static_cast<int>(Specimen::Type::Small) + static_cast<int>(Specimen::Type::Big);
+
+			Specimen::SpawnSide side = static_cast<Specimen::SpawnSide>(sideRandom);
+			Specimen::Type type = static_cast<Specimen::Type>(typeRandom);
+
+			specimens[i] = Specimen::SpawnAtSide(side, type);
+		}
 	}
 
 	static void CreateProjectile()
