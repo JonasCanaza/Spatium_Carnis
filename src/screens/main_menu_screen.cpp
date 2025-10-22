@@ -7,6 +7,7 @@
 #include "game/game.h"
 #include "interface/button.h"
 #include "utilities/constants.h"
+#include "panels/exit_panel.h"
 
 namespace MainMenu
 {
@@ -39,44 +40,34 @@ namespace MainMenu
 	static void InitButtons();
 	static void DrawLogo();
 	static void DrawButtons();
+	static void UpdateButtons();
 	static float GetTotalMenuHeight();
 
 	void Init()
 	{
 		InitLogo();
 		InitButtons();
+
+		ExitPanel::Init();
 	}
 
 	void Input()
 	{
-
+		if (IsKeyPressed(KEY_ESCAPE))
+		{
+			ExitPanel::isActive = !ExitPanel::isActive;
+		}
 	}
 
 	void Update()
 	{
-		for (int i = 0; i < MAX_BUTTONS; i++)
+		if (!ExitPanel::isActive)
 		{
-			Button::Update(buttons[i]);
+			UpdateButtons();
 		}
-
-		if (buttons[Play].clicked)
+		else
 		{
-			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::Gameplay;
-		}
-
-		if (buttons[HowToPlay].clicked)
-		{
-			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::HowToPlay;
-		}
-
-		if (buttons[Credits].clicked)
-		{
-			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::Credits;
-		}
-
-		if (buttons[Exit].clicked)
-		{
-			SpatiumCarnis::isRunning = false;
+			ExitPanel::Update();
 		}
 	}
 
@@ -88,12 +79,17 @@ namespace MainMenu
 		DrawLogo();
 		DrawButtons();
 
+		if (ExitPanel::isActive)
+		{
+			ExitPanel::Draw();
+		}
+
 		EndDrawing();
 	}
 
 	void Close()
 	{
-
+		ExitPanel::Close();
 	}
 
 	static void InitLogo()
@@ -135,6 +131,34 @@ namespace MainMenu
 		for (int i = 0; i < MAX_BUTTONS; i++)
 		{
 			Button::Draw(buttons[i]);
+		}
+	}
+
+	static void UpdateButtons()
+	{
+		for (int i = 0; i < MAX_BUTTONS; i++)
+		{
+			Button::Update(buttons[i]);
+		}
+
+		if (buttons[Play].clicked)
+		{
+			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::Gameplay;
+		}
+
+		if (buttons[HowToPlay].clicked)
+		{
+			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::HowToPlay;
+		}
+
+		if (buttons[Credits].clicked)
+		{
+			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::Credits;
+		}
+
+		if (buttons[Exit].clicked)
+		{
+			SpatiumCarnis::isRunning = false;
 		}
 	}
 
