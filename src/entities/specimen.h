@@ -38,4 +38,5 @@ namespace Specimen
 
 	Specimen Create(float x, float y, float velocityX, float velocityY, Type type);
 	Specimen SpawnAtSide(SpawnSide side, Type type);
+	void Reset(Specimen& specimen);
 }

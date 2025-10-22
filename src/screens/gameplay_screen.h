@@ -9,4 +9,5 @@ namespace Gameplay
 	void Close();
 
 	void CreateInitialSpecimen();
+	void Reset();
 }

@@ -138,6 +138,11 @@ namespace Specimen
 		return Create(spawnX, spawnY, velocityX, velocityY, type);
 	}
 
+	void Reset(Specimen& specimen)
+	{
+		specimen.isActive = false;
+	}
+
 	static void WrapAroundScreen(Specimen& specimen)
 	{
 		if (specimen.x + specimen.radius < 0)

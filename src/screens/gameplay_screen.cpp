@@ -112,6 +112,8 @@ namespace Gameplay
 	void Close()
 	{
 		Nave::Close();
+		Projectile::Close();
+		Specimen::Close();
 		PausePanel::Close();
 	}
 
@@ -127,6 +129,23 @@ namespace Gameplay
 
 			specimens[i] = Specimen::SpawnAtSide(side, type);
 		}
+	}
+
+	void Reset()
+	{
+		Nave::Reset(nave);
+
+		for (int i = 0; i < MAX_PROJECTILE; i++)
+		{
+			Projectile::Reset(projectiles[i]);
+		}
+
+		for (int i = 0; i < MAX_SPECIMENS; i++)
+		{
+			Specimen::Reset(specimens[i]);
+		}
+
+		CreateInitialSpecimen();
 	}
 
 	static void CreateProjectile()

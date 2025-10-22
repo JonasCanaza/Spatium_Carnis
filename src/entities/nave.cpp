@@ -67,6 +67,16 @@ namespace Nave
 		return newNave;
 	}
 
+	void Reset(Nave& nave)
+	{
+		nave.x = static_cast<float>(SCREEN_WIDTH / 2);
+		nave.y = static_cast<float>(SCREEN_HEIGHT / 2);
+		nave.rotation = 0.0f;
+		nave.velocityX = 0.0f;
+		nave.velocityY = 0.0f;
+		nave.lives = 3;
+	}
+
 	static void UpdateRotation(Nave& nave)
 	{
 		float mousePosX = static_cast<float>(GetMouseX());

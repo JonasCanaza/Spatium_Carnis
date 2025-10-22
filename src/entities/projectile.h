@@ -25,4 +25,5 @@ namespace Projectile
 	void Close();
 
 	Projectile Create(Nave::Nave& nave);
+	void Reset(Projectile& Projectile);
 }

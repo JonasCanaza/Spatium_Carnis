@@ -5,6 +5,7 @@
 #include "interface/button.h"
 #include "utilities/constants.h"
 #include "game/game.h"
+#include "screens/gameplay_screen.h"
 
 namespace PausePanel
 {
@@ -59,7 +60,8 @@ namespace PausePanel
 
 		if (buttons[Restart].clicked)
 		{
-			// RESTART LEVEL
+			isActive = false;
+			Gameplay::Reset();
 		}
 
 		if (buttons[Exit].clicked)

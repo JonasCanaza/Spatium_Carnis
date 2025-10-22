@@ -70,4 +70,9 @@ namespace Projectile
 
 		return newProjectile;
 	}
+
+	void Reset(Projectile& Projectile)
+	{
+		Projectile.isActive = false;
+	}
 }

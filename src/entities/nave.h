@@ -23,4 +23,5 @@ namespace Nave
 	void Close();
 
 	Nave Create();
+	void Reset(Nave& nave);
 }
