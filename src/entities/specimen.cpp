@@ -96,12 +96,12 @@ namespace Specimen
 
 		switch (side)
 		{
-		case SpawnSide::Left:
+		case SpawnSide::Top:
 
-			spawnX = -SCREEN_BUFFER;
-			spawnY = static_cast<float>(rand() % SCREEN_HEIGHT);
-			velocityX = VELOCITY_MIN + rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
-			velocityY = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
+			spawnX = static_cast<float>(rand() % SCREEN_WIDTH);
+			spawnY = -SCREEN_BUFFER;
+			velocityX = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
+			velocityY = VELOCITY_MIN + rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
 
 			break;
 		case SpawnSide::Right:
@@ -112,20 +112,25 @@ namespace Specimen
 			velocityY = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
 
 			break;
-		case SpawnSide::Top:
-
-			spawnX = static_cast<float>(rand() % SCREEN_WIDTH);
-			spawnY = -SCREEN_BUFFER;
-			velocityX = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
-			velocityY = VELOCITY_MIN + rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
-
-			break;
 		case SpawnSide::Bottom:
 
 			spawnX = static_cast<float>(rand() % SCREEN_WIDTH);
 			spawnY = SCREEN_HEIGHT + SCREEN_BUFFER;
 			velocityX = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
 			velocityY = -VELOCITY_MIN - rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
+
+			break;
+		case SpawnSide::Left:
+
+			spawnX = -SCREEN_BUFFER;
+			spawnY = static_cast<float>(rand() % SCREEN_HEIGHT);
+			velocityX = VELOCITY_MIN + rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
+			velocityY = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
+
+			break;
+		default:
+
+			// THERE ARE NO MORE PLACES TO SPAWN
 
 			break;
 		}

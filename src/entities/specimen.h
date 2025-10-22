@@ -4,10 +4,11 @@ namespace Specimen
 {
 	enum class SpawnSide
 	{
-		Left,
-		Right,
+		None,
 		Top,
-		Bottom
+		Right,
+		Bottom,
+		Left
 	};
 
 	enum class Type
