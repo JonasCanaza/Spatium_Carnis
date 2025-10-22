@@ -8,6 +8,7 @@
 #include "entities/projectile.h"
 #include "entities/specimen.h"
 #include "game/game.h"
+#include "panels/pause_panel.h"
 
 namespace Gameplay
 {
@@ -47,6 +48,8 @@ namespace Gameplay
 		Projectile::Init();
 		Specimen::Init();
 
+		PausePanel::Init();
+
 		nave = Nave::Create();
 
 		CreateInitialSpecimen();
@@ -56,26 +59,37 @@ namespace Gameplay
 	{
 		if (IsKeyPressed(KEY_ESCAPE))
 		{
-			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::MainMenu;
+			PausePanel::isActive = !PausePanel::isActive;
 		}
 
-		isAccelerating = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
-
-		if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && timeSinceLastShot >= fireRate)
+		if (!PausePanel::isActive)
 		{
-			CreateProjectile();
-			timeSinceLastShot = 0.0f;
+			isAccelerating = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
+
+			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && timeSinceLastShot >= fireRate)
+			{
+				CreateProjectile();
+				timeSinceLastShot = 0.0f;
+			}
 		}
 	}
 
 	void Update()
 	{
 		deltaTime = GetFrameTime();
-		timeSinceLastShot += deltaTime;
 
-		Nave::Update(nave, deltaTime, isAccelerating);
-		UpdateAllProjectiles();
-		UpdateAllSpecimens();
+		if (!PausePanel::isActive)
+		{
+			timeSinceLastShot += deltaTime;
+
+			Nave::Update(nave, deltaTime, isAccelerating);
+			UpdateAllProjectiles();
+			UpdateAllSpecimens();
+		}
+		else
+		{
+			PausePanel::Update();
+		}
 	}
 
 	void Draw()
@@ -87,12 +101,18 @@ namespace Gameplay
 		DrawAllProjectiles();
 		DrawAllSpecimens();
 
+		if (PausePanel::isActive)
+		{
+			PausePanel::Draw();
+		}
+
 		EndDrawing();
 	}
 
 	void Close()
 	{
 		Nave::Close();
+		PausePanel::Close();
 	}
 
 	void CreateInitialSpecimen()
