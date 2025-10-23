@@ -45,6 +45,7 @@ namespace Gameplay
 	// FUNCTIONS TO DETECT COLLISIONS BETWEEN ENTITIES
 
 	static void HandleProjectileSpecimenCollisions();
+	static void HandleNaveSpecimenCollisions();
 
 	void Init()
 	{
@@ -95,6 +96,7 @@ namespace Gameplay
 			UpdateAllSpecimens();
 
 			HandleProjectileSpecimenCollisions();
+			HandleNaveSpecimenCollisions();
 		}
 		else
 		{
@@ -225,6 +227,24 @@ namespace Gameplay
 
 					break;
 				}
+			}
+		}
+	}
+
+	static void HandleNaveSpecimenCollisions()
+	{
+		for (int i = 0; i < MAX_SPECIMENS; i++)
+		{
+			if (!specimens[i].isActive)
+			{
+				continue;
+			}
+
+			if (CheckCircleCollision(nave.x, nave.y, nave.radius, specimens[i].x, specimens[i].y, specimens[i].radius))
+			{
+				specimens[i].isActive = false;
+
+				break;
 			}
 		}
 	}
