@@ -2,6 +2,9 @@
 
 namespace Specimen
 {
+	static const float VELOCITY_MIN = 50.0f;
+	static const float VELOCITY_MAX = 150.0f;
+
 	enum class SpawnSide
 	{
 		None,

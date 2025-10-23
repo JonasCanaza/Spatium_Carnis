@@ -10,8 +10,10 @@
 #include "collision/collisions.h"
 #include "game/game.h"
 #include "panels/pause_panel.h"
+#include "utilities/math_utils.h"
 
 using namespace Collisions;
+using namespace MathUtils;
 
 namespace Gameplay
 {
@@ -20,6 +22,7 @@ namespace Gameplay
 	static const int MAX_PROJECTILE = 20;
 	static Projectile::Projectile projectiles[MAX_PROJECTILE] = {};
 
+	static const int DIVIDE_SPECIMENS = 2;
 	static const int INITIAL_SPECIMENS = 10;
 	static const int MAX_SPECIMENS = 50;
 	static Specimen::Specimen specimens[MAX_SPECIMENS];
@@ -45,6 +48,9 @@ namespace Gameplay
 
 	static void HandleProjectileSpecimenCollisions();
 	static void HandleNaveSpecimenCollisions();
+	static void HandleSpecimenDivision(Specimen::Specimen& specimen);
+	static void SplitSpecimen(Specimen::Specimen& specimen, Specimen::Type type);
+	static int GetEmptyIndexSpecimens();
 
 	void Init()
 	{
@@ -222,7 +228,8 @@ namespace Gameplay
 				if (CheckCircleCollision(projectiles[i].x, projectiles[i].y, projectiles[i].radius, specimens[j].x, specimens[j].y, specimens[j].radius))
 				{
 					projectiles[i].isActive = false;
-					specimens[j].isActive = false;
+
+					HandleSpecimenDivision(specimens[j]);
 
 					break;
 				}
@@ -246,5 +253,62 @@ namespace Gameplay
 				break;
 			}
 		}
+	}
+
+	static void HandleSpecimenDivision(Specimen::Specimen& specimen)
+	{
+		switch (specimen.type)
+		{
+		case Specimen::Type::Big:
+
+			SplitSpecimen(specimen, Specimen::Type::Medium);
+
+			break;
+		case Specimen::Type::Medium:
+
+			SplitSpecimen(specimen, Specimen::Type::Small);
+
+			break;
+		case Specimen::Type::Small:
+
+			specimen.isActive = false;
+
+			break;
+		default:
+
+			// THERE ARE NO MORE TYPES OF SPECIMENS
+
+			break;
+		}
+	}
+
+	static void SplitSpecimen(Specimen::Specimen& specimen, Specimen::Type type)
+	{
+		for (int i = 0; i < DIVIDE_SPECIMENS; i++)
+		{
+			int emptyIndex = GetEmptyIndexSpecimens();
+			float velocityX = GetFloatRandomBetween(Specimen::VELOCITY_MIN, Specimen::VELOCITY_MAX);
+			float velocityY = GetFloatRandomBetween(Specimen::VELOCITY_MIN, Specimen::VELOCITY_MAX);
+
+			velocityX *= (rand() % 2 == 0) ? 1.0f : -1.0f;
+			velocityY *= (rand() % 2 == 0) ? 1.0f : -1.0f;
+
+			specimens[emptyIndex] = Specimen::Create(specimen.x, specimen.y, velocityX, velocityY, type);
+		}
+
+		specimen.isActive = false;
+	}
+
+	static int GetEmptyIndexSpecimens()
+	{
+		for (int i = 0; i < MAX_SPECIMENS; i++)
+		{
+			if (!specimens[i].isActive)
+			{
+				return i;
+			}
+		}
+
+		return 0;
 	}
 }

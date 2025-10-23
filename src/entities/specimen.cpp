@@ -7,8 +7,6 @@
 namespace Specimen
 {
 	static const float SCREEN_BUFFER = 50.0f;
-	static const float VELOCITY_MIN = 50.0f;
-	static const float VELOCITY_MAX = 150.0f;
 
 	static void WrapAroundScreen(Specimen& specimen);
 
