@@ -24,7 +24,9 @@ namespace Gameplay
 
 	static const int DIVIDE_SPECIMENS = 2;
 	static const int INITIAL_SPECIMENS = 10;
-	static const int MAX_SPECIMENS = 50;
+	static const int SPECIMENS_PER_SPAWN = 5;
+	static const int MAX_SAFE_SPAWN = 45;
+	static const int MAX_SPECIMENS = 200;
 	static Specimen::Specimen specimens[MAX_SPECIMENS];
 
 	static float deltaTime;
@@ -32,6 +34,9 @@ namespace Gameplay
 	static bool isAccelerating;
 	static float fireRate;
 	static float timeSinceLastShot;
+
+	static float specimensSpawnTimer;
+	static const float SPECIMEN_SPAWN_INTERVAL = 8.5f;
 
 	// FUNCTIONS OF PROJECTILES
 
@@ -52,11 +57,19 @@ namespace Gameplay
 	static void SplitSpecimen(Specimen::Specimen& specimen, Specimen::Type type);
 	static int GetEmptyIndexSpecimens();
 
+	// SPAWNEO FUNCTIONS
+
+	static void HandleSpawningSpecimens();
+	static int GetActiveSpecimens();
+	static void SpawnSpecimenWave();
+
 	void Init()
 	{
 		isAccelerating = false;
 		fireRate = 0.25f;
 		timeSinceLastShot = 0.0f;
+
+		specimensSpawnTimer = 0.0f;
 
 		Nave::Init();
 		Projectile::Init();
@@ -102,6 +115,8 @@ namespace Gameplay
 
 			HandleProjectileSpecimenCollisions();
 			HandleNaveSpecimenCollisions();
+
+			HandleSpawningSpecimens();
 		}
 		else
 		{
@@ -310,5 +325,47 @@ namespace Gameplay
 		}
 
 		return 0;
+	}
+
+	void HandleSpawningSpecimens()
+	{
+		specimensSpawnTimer += deltaTime;
+
+		if (specimensSpawnTimer >= SPECIMEN_SPAWN_INTERVAL && GetActiveSpecimens() <= MAX_SAFE_SPAWN)
+		{
+			SpawnSpecimenWave();
+			specimensSpawnTimer = 0.0f;
+		}
+	}
+
+	static int GetActiveSpecimens()
+	{
+		int counter = 0;
+
+		for (int i = 0; i < MAX_SPECIMENS; i++)
+		{
+			if (specimens[i].isActive)
+			{
+				counter++;
+			}
+		}
+
+		return counter;
+	}
+
+	static void SpawnSpecimenWave()
+	{
+		for (int i = 0; i < SPECIMENS_PER_SPAWN; i++)
+		{
+			int emptyIndex = GetEmptyIndexSpecimens();
+
+			int sideRandom = rand() % static_cast<int>(Specimen::SpawnSide::Left) + static_cast<int>(Specimen::SpawnSide::Top);
+			int typeRandom = rand() % static_cast<int>(Specimen::Type::Small) + static_cast<int>(Specimen::Type::Big);
+
+			Specimen::SpawnSide side = static_cast<Specimen::SpawnSide>(sideRandom);
+			Specimen::Type type = static_cast<Specimen::Type>(typeRandom);
+
+			specimens[emptyIndex] = Specimen::SpawnAtSide(side, type);
+		}
 	}
 }
