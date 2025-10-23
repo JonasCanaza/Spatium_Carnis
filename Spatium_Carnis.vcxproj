@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\collision\collisions.cpp" />
     <ClCompile Include="src\entities\nave.cpp" />
     <ClCompile Include="src\entities\projectile.cpp" />
     <ClCompile Include="src\entities\specimen.cpp" />
@@ -33,6 +34,7 @@
     <ClCompile Include="src\screens\main_menu_screen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\collision\collisions.h" />
     <ClInclude Include="src\entities\nave.h" />
     <ClInclude Include="src\entities\projectile.h" />
     <ClInclude Include="src\entities\specimen.h" />
