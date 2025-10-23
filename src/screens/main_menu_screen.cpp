@@ -1,7 +1,5 @@
 #include "main_menu_screen.h"
 
-#include <iostream>
-
 #include "raylib.h"
 
 #include "game/game.h"

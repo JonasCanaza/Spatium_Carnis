@@ -1,6 +1,5 @@
 #include "screens/gameplay_screen.h"
 
-#include <iostream>
 #include <stdlib.h>
 
 #include "raylib.h"

@@ -1,6 +1,5 @@
 #include "projectile.h"
 
-#include <iostream>
 #include <cmath>
 
 #include "raylib.h"

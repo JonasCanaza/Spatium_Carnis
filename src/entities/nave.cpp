@@ -1,6 +1,5 @@
 #include "nave.h"
 
-#include <iostream>
 #include <cmath>
 
 #include "raylib.h"
