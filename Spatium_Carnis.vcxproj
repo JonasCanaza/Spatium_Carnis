@@ -32,6 +32,7 @@
     <ClCompile Include="src\screens\gameplay_screen.cpp" />
     <ClCompile Include="src\screens\how_to_play_screen.cpp" />
     <ClCompile Include="src\screens\main_menu_screen.cpp" />
+    <ClCompile Include="src\utilities\math_utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\collision\collisions.h" />
@@ -47,6 +48,7 @@
     <ClInclude Include="src\screens\gameplay_screen.h" />
     <ClInclude Include="src\screens\how_to_play_screen.h" />
     <ClInclude Include="src\screens\main_menu_screen.h" />
+    <ClInclude Include="src\utilities\math_utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
