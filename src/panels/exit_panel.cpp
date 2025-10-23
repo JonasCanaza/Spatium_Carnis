@@ -4,7 +4,7 @@
 
 #include "interface/button.h"
 #include "interface/ui_constants.h"
-#include "utilities/constants.h"
+#include "game/game_constants.h"
 #include "game/game.h"
 #include "screens/gameplay_screen.h"
 

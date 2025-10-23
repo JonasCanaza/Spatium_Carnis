@@ -45,7 +45,6 @@
     <ClInclude Include="src\screens\gameplay_screen.h" />
     <ClInclude Include="src\screens\how_to_play_screen.h" />
     <ClInclude Include="src\screens\main_menu_screen.h" />
-    <ClInclude Include="src\utilities\constants.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

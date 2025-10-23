@@ -6,7 +6,7 @@
 #include "raylib.h"
 
 #include "nave.h"
-#include "utilities/constants.h"
+#include "game/game_constants.h"
 
 namespace Projectile
 {

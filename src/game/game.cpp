@@ -8,7 +8,7 @@
 #include "screens/gameplay_screen.h"
 #include "screens/how_to_play_screen.h"
 #include "screens/credits_screen.h"
-#include "utilities/constants.h"
+#include "game/game_constants.h"
 
 namespace SpatiumCarnis
 {

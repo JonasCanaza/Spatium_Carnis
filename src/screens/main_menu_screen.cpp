@@ -7,7 +7,7 @@
 #include "game/game.h"
 #include "interface/button.h"
 #include "interface/ui_constants.h"
-#include "utilities/constants.h"
+#include "game/game_constants.h"
 #include "panels/exit_panel.h"
 
 using namespace UIConstants;

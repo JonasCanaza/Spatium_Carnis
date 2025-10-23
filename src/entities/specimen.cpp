@@ -2,7 +2,7 @@
 
 #include "raylib.h"
 
-#include "utilities/constants.h"
+#include "game/game_constants.h"
 
 namespace Specimen
 {
