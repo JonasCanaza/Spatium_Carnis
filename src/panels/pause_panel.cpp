@@ -3,9 +3,12 @@
 #include "raylib.h"
 
 #include "interface/button.h"
+#include "interface/ui_constants.h"
 #include "utilities/constants.h"
 #include "game/game.h"
 #include "screens/gameplay_screen.h"
+
+using namespace UIConstants;
 
 namespace PausePanel
 {
@@ -21,13 +24,6 @@ namespace PausePanel
 		Restart,
 		Exit
 	};
-
-	static const float TITLE_WIDTH = 650.0f;
-	static const float TITLE_HEIGHT = 300.0f;
-	static const float BUTTON_WIDTH = 350.0f;
-	static const float BUTTON_HEIGHT = 60.0f;
-	static const float BUTTON_MARGIN_Y = 10.0f;
-	static const float TITLE_TO_BUTTONS_MARGIN = 40.0f;
 
 	// TEST TITLE!!!
 	static Rectangle title = { 0.0f, 0.0f, TITLE_WIDTH, TITLE_HEIGHT };

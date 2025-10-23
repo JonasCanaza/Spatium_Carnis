@@ -6,8 +6,11 @@
 
 #include "game/game.h"
 #include "interface/button.h"
+#include "interface/ui_constants.h"
 #include "utilities/constants.h"
 #include "panels/exit_panel.h"
+
+using namespace UIConstants;
 
 namespace MainMenu
 {
@@ -24,17 +27,7 @@ namespace MainMenu
 	};
 
 	// TEST LOGO!!!
-
-	static const float LOGO_WIDTH = 500.0f;
-	static const float LOGO_HEIGHT = 300.0f;
-	static const float BUTTON_WIDTH = 350.0f;
-	static const float BUTTON_HEIGHT = 50.0f;
-	static const float BUTTON_MARGIN_Y = 10.0f;
-	static const float LOGO_TO_BUTTONS_MARGIN = 40.0f;
-
 	static Rectangle logo = { 0.0f, 0.0f, LOGO_WIDTH, LOGO_HEIGHT };
-
-	// ===============
 
 	static void InitLogo();
 	static void InitButtons();

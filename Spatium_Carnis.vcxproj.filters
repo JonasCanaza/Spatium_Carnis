@@ -89,5 +89,8 @@
     <ClInclude Include="src\panels\exit_panel.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\interface\ui_constants.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
