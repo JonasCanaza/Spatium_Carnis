@@ -1,5 +1,6 @@
 #include "screens/gameplay_screen.h"
 
+#include <iostream>
 #include <stdlib.h>
 
 #include "raylib.h"
@@ -7,8 +8,11 @@
 #include "entities/nave.h"
 #include "entities/projectile.h"
 #include "entities/specimen.h"
+#include "collision/collisions.h"
 #include "game/game.h"
 #include "panels/pause_panel.h"
+
+using namespace Collisions;
 
 namespace Gameplay
 {
@@ -37,6 +41,10 @@ namespace Gameplay
 
 	static void UpdateAllSpecimens();
 	static void DrawAllSpecimens();
+
+	// FUNCTIONS TO DETECT COLLISIONS BETWEEN ENTITIES
+
+	static void HandleProjectileSpecimenCollisions();
 
 	void Init()
 	{
@@ -85,6 +93,8 @@ namespace Gameplay
 			Nave::Update(nave, deltaTime, isAccelerating);
 			UpdateAllProjectiles();
 			UpdateAllSpecimens();
+
+			HandleProjectileSpecimenCollisions();
 		}
 		else
 		{
@@ -189,6 +199,33 @@ namespace Gameplay
 		for (int i = 0; i < MAX_SPECIMENS; i++)
 		{
 			Specimen::Draw(specimens[i]);
+		}
+	}
+
+	static void HandleProjectileSpecimenCollisions()
+	{
+		for (int i = 0; i < MAX_PROJECTILE; i++)
+		{
+			if (!projectiles[i].isActive)
+			{
+				continue;
+			}
+
+			for (int j = 0; j < MAX_SPECIMENS; j++)
+			{
+				if (!specimens[j].isActive)
+				{
+					continue;
+				}
+
+				if (CheckCircleCollision(projectiles[i].x, projectiles[i].y, projectiles[i].radius, specimens[j].x, specimens[j].y, specimens[j].radius))
+				{
+					projectiles[i].isActive = false;
+					specimens[j].isActive = false;
+
+					break;
+				}
+			}
 		}
 	}
 }
