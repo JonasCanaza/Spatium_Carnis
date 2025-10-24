@@ -61,7 +61,7 @@ namespace Gameplay
 	static void HandleSpecimenDivision(Specimen::Specimen& specimen);
 	static void SplitSpecimen(Specimen::Specimen& specimen, Specimen::Type type);
 	static int GetEmptyIndexSpecimens();
-	static void HandleNavePowerUpCollision();
+	static void HandleNaveSporeCollision();
 
 	// SPAWNEO FUNCTIONS
 
@@ -130,7 +130,7 @@ namespace Gameplay
 
 			HandleProjectileSpecimenCollisions();
 			HandleNaveSpecimenCollisions();
-			HandleNavePowerUpCollision();
+			HandleNaveSporeCollision();
 
 			HandleSpawningSpecimens();
 		}
@@ -351,7 +351,7 @@ namespace Gameplay
 		return 0;
 	}
 
-	static void HandleNavePowerUpCollision()
+	static void HandleNaveSporeCollision()
 	{
 		if (!spore.isActive)
 		{
