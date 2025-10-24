@@ -44,6 +44,11 @@ namespace PausePanel
 
 	void Update()
 	{
+		if (!isActive)
+		{
+			return;
+		}
+
 		for (int i = 0; i < MAX_BUTTONS; i++)
 		{
 			Button::Update(buttons[i]);
@@ -69,6 +74,11 @@ namespace PausePanel
 
 	void Draw()
 	{
+		if (!isActive)
+		{
+			return;
+		}
+
 		Color backgroundColor = { 0, 0, 0, 100 };
 		DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, backgroundColor);
 

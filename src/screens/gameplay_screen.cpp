@@ -125,11 +125,9 @@ namespace Gameplay
 
 			HandleSpawningSpecimens();
 		}
-		else
-		{
-			PausePanel::Update();
-			GameOverPanel::Update();
-		}
+
+		PausePanel::Update();
+		GameOverPanel::Update();
 	}
 
 	void Draw()
@@ -141,15 +139,8 @@ namespace Gameplay
 		DrawAllProjectiles();
 		DrawAllSpecimens();
 
-		if (PausePanel::isActive)
-		{
-			PausePanel::Draw();
-		}
-
-		if (GameOverPanel::isActive)
-		{
-			GameOverPanel::Draw();
-		}
+		PausePanel::Draw();
+		GameOverPanel::Draw();
 
 		EndDrawing();
 	}

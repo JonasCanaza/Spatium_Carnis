@@ -56,10 +56,8 @@ namespace MainMenu
 		{
 			UpdateButtons();
 		}
-		else
-		{
-			ExitPanel::Update();
-		}
+
+		ExitPanel::Update();
 	}
 
 	void Draw()
@@ -70,10 +68,7 @@ namespace MainMenu
 		DrawLogo();
 		DrawButtons();
 
-		if (ExitPanel::isActive)
-		{
-			ExitPanel::Draw();
-		}
+		ExitPanel::Draw();
 
 		EndDrawing();
 	}
