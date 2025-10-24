@@ -118,6 +118,8 @@ namespace Gameplay
 			UpdateAllProjectiles();
 			UpdateAllSpecimens();
 
+			GameOverPanel::isActive = !nave.isActive;
+
 			HandleProjectileSpecimenCollisions();
 			HandleNaveSpecimenCollisions();
 

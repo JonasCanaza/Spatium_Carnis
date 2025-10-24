@@ -85,6 +85,7 @@ namespace Nave
 		nave.velocityY = 0.0f;
 		nave.lives = 3;
 		nave.score = 0;
+		nave.isActive = true;
 	}
 
 	void TakeDamage(Nave& nave)
