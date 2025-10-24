@@ -12,6 +12,7 @@
 #include "game/game.h"
 #include "panels/pause_panel.h"
 #include "panels/game_over_panel.h"
+#include "panels/power_up_panel.h"
 #include "utilities/math_utils.h"
 
 using namespace Collisions;
@@ -94,12 +95,12 @@ namespace Gameplay
 	{
 		if (nave.isActive)
 		{
-			if (IsKeyPressed(KEY_ESCAPE))
+			if (IsKeyPressed(KEY_ESCAPE) && !PowerUpPanel::isActive)
 			{
 				PausePanel::isActive = !PausePanel::isActive;
 			}
 
-			if (!PausePanel::isActive)
+			if (!PausePanel::isActive && !PowerUpPanel::isActive)
 			{
 				isAccelerating = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
 
@@ -116,7 +117,7 @@ namespace Gameplay
 	{
 		deltaTime = GetFrameTime();
 
-		if (!PausePanel::isActive && nave.isActive)
+		if (!PausePanel::isActive && !PowerUpPanel::isActive && nave.isActive)
 		{
 			timeSinceLastShot += deltaTime;
 
@@ -150,6 +151,7 @@ namespace Gameplay
 
 		PausePanel::Draw();
 		GameOverPanel::Draw();
+		PowerUpPanel::Draw();
 
 		EndDrawing();
 	}
@@ -354,6 +356,7 @@ namespace Gameplay
 		if (CheckCircleCollision(nave.x, nave.y, nave.radius, powerUP.x, powerUP.y, powerUP.radius))
 		{
 			powerUP.isActive = false;
+			PowerUpPanel::isActive = true;
 		}
 	}
 
