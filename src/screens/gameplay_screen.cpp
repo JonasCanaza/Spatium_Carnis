@@ -84,19 +84,22 @@ namespace Gameplay
 
 	void Input()
 	{
-		if (IsKeyPressed(KEY_ESCAPE))
+		if (nave.isActive)
 		{
-			PausePanel::isActive = !PausePanel::isActive;
-		}
-
-		if (!PausePanel::isActive)
-		{
-			isAccelerating = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
-
-			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && timeSinceLastShot >= fireRate)
+			if (IsKeyPressed(KEY_ESCAPE))
 			{
-				CreateProjectile();
-				timeSinceLastShot = 0.0f;
+				PausePanel::isActive = !PausePanel::isActive;
+			}
+
+			if (!PausePanel::isActive)
+			{
+				isAccelerating = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
+
+				if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && timeSinceLastShot >= fireRate)
+				{
+					CreateProjectile();
+					timeSinceLastShot = 0.0f;
+				}
 			}
 		}
 	}
@@ -105,7 +108,7 @@ namespace Gameplay
 	{
 		deltaTime = GetFrameTime();
 
-		if (!PausePanel::isActive)
+		if (!PausePanel::isActive && nave.isActive)
 		{
 			timeSinceLastShot += deltaTime;
 

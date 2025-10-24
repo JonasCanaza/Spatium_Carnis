@@ -21,6 +21,7 @@ namespace Nave
 	static void LimitSpeed(Nave& nave);
 	static void Move(Nave& nave, float deltaTime);
 	static void WrapAroundScreen(Nave& nave);
+	static bool IsAlive(Nave nave);
 
 	void Init()
 	{
@@ -34,6 +35,8 @@ namespace Nave
 		LimitSpeed(nave);
 		Move(nave, deltaTime);
 		WrapAroundScreen(nave);
+
+		nave.isActive = IsAlive(nave);
 	}
 
 	void Draw(Nave nave)
@@ -185,5 +188,15 @@ namespace Nave
 		{
 			nave.y = -nave.radius;
 		}
+	}
+
+	static bool IsAlive(Nave nave)
+	{
+		if (nave.lives > 0)
+		{
+			return true;
+		}
+
+		return false;
 	}
 }
