@@ -353,6 +353,11 @@ namespace Gameplay
 
 	static void HandleNavePowerUpCollision()
 	{
+		if (!powerUP.isActive)
+		{
+			return;
+		}
+
 		if (CheckCircleCollision(nave.x, nave.y, nave.radius, powerUP.x, powerUP.y, powerUP.radius))
 		{
 			powerUP.isActive = false;
