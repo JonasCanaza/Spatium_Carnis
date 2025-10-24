@@ -10,6 +10,7 @@ namespace PowerUp
 		float rotation;
 		float velocityX;
 		float velocityY;
+		float timerLife;
 		bool isActive;
 	};
 
