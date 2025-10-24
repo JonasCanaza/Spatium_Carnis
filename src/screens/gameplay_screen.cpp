@@ -244,6 +244,8 @@ namespace Gameplay
 				{
 					projectiles[i].isActive = false;
 
+					Nave::AddScore(nave);
+
 					HandleSpecimenDivision(specimens[j]);
 
 					break;

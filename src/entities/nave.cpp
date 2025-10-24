@@ -5,9 +5,15 @@
 #include "raylib.h"
 
 #include "game/game_constants.h"
+#include "utilities/math_utils.h"
+
+using namespace MathUtils;
 
 namespace Nave
 {
+	static const int MIN_SCORE = 25;
+	static const int MAX_SCORE = 50;
+
 	static void UpdateRotation(Nave& nave);
 	static void AccelerateTowardsMouse(Nave& nave, float deltaTime, bool isAccelerating);
 	static void CalculateDirectionToMouse(Nave& nave, float& directionX, float& directionY);
@@ -61,6 +67,7 @@ namespace Nave
 		newNave.velocityY = 0.0f;
 		newNave.reload = 0.0f;
 		newNave.lives = 3;
+		newNave.score = 0;
 		newNave.isActive = true;
 
 		return newNave;
@@ -74,6 +81,12 @@ namespace Nave
 		nave.velocityX = 0.0f;
 		nave.velocityY = 0.0f;
 		nave.lives = 3;
+		nave.score = 0;
+	}
+
+	void AddScore(Nave& nave)
+	{
+		nave.score += GetIntegerRandomBetween(MIN_SCORE, MAX_SCORE);
 	}
 
 	static void UpdateRotation(Nave& nave)

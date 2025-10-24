@@ -14,6 +14,7 @@ namespace Nave
 		float velocityY;
 		float reload;
 		int lives;
+		int score;
 		bool isActive;
 	};
 
@@ -24,4 +25,5 @@ namespace Nave
 
 	Nave Create();
 	void Reset(Nave& nave);
+	void AddScore(Nave& nave);
 }
