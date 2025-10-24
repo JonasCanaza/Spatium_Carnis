@@ -7,6 +7,7 @@
 #include "entities/nave.h"
 #include "entities/projectile.h"
 #include "entities/specimen.h"
+#include "entities/power_up.h"
 #include "collision/collisions.h"
 #include "game/game.h"
 #include "panels/pause_panel.h"
@@ -29,6 +30,8 @@ namespace Gameplay
 	static const int MAX_SAFE_SPAWN = 45;
 	static const int MAX_SPECIMENS = 200;
 	static Specimen::Specimen specimens[MAX_SPECIMENS];
+
+	static PowerUp::PowerUP powerUP;
 
 	static float deltaTime;
 
@@ -75,11 +78,13 @@ namespace Gameplay
 		Nave::Init();
 		Projectile::Init();
 		Specimen::Init();
+		PowerUp::Init();
 
 		PausePanel::Init();
 		GameOverPanel::Init();
 
 		nave = Nave::Create();
+		powerUP = PowerUp::Create();
 
 		CreateInitialSpecimen();
 	}
@@ -117,6 +122,7 @@ namespace Gameplay
 			Nave::Update(nave, deltaTime, isAccelerating);
 			UpdateAllProjectiles();
 			UpdateAllSpecimens();
+			PowerUp::Update(powerUP, deltaTime);
 
 			GameOverPanel::isActive = !nave.isActive;
 
@@ -138,6 +144,7 @@ namespace Gameplay
 		Nave::Draw(nave);
 		DrawAllProjectiles();
 		DrawAllSpecimens();
+		PowerUp::Draw(powerUP);
 
 		PausePanel::Draw();
 		GameOverPanel::Draw();
@@ -150,6 +157,7 @@ namespace Gameplay
 		Nave::Close();
 		Projectile::Close();
 		Specimen::Close();
+		PowerUp::Close();
 
 		PausePanel::Close();
 		GameOverPanel::Close();
@@ -182,6 +190,8 @@ namespace Gameplay
 		{
 			Specimen::Reset(specimens[i]);
 		}
+
+		PowerUp::Reset(powerUP);
 
 		CreateInitialSpecimen();
 	}

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\collision\collisions.cpp" />
     <ClCompile Include="src\entities\nave.cpp" />
+    <ClCompile Include="src\entities\power_up.cpp" />
     <ClCompile Include="src\entities\projectile.cpp" />
     <ClCompile Include="src\entities\specimen.cpp" />
     <ClCompile Include="src\game\game.cpp" />
@@ -38,6 +39,7 @@
   <ItemGroup>
     <ClInclude Include="src\collision\collisions.h" />
     <ClInclude Include="src\entities\nave.h" />
+    <ClInclude Include="src\entities\power_up.h" />
     <ClInclude Include="src\entities\projectile.h" />
     <ClInclude Include="src\entities\specimen.h" />
     <ClInclude Include="src\game\game.h" />
