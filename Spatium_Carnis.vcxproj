@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\collision\collisions.cpp" />
     <ClCompile Include="src\entities\nave.cpp" />
-    <ClCompile Include="src\entities\power_up.cpp" />
+    <ClCompile Include="src\entities\spore.cpp" />
     <ClCompile Include="src\entities\projectile.cpp" />
     <ClCompile Include="src\entities\specimen.cpp" />
     <ClCompile Include="src\game\game.cpp" />
@@ -30,7 +30,7 @@
     <ClCompile Include="src\panels\exit_panel.cpp" />
     <ClCompile Include="src\panels\game_over_panel.cpp" />
     <ClCompile Include="src\panels\pause_panel.cpp" />
-    <ClCompile Include="src\panels\power_up_panel.cpp" />
+    <ClCompile Include="src\panels\spore_panel.cpp" />
     <ClCompile Include="src\screens\credits_screen.cpp" />
     <ClCompile Include="src\screens\gameplay_screen.cpp" />
     <ClCompile Include="src\screens\how_to_play_screen.cpp" />
@@ -40,7 +40,7 @@
   <ItemGroup>
     <ClInclude Include="src\collision\collisions.h" />
     <ClInclude Include="src\entities\nave.h" />
-    <ClInclude Include="src\entities\power_up.h" />
+    <ClInclude Include="src\entities\spore.h" />
     <ClInclude Include="src\entities\projectile.h" />
     <ClInclude Include="src\entities\specimen.h" />
     <ClInclude Include="src\game\game.h" />
@@ -49,7 +49,7 @@
     <ClInclude Include="src\panels\exit_panel.h" />
     <ClInclude Include="src\panels\game_over_panel.h" />
     <ClInclude Include="src\panels\pause_panel.h" />
-    <ClInclude Include="src\panels\power_up_panel.h" />
+    <ClInclude Include="src\panels\spore_panel.h" />
     <ClInclude Include="src\screens\credits_screen.h" />
     <ClInclude Include="src\screens\gameplay_screen.h" />
     <ClInclude Include="src\screens\how_to_play_screen.h" />

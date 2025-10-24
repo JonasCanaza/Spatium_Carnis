@@ -1,8 +1,8 @@
 #pragma once
 
-namespace PowerUp
+namespace Spore
 {
-	struct PowerUP
+	struct Spore
 	{
 		float x;
 		float y;
@@ -15,10 +15,10 @@ namespace PowerUp
 	};
 
 	void Init();
-	void Update(PowerUP& powerUP, float deltaTime);
-	void Draw(PowerUP powerUP);
+	void Update(Spore& spore, float deltaTime);
+	void Draw(Spore spore);
 	void Close();
 
-	PowerUP Create();
-	void Reset(PowerUP& powerUP);
+	Spore Create();
+	void Reset(Spore& spore);
 }

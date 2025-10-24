@@ -1,10 +1,10 @@
-#include "power_up_panel.h"
+#include "spore_panel.h"
 
 #include "raylib.h"
 
 #include "game/game_constants.h"
 
-namespace PowerUpPanel
+namespace SporePanel
 {
 	bool isActive;
 

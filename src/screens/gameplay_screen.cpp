@@ -7,12 +7,12 @@
 #include "entities/nave.h"
 #include "entities/projectile.h"
 #include "entities/specimen.h"
-#include "entities/power_up.h"
+#include "entities/spore.h"
 #include "collision/collisions.h"
 #include "game/game.h"
 #include "panels/pause_panel.h"
 #include "panels/game_over_panel.h"
-#include "panels/power_up_panel.h"
+#include "panels/spore_panel.h"
 #include "utilities/math_utils.h"
 
 using namespace Collisions;
@@ -32,7 +32,7 @@ namespace Gameplay
 	static const int MAX_SPECIMENS = 200;
 	static Specimen::Specimen specimens[MAX_SPECIMENS];
 
-	static PowerUp::PowerUP powerUP;
+	static Spore::Spore spore;
 
 	static float deltaTime;
 
@@ -80,13 +80,13 @@ namespace Gameplay
 		Nave::Init();
 		Projectile::Init();
 		Specimen::Init();
-		PowerUp::Init();
+		Spore::Init();
 
 		PausePanel::Init();
 		GameOverPanel::Init();
 
 		nave = Nave::Create();
-		powerUP = PowerUp::Create();
+		spore = Spore::Create();
 
 		CreateInitialSpecimen();
 	}
@@ -95,12 +95,12 @@ namespace Gameplay
 	{
 		if (nave.isActive)
 		{
-			if (IsKeyPressed(KEY_ESCAPE) && !PowerUpPanel::isActive)
+			if (IsKeyPressed(KEY_ESCAPE) && !SporePanel::isActive)
 			{
 				PausePanel::isActive = !PausePanel::isActive;
 			}
 
-			if (!PausePanel::isActive && !PowerUpPanel::isActive)
+			if (!PausePanel::isActive && !SporePanel::isActive)
 			{
 				isAccelerating = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
 
@@ -117,14 +117,14 @@ namespace Gameplay
 	{
 		deltaTime = GetFrameTime();
 
-		if (!PausePanel::isActive && !PowerUpPanel::isActive && nave.isActive)
+		if (!PausePanel::isActive && !SporePanel::isActive && nave.isActive)
 		{
 			timeSinceLastShot += deltaTime;
 
 			Nave::Update(nave, deltaTime, isAccelerating);
 			UpdateAllProjectiles();
 			UpdateAllSpecimens();
-			PowerUp::Update(powerUP, deltaTime);
+			Spore::Update(spore, deltaTime);
 
 			GameOverPanel::isActive = !nave.isActive;
 
@@ -147,11 +147,11 @@ namespace Gameplay
 		Nave::Draw(nave);
 		DrawAllProjectiles();
 		DrawAllSpecimens();
-		PowerUp::Draw(powerUP);
+		Spore::Draw(spore);
 
 		PausePanel::Draw();
 		GameOverPanel::Draw();
-		PowerUpPanel::Draw();
+		SporePanel::Draw();
 
 		EndDrawing();
 	}
@@ -161,7 +161,7 @@ namespace Gameplay
 		Nave::Close();
 		Projectile::Close();
 		Specimen::Close();
-		PowerUp::Close();
+		Spore::Close();
 
 		PausePanel::Close();
 		GameOverPanel::Close();
@@ -195,7 +195,7 @@ namespace Gameplay
 			Specimen::Reset(specimens[i]);
 		}
 
-		PowerUp::Reset(powerUP);
+		Spore::Reset(spore);
 
 		CreateInitialSpecimen();
 	}
@@ -353,15 +353,15 @@ namespace Gameplay
 
 	static void HandleNavePowerUpCollision()
 	{
-		if (!powerUP.isActive)
+		if (!spore.isActive)
 		{
 			return;
 		}
 
-		if (CheckCircleCollision(nave.x, nave.y, nave.radius, powerUP.x, powerUP.y, powerUP.radius))
+		if (CheckCircleCollision(nave.x, nave.y, nave.radius, spore.x, spore.y, spore.radius))
 		{
-			powerUP.isActive = false;
-			PowerUpPanel::isActive = true;
+			spore.isActive = false;
+			SporePanel::isActive = true;
 		}
 	}
 
