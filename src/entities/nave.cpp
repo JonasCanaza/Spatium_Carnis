@@ -84,6 +84,11 @@ namespace Nave
 		nave.score = 0;
 	}
 
+	void TakeDamage(Nave& nave)
+	{
+		nave.lives -= 1;
+	}
+
 	void AddScore(Nave& nave)
 	{
 		nave.score += GetIntegerRandomBetween(MIN_SCORE, MAX_SCORE);

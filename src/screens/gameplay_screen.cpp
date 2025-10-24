@@ -267,6 +267,8 @@ namespace Gameplay
 			{
 				specimens[i].isActive = false;
 
+				Nave::TakeDamage(nave);
+
 				break;
 			}
 		}

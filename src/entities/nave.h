@@ -25,5 +25,6 @@ namespace Nave
 
 	Nave Create();
 	void Reset(Nave& nave);
+	void TakeDamage(Nave& nave);
 	void AddScore(Nave& nave);
 }
