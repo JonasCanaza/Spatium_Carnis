@@ -27,6 +27,7 @@
     <ClCompile Include="src\interface\button.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\panels\exit_panel.cpp" />
+    <ClCompile Include="src\panels\game_over_panel.cpp" />
     <ClCompile Include="src\panels\pause_panel.cpp" />
     <ClCompile Include="src\screens\credits_screen.cpp" />
     <ClCompile Include="src\screens\gameplay_screen.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="src\interface\button.h" />
     <ClInclude Include="src\interface\ui_constants.h" />
     <ClInclude Include="src\panels\exit_panel.h" />
+    <ClInclude Include="src\panels\game_over_panel.h" />
     <ClInclude Include="src\panels\pause_panel.h" />
     <ClInclude Include="src\screens\credits_screen.h" />
     <ClInclude Include="src\screens\gameplay_screen.h" />

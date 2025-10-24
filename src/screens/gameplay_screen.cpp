@@ -10,6 +10,7 @@
 #include "collision/collisions.h"
 #include "game/game.h"
 #include "panels/pause_panel.h"
+#include "panels/game_over_panel.h"
 #include "utilities/math_utils.h"
 
 using namespace Collisions;
@@ -76,6 +77,7 @@ namespace Gameplay
 		Specimen::Init();
 
 		PausePanel::Init();
+		GameOverPanel::Init();
 
 		nave = Nave::Create();
 
@@ -124,6 +126,7 @@ namespace Gameplay
 		else
 		{
 			PausePanel::Update();
+			GameOverPanel::Update();
 		}
 	}
 
@@ -141,6 +144,11 @@ namespace Gameplay
 			PausePanel::Draw();
 		}
 
+		if (GameOverPanel::isActive)
+		{
+			GameOverPanel::Draw();
+		}
+
 		EndDrawing();
 	}
 
@@ -149,7 +157,9 @@ namespace Gameplay
 		Nave::Close();
 		Projectile::Close();
 		Specimen::Close();
+
 		PausePanel::Close();
+		GameOverPanel::Close();
 	}
 
 	void CreateInitialSpecimen()
