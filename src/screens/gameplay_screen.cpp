@@ -60,6 +60,7 @@ namespace Gameplay
 	static void HandleSpecimenDivision(Specimen::Specimen& specimen);
 	static void SplitSpecimen(Specimen::Specimen& specimen, Specimen::Type type);
 	static int GetEmptyIndexSpecimens();
+	static void HandleNavePowerUpCollision();
 
 	// SPAWNEO FUNCTIONS
 
@@ -128,6 +129,7 @@ namespace Gameplay
 
 			HandleProjectileSpecimenCollisions();
 			HandleNaveSpecimenCollisions();
+			HandleNavePowerUpCollision();
 
 			HandleSpawningSpecimens();
 		}
@@ -345,6 +347,14 @@ namespace Gameplay
 		}
 
 		return 0;
+	}
+
+	static void HandleNavePowerUpCollision()
+	{
+		if (CheckCircleCollision(nave.x, nave.y, nave.radius, powerUP.x, powerUP.y, powerUP.radius))
+		{
+			powerUP.isActive = false;
+		}
 	}
 
 	void HandleSpawningSpecimens()

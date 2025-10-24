@@ -13,7 +13,9 @@ namespace PowerUp
 	static const float MAX_VELOCITY_X = 100.0f;
 	static const float MIN_VELOCITY_Y = 25.0f;
 	static const float MAX_VELOCITY_Y = 100.0f;
-	static const float MAX_TIME_LIFE = 15.0f;
+	static const float MAX_TIME_LIFE = 25.0f;
+
+	static void WrapAroundScreen(PowerUP& powerUP);
 
 	void Init()
 	{
@@ -22,8 +24,15 @@ namespace PowerUp
 
 	void Update(PowerUP& powerUP, float deltaTime)
 	{
+		if (!powerUP.isActive)
+		{
+			return;
+		}
+
 		powerUP.x += powerUP.velocityX * deltaTime;
 		powerUP.y += powerUP.velocityY * deltaTime;
+
+		WrapAroundScreen(powerUP);
 
 		powerUP.timerLife += deltaTime;
 
@@ -35,10 +44,15 @@ namespace PowerUp
 
 	void Draw(PowerUP powerUP)
 	{
+		if (!powerUP.isActive)
+		{
+			return;
+		}
+
 		int x = static_cast<int>(powerUP.x);
 		int y = static_cast<int>(powerUP.y);
 
-		DrawCircle(x, y, powerUP.radius, WHITE);
+		DrawCircle(x, y, powerUP.radius, GREEN);
 	}
 
 	void Close()
@@ -50,12 +64,12 @@ namespace PowerUp
 	{
 		PowerUP newPowerUp{};
 
-		float x = static_cast<float>(SCREEN_WIDTH / 2);
-		float y = static_cast<float>(SCREEN_HEIGHT / 2);
+		float x = 0.0f;
+		float y = 0.0f;
 
 		newPowerUp.x = x;
 		newPowerUp.y = y;
-		newPowerUp.radius = 30.0f;
+		newPowerUp.radius = 25.0f;
 		newPowerUp.rotation = 0.0f;
 		newPowerUp.velocityX = GetFloatRandomBetween(MIN_VELOCITY_X, MAX_VELOCITY_X);
 		newPowerUp.velocityY = GetFloatRandomBetween(MIN_VELOCITY_Y, MAX_VELOCITY_Y);
@@ -67,8 +81,8 @@ namespace PowerUp
 
 	void Reset(PowerUP& powerUP)
 	{
-		float x = static_cast<float>(SCREEN_WIDTH / 2);
-		float y = static_cast<float>(SCREEN_HEIGHT / 2);
+		float x = 0.0f;
+		float y = 0.0f;
 
 		powerUP.x = x;
 		powerUP.y = y;
@@ -77,5 +91,26 @@ namespace PowerUp
 		powerUP.velocityY = GetFloatRandomBetween(MIN_VELOCITY_Y, MAX_VELOCITY_Y);
 		powerUP.timerLife = 0.0f;
 		powerUP.isActive = true;
+	}
+
+	static void WrapAroundScreen(PowerUP& powerUP)
+	{
+		if (powerUP.x + powerUP.radius < 0)
+		{
+			powerUP.x = SCREEN_WIDTH + powerUP.radius;
+		}
+		else if (powerUP.x - powerUP.radius > SCREEN_WIDTH)
+		{
+			powerUP.x = -powerUP.radius;
+		}
+
+		if (powerUP.y + powerUP.radius < 0)
+		{
+			powerUP.y = SCREEN_HEIGHT + powerUP.radius;
+		}
+		else if (powerUP.y - powerUP.radius > SCREEN_HEIGHT)
+		{
+			powerUP.y = -powerUP.radius;
+		}
 	}
 }
