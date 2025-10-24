@@ -12,4 +12,13 @@ namespace MathUtils
 
         return randomValue;
 	}
+
+    int GetIntegerRandomBetween(int min, int max)
+    {
+        int range = max - min + 1;
+        int randomOffset = rand() % range;
+        int randomValue = min + randomOffset;
+
+        return randomValue;
+    }
 }
