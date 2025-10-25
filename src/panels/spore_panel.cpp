@@ -7,6 +7,7 @@
 #include "interface/button.h"
 #include "interface/ui_constants.h"
 #include "game/game_constants.h"
+#include "entities/nave.h"
 
 using namespace UIConstants;
 
@@ -44,7 +45,7 @@ namespace SporePanel
 		InitButtons();
 	}
 
-	void Update()
+	void Update(Nave::Nave& nave)
 	{
 		if (!isActive)
 		{
@@ -58,31 +59,30 @@ namespace SporePanel
 
 		if (buttons[Life].clicked)
 		{
-			std::cout << "More life!" << std::endl;
+			Nave::ApplySpore(Nave::SporeType::MoreLife, nave);
 			isActive = false;
 		}
 
 		if (buttons[ShootingSpeed].clicked)
 		{
-			std::cout << "More shooting speed!" << std::endl;
+			Nave::ApplySpore(Nave::SporeType::MoreShootingSpeed, nave);
 			isActive = false;
 		}
 
 		if (buttons[MovementSpeed].clicked)
 		{
-			std::cout << "More movement speed!" << std::endl;
+			Nave::ApplySpore(Nave::SporeType::MoreMovementSpeed, nave);
 			isActive = false;
 		}
 
 		if (buttons[Immunity].clicked)
 		{
-			std::cout << "Immunity activated!" << std::endl;
+			Nave::ApplySpore(Nave::SporeType::ApplyImmunity, nave);
 			isActive = false;
 		}
 
 		if (buttons[Cancel].clicked)
 		{
-			std::cout << "Canceled!" << std::endl;
 			isActive = false;
 		}
 	}

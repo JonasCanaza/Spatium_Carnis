@@ -11,6 +11,18 @@ using namespace MathUtils;
 
 namespace Nave
 {
+	static const int DEFAULT_LIFE = 3;
+	static const int INCREASE_LIFE = 1;
+	static const int REDUCE_LIFE = 1;
+
+	static const float DEFAULT_FIRE_RATE = 0.25f;
+	static const float REDUCE_FIRE_RATE = 0.05f;
+
+	static const float DEFAULT_SPEED = 250.0f;
+	static const float INCREASE_SPEED = 50.0f;
+
+	static const float MAX_IMMUNITY_TIME = 15.0f;
+
 	static const int MIN_SCORE = 25;
 	static const int MAX_SCORE = 50;
 
@@ -22,6 +34,7 @@ namespace Nave
 	static void Move(Nave& nave, float deltaTime);
 	static void WrapAroundScreen(Nave& nave);
 	static bool IsAlive(Nave nave);
+	static void UpdateImmunizationTime(Nave& nave, float deltaTime);
 
 	void Init()
 	{
@@ -35,6 +48,7 @@ namespace Nave
 		LimitSpeed(nave);
 		Move(nave, deltaTime);
 		WrapAroundScreen(nave);
+		UpdateImmunizationTime(nave, deltaTime);
 
 		nave.isActive = IsAlive(nave);
 	}
@@ -63,15 +77,16 @@ namespace Nave
 		newNave.x = static_cast<float>(SCREEN_WIDTH / 2);
 		newNave.y = static_cast<float>(SCREEN_HEIGHT / 2);
 		newNave.radius = 30.0f;
-		newNave.speedMax = 250.0f;
-		newNave.acceleration = 250.0f;
+		newNave.speedMax = DEFAULT_SPEED;
+		newNave.acceleration = DEFAULT_SPEED;
 		newNave.rotation = 0.0f;
 		newNave.velocityX = 0.0f;
 		newNave.velocityY = 0.0f;
-		newNave.reload = 0.0f;
-		newNave.lives = 3;
+		newNave.fireRate = DEFAULT_FIRE_RATE;
+		newNave.lives = DEFAULT_LIFE;
 		newNave.score = 0;
 		newNave.isActive = true;
+		newNave.isImmune = false;
 
 		return newNave;
 	}
@@ -83,19 +98,53 @@ namespace Nave
 		nave.rotation = 0.0f;
 		nave.velocityX = 0.0f;
 		nave.velocityY = 0.0f;
-		nave.lives = 3;
+		nave.lives = DEFAULT_LIFE;
 		nave.score = 0;
 		nave.isActive = true;
+		nave.isImmune = false;
 	}
 
 	void TakeDamage(Nave& nave)
 	{
-		nave.lives -= 1;
+		nave.lives -= REDUCE_LIFE;
 	}
 
 	void AddScore(Nave& nave)
 	{
 		nave.score += GetIntegerRandomBetween(MIN_SCORE, MAX_SCORE);
+	}
+
+	void ApplySpore(SporeType type, Nave& nave)
+	{
+		switch (type)
+		{
+		case SporeType::MoreLife:
+
+			nave.lives += INCREASE_LIFE;
+
+			break;
+		case SporeType::MoreShootingSpeed:
+
+			nave.fireRate -= REDUCE_FIRE_RATE;
+
+			break;
+		case SporeType::MoreMovementSpeed:
+
+			nave.speedMax += INCREASE_SPEED;
+			nave.acceleration += INCREASE_SPEED;
+
+			break;
+		case SporeType::ApplyImmunity:
+
+			nave.isImmune = true;
+
+			break;
+		default:
+
+			// THERE ARE NO MORE TYPES OF SPORES
+
+			break;
+		}
 	}
 
 	static void UpdateRotation(Nave& nave)
@@ -199,5 +248,21 @@ namespace Nave
 		}
 
 		return false;
+	}
+
+	static void UpdateImmunizationTime(Nave& nave, float deltaTime)
+	{
+		if (!nave.isImmune)
+		{
+			return;
+		}
+
+		nave.immunityTimer += deltaTime;
+
+		if (nave.immunityTimer >= MAX_IMMUNITY_TIME)
+		{
+			nave.isImmune = false;
+			nave.immunityTimer = 0.0f;
+		}
 	}
 }

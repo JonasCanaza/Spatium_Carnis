@@ -37,7 +37,6 @@ namespace Gameplay
 	static float deltaTime;
 
 	static bool isAccelerating;
-	static float fireRate;
 	static float timeSinceLastShot;
 
 	static float specimensSpawnTimer;
@@ -72,7 +71,6 @@ namespace Gameplay
 	void Init()
 	{
 		isAccelerating = false;
-		fireRate = 0.25f;
 		timeSinceLastShot = 0.0f;
 
 		specimensSpawnTimer = 0.0f;
@@ -105,7 +103,7 @@ namespace Gameplay
 			{
 				isAccelerating = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
 
-				if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && timeSinceLastShot >= fireRate)
+				if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && timeSinceLastShot >= nave.fireRate)
 				{
 					CreateProjectile();
 					timeSinceLastShot = 0.0f;
@@ -138,7 +136,7 @@ namespace Gameplay
 
 		PausePanel::Update();
 		GameOverPanel::Update();
-		SporePanel::Update();
+		SporePanel::Update(nave);
 	}
 
 	void Draw()
@@ -290,7 +288,10 @@ namespace Gameplay
 			{
 				specimens[i].isActive = false;
 
-				Nave::TakeDamage(nave);
+				if (!nave.isImmune)
+				{
+					Nave::TakeDamage(nave);
+				}
 
 				break;
 			}
