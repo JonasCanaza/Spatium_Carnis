@@ -32,7 +32,8 @@ namespace Gameplay
 	static const int MAX_SPECIMENS = 200;
 	static Specimen::Specimen specimens[MAX_SPECIMENS];
 
-	static Spore::Spore spore;
+	static const int MAX_SPORES = 5;
+	static Spore::Spore spores[MAX_SPORES];
 
 	static float deltaTime;
 
@@ -41,6 +42,9 @@ namespace Gameplay
 
 	static float specimensSpawnTimer;
 	static const float SPECIMEN_SPAWN_INTERVAL = 8.5f;
+
+	static float sporesSpawnTimer;
+	static const float SPORES_SPAWN_INTERVAL = 12.5f;
 
 	// FUNCTIONS OF PROJECTILES
 
@@ -52,6 +56,11 @@ namespace Gameplay
 
 	static void UpdateAllSpecimens();
 	static void DrawAllSpecimens();
+
+	// FUNCTIONS OF SPORES
+
+	static void UpdateAllSpores();
+	static void DrawAllSpores();
 
 	// FUNCTIONS TO DETECT COLLISIONS BETWEEN ENTITIES
 
@@ -67,6 +76,11 @@ namespace Gameplay
 	static void HandleSpawningSpecimens();
 	static int GetActiveSpecimens();
 	static void SpawnSpecimenWave();
+
+	static void HandleSpawningSpores();
+	static int GetActiveSpores();
+	static void SpawnSpore();
+	static int GetEmptyIndexSpore();
 
 	void Init()
 	{
@@ -85,7 +99,6 @@ namespace Gameplay
 		SporePanel::Init();
 
 		nave = Nave::Create();
-		spore = Spore::Create();
 
 		CreateInitialSpecimen();
 	}
@@ -123,7 +136,7 @@ namespace Gameplay
 			Nave::Update(nave, deltaTime, isAccelerating);
 			UpdateAllProjectiles();
 			UpdateAllSpecimens();
-			Spore::Update(spore, deltaTime);
+			UpdateAllSpores();
 
 			GameOverPanel::isActive = !nave.isActive;
 
@@ -132,6 +145,7 @@ namespace Gameplay
 			HandleNaveSporeCollision();
 
 			HandleSpawningSpecimens();
+			HandleSpawningSpores();
 		}
 
 		PausePanel::Update();
@@ -147,7 +161,7 @@ namespace Gameplay
 		Nave::Draw(nave);
 		DrawAllProjectiles();
 		DrawAllSpecimens();
-		Spore::Draw(spore);
+		DrawAllSpores();
 
 		PausePanel::Draw();
 		GameOverPanel::Draw();
@@ -196,7 +210,10 @@ namespace Gameplay
 			Specimen::Reset(specimens[i]);
 		}
 
-		Spore::Reset(spore);
+		for (int i = 0; i < MAX_SPORES; i++)
+		{
+			Spore::Reset(spores[i]);
+		}
 
 		CreateInitialSpecimen();
 	}
@@ -242,6 +259,22 @@ namespace Gameplay
 		for (int i = 0; i < MAX_SPECIMENS; i++)
 		{
 			Specimen::Draw(specimens[i]);
+		}
+	}
+
+	static void UpdateAllSpores()
+	{
+		for (int i = 0; i < MAX_SPORES; i++)
+		{
+			Spore::Update(spores[i], deltaTime);
+		}
+	}
+
+	static void DrawAllSpores()
+	{
+		for (int i = 0; i < MAX_SPORES; i++)
+		{
+			Spore::Draw(spores[i]);
 		}
 	}
 
@@ -357,15 +390,18 @@ namespace Gameplay
 
 	static void HandleNaveSporeCollision()
 	{
-		if (!spore.isActive)
+		for (int i = 0; i < MAX_SPORES; i++)
 		{
-			return;
-		}
+			if (!spores[i].isActive)
+			{
+				continue;
+			}
 
-		if (CheckCircleCollision(nave.x, nave.y, nave.radius, spore.x, spore.y, spore.radius))
-		{
-			spore.isActive = false;
-			SporePanel::isActive = true;
+			if (CheckCircleCollision(nave.x, nave.y, nave.radius, spores[i].x, spores[i].y, spores[i].radius))
+			{
+				spores[i].isActive = false;
+				SporePanel::isActive = true;
+			}
 		}
 	}
 
@@ -409,5 +445,54 @@ namespace Gameplay
 
 			specimens[emptyIndex] = Specimen::SpawnAtSide(side, type);
 		}
+	}
+
+	static void HandleSpawningSpores()
+	{
+		sporesSpawnTimer += deltaTime;
+
+		if (sporesSpawnTimer >= SPORES_SPAWN_INTERVAL && GetActiveSpores() < MAX_SPORES)
+		{
+			SpawnSpore();
+			sporesSpawnTimer = 0.0f;
+		}
+	}
+
+	static int GetActiveSpores()
+	{
+		int counter = 0;
+
+		for (int i = 0; i < MAX_SPORES; i++)
+		{
+			if (spores[i].isActive)
+			{
+				counter++;
+			}
+		}
+
+		return counter;
+	}
+
+	static void SpawnSpore()
+	{
+		int emptyIndex = GetEmptyIndexSpore();
+
+		int sideRandom = rand() % static_cast<int>(Spore::SpawnSide::Left) + static_cast<int>(Spore::SpawnSide::Top);
+		Spore::SpawnSide side = static_cast<Spore::SpawnSide>(sideRandom);
+
+		spores[emptyIndex] = Spore::SpawnAtSide(side);
+	}
+
+	static int GetEmptyIndexSpore()
+	{
+		for (int i = 0; i < MAX_SPORES; i++)
+		{
+			if (!spores[i].isActive)
+			{
+				return i;
+			}
+		}
+
+		return 0;
 	}
 }

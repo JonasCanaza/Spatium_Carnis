@@ -2,6 +2,18 @@
 
 namespace Spore
 {
+	static const float VELOCITY_MIN = 75.0f;
+	static const float VELOCITY_MAX = 100.0f;
+
+	enum class SpawnSide
+	{
+		None,
+		Top,
+		Right,
+		Bottom,
+		Left
+	};
+
 	struct Spore
 	{
 		float x;
@@ -19,6 +31,7 @@ namespace Spore
 	void Draw(Spore spore);
 	void Close();
 
-	Spore Create();
+	Spore Create(float x, float y, float velocityX, float velocityY);
+	Spore SpawnAtSide(SpawnSide side);
 	void Reset(Spore& spore);
 }

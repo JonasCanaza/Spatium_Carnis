@@ -13,7 +13,10 @@ namespace Spore
 	static const float MAX_VELOCITY_X = 100.0f;
 	static const float MIN_VELOCITY_Y = 25.0f;
 	static const float MAX_VELOCITY_Y = 100.0f;
-	static const float MAX_TIME_LIFE = 25.0f;
+	static const float MAX_TIME_LIFE = 30.0f;
+
+	static const float SCREEN_BUFFER = 50.0f;
+	static const float RADIUS = 25.0f;
 
 	static void WrapAroundScreen(Spore& spore);
 
@@ -60,37 +63,76 @@ namespace Spore
 
 	}
 
-	Spore Create()
+	Spore Create(float x, float y, float velocityX, float velocityY)
 	{
 		Spore newSpore{};
 
-		float x = 0.0f;
-		float y = 0.0f;
-
 		newSpore.x = x;
 		newSpore.y = y;
-		newSpore.radius = 25.0f;
+		newSpore.radius = RADIUS;
 		newSpore.rotation = 0.0f;
-		newSpore.velocityX = GetFloatRandomBetween(MIN_VELOCITY_X, MAX_VELOCITY_X);
-		newSpore.velocityY = GetFloatRandomBetween(MIN_VELOCITY_Y, MAX_VELOCITY_Y);
+		newSpore.velocityX = velocityX;
+		newSpore.velocityY = velocityY;
 		newSpore.timerLife = 0.0f;
 		newSpore.isActive = true;
 
 		return newSpore;
 	}
 
+	Spore SpawnAtSide(SpawnSide side)
+	{
+		float spawnX = 0.0f;
+		float spawnY = 0.0f;
+		float velocityX = 0.0f;
+		float velocityY = 0.0f;
+
+		switch (side)
+		{
+		case SpawnSide::Top:
+
+			spawnX = static_cast<float>(rand() % SCREEN_WIDTH);
+			spawnY = -SCREEN_BUFFER;
+			velocityX = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
+			velocityY = VELOCITY_MIN + rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
+
+			break;
+		case SpawnSide::Right:
+
+			spawnX = SCREEN_WIDTH + SCREEN_BUFFER;
+			spawnY = static_cast<float>(rand() % SCREEN_HEIGHT);
+			velocityX = -VELOCITY_MIN - rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
+			velocityY = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
+
+			break;
+		case SpawnSide::Bottom:
+
+			spawnX = static_cast<float>(rand() % SCREEN_WIDTH);
+			spawnY = SCREEN_HEIGHT + SCREEN_BUFFER;
+			velocityX = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
+			velocityY = -VELOCITY_MIN - rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
+
+			break;
+		case SpawnSide::Left:
+
+			spawnX = -SCREEN_BUFFER;
+			spawnY = static_cast<float>(rand() % SCREEN_HEIGHT);
+			velocityX = VELOCITY_MIN + rand() % static_cast<int>(VELOCITY_MAX - VELOCITY_MIN);
+			velocityY = -VELOCITY_MIN + rand() % static_cast<int>(2 * VELOCITY_MIN);
+
+			break;
+		default:
+
+			// THERE ARE NO MORE PLACES TO SPAWN
+
+			break;
+		}
+
+		return Create(spawnX, spawnY, velocityX, velocityY);
+	}
+
 	void Reset(Spore& spore)
 	{
-		float x = 0.0f;
-		float y = 0.0f;
-
-		spore.x = x;
-		spore.y = y;
-		spore.rotation = 0.0f;
-		spore.velocityX = GetFloatRandomBetween(MIN_VELOCITY_X, MAX_VELOCITY_X);
-		spore.velocityY = GetFloatRandomBetween(MIN_VELOCITY_Y, MAX_VELOCITY_Y);
-		spore.timerLife = 0.0f;
-		spore.isActive = true;
+		spore.isActive = false;
 	}
 
 	static void WrapAroundScreen(Spore& spore)
