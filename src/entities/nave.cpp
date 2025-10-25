@@ -14,12 +14,15 @@ namespace Nave
 	static const int DEFAULT_LIFE = 3;
 	static const int INCREASE_LIFE = 1;
 	static const int REDUCE_LIFE = 1;
+	static const int MAX_LIFE = 6;
 
 	static const float DEFAULT_FIRE_RATE = 0.25f;
 	static const float REDUCE_FIRE_RATE = 0.05f;
+	static const float MAX_FIRE_RATE = 0.10f;
 
 	static const float DEFAULT_SPEED = 250.0f;
 	static const float INCREASE_SPEED = 50.0f;
+	static const float MAX_SPEED = 500.0f;
 
 	static const float MAX_IMMUNITY_TIME = 15.0f;
 
@@ -120,18 +123,32 @@ namespace Nave
 		{
 		case SporeType::MoreLife:
 
-			nave.lives += INCREASE_LIFE;
+			if (nave.lives < MAX_LIFE)
+			{
+				nave.lives += INCREASE_LIFE;
+			}
 
 			break;
 		case SporeType::MoreShootingSpeed:
 
-			nave.fireRate -= REDUCE_FIRE_RATE;
+			if (nave.fireRate > MAX_FIRE_RATE)
+			{
+				nave.fireRate -= REDUCE_FIRE_RATE;
+
+				if (nave.fireRate < MAX_FIRE_RATE)
+				{
+					nave.fireRate = MAX_FIRE_RATE;
+				}
+			}
 
 			break;
 		case SporeType::MoreMovementSpeed:
 
-			nave.speedMax += INCREASE_SPEED;
-			nave.acceleration += INCREASE_SPEED;
+			if (nave.speedMax < MAX_SPEED && nave.acceleration < MAX_SPEED)
+			{
+				nave.speedMax += INCREASE_SPEED;
+				nave.acceleration += INCREASE_SPEED;
+			}
 
 			break;
 		case SporeType::ApplyImmunity:
