@@ -1,21 +1,90 @@
 #include "spore_panel.h"
 
+#include <iostream>
+
 #include "raylib.h"
 
+#include "interface/button.h"
+#include "interface/ui_constants.h"
 #include "game/game_constants.h"
+
+using namespace UIConstants;
 
 namespace SporePanel
 {
 	bool isActive;
 
+	static const int MAX_BUTTONS = 5;
+	static Button::Button buttons[MAX_BUTTONS];
+	static std::string buttonNames[MAX_BUTTONS] = { "+ Life", "+ Shooting speed", "+ Movement speed", "Immunity", "Cancel" };
+
+	enum ButtonID
+	{
+		Life,
+		ShootingSpeed,
+		MovementSpeed,
+		Immunity,
+		Cancel
+	};
+
+	// TEST TITLE!!!
+	static Rectangle title = { 0.0f, 0.0f, TITLE_WIDTH, TITLE_HEIGHT };
+
+	static void InitTitle();
+	static void InitButtons();
+	static void DrawTitle();
+	static void DrawButtons();
+	static float GetTotalPanelHeight();
+
 	void Init()
 	{
 		isActive = false;
+
+		InitTitle();
+		InitButtons();
 	}
 
 	void Update()
 	{
+		if (!isActive)
+		{
+			return;
+		}
 
+		for (int i = 0; i < MAX_BUTTONS; i++)
+		{
+			Button::Update(buttons[i]);
+		}
+
+		if (buttons[Life].clicked)
+		{
+			std::cout << "More life!" << std::endl;
+			isActive = false;
+		}
+
+		if (buttons[ShootingSpeed].clicked)
+		{
+			std::cout << "More shooting speed!" << std::endl;
+			isActive = false;
+		}
+
+		if (buttons[MovementSpeed].clicked)
+		{
+			std::cout << "More movement speed!" << std::endl;
+			isActive = false;
+		}
+
+		if (buttons[Immunity].clicked)
+		{
+			std::cout << "Immunity activated!" << std::endl;
+			isActive = false;
+		}
+
+		if (buttons[Cancel].clicked)
+		{
+			std::cout << "Canceled!" << std::endl;
+			isActive = false;
+		}
 	}
 
 	void Draw()
@@ -27,10 +96,60 @@ namespace SporePanel
 
 		Color backgroundColor = { 0, 0, 0, 100 };
 		DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, backgroundColor);
+
+		DrawTitle();
+		DrawButtons();
 	}
 
 	void Close()
 	{
 
+	}
+
+	static void InitTitle()
+	{
+		const float totalPanelHeight = GetTotalPanelHeight();
+		const float titleStartY = (SCREEN_HEIGHT - totalPanelHeight) / 2.0f;
+
+		title.x = (SCREEN_WIDTH - TITLE_WIDTH) / 2.0f;
+		title.y = titleStartY;
+	}
+
+	static void InitButtons()
+	{
+		const float totalPanelHeight = GetTotalPanelHeight();
+		const float titleStartY = (SCREEN_HEIGHT - totalPanelHeight) / 2.0f;
+		const float buttonsStartY = titleStartY + TITLE_HEIGHT + TITLE_TO_BUTTONS_MARGIN;
+
+		const float buttonX = (SCREEN_WIDTH - BUTTON_WIDTH) / 2.0f;
+
+		for (int i = 0; i < MAX_BUTTONS; i++)
+		{
+			const float buttonY = buttonsStartY + (BUTTON_HEIGHT + BUTTON_MARGIN_Y) * i;
+			buttons[i] = Button::Create(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT, buttonNames[i]);
+		}
+	}
+
+	static void DrawTitle()
+	{
+		int x = static_cast<int>(title.x);
+		int y = static_cast<int>(title.y);
+		int width = static_cast<int>(title.width);
+		int height = static_cast<int>(title.height);
+
+		DrawRectangle(x, y, width, height, WHITE);
+	}
+
+	static void DrawButtons()
+	{
+		for (int i = 0; i < MAX_BUTTONS; i++)
+		{
+			Button::Draw(buttons[i]);
+		}
+	}
+
+	static float GetTotalPanelHeight()
+	{
+		return TITLE_HEIGHT + TITLE_TO_BUTTONS_MARGIN + (BUTTON_HEIGHT * MAX_BUTTONS) + (BUTTON_MARGIN_Y * (MAX_BUTTONS - 1));
 	}
 }

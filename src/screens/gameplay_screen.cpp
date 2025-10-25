@@ -84,6 +84,7 @@ namespace Gameplay
 
 		PausePanel::Init();
 		GameOverPanel::Init();
+		SporePanel::Init();
 
 		nave = Nave::Create();
 		spore = Spore::Create();
@@ -137,6 +138,7 @@ namespace Gameplay
 
 		PausePanel::Update();
 		GameOverPanel::Update();
+		SporePanel::Update();
 	}
 
 	void Draw()
@@ -165,6 +167,7 @@ namespace Gameplay
 
 		PausePanel::Close();
 		GameOverPanel::Close();
+		SporePanel::Close();
 	}
 
 	void CreateInitialSpecimen()
