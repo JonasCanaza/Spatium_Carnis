@@ -1,9 +1,10 @@
-#include "screens/gameplay_screen.h"
+﻿#include "screens/gameplay_screen.h"
 
 #include <stdlib.h>
 
 #include "raylib.h"
 
+#include "sprite/sprite.h"
 #include "entities/nave.h"
 #include "entities/projectile.h"
 #include "entities/specimen.h"
@@ -15,12 +16,26 @@
 #include "panels/game_over_panel.h"
 #include "panels/spore_panel.h"
 #include "utilities/math_utils.h"
+#include "game/game_constants.h"
 
 using namespace Collisions;
 using namespace MathUtils;
 
 namespace Gameplay
 {
+	static const float BACKGROUND_MOVE_SPEED_X = 1.5f;
+	static const float BACKGROUND_MOVE_SPEED_Y = 1.2f;
+	static const float BACKGROUND_MOVE_AMPLITUDE_X = 15.0f;
+	static const float BACKGROUND_MOVE_AMPLITUDE_Y = 8.0f;
+	static const Color BACKGROUND_OVERLAY_COLOR = { 0, 0, 0, 100 };
+
+	static float backgroundTime = 0.0f;
+	static float backgroundOffsetX = 0.0f;
+	static float backgroundOffsetY = 0.0f;
+
+	static Sprite::Sprite backgroundOne{};
+	static Sprite::Sprite backgroundTwo{};
+
 	static Nave::Nave nave;
 
 	static const int MAX_PROJECTILE = 20;
@@ -52,6 +67,13 @@ namespace Gameplay
 
 	static float fungiSpawnTimer;
 	static const float FUNGI_SPAWN_INTERVAL = 3.5f;
+
+	// BACKGROUND FUNCTIONS
+
+	static void InitBackground();
+	static void UpdateBackground();
+	static void DrawBackground();
+	static void CloseBackground();
 
 	// FUNCTIONS OF PROJECTILES
 
@@ -103,6 +125,8 @@ namespace Gameplay
 
 	void Init()
 	{
+		InitBackground();
+
 		isAccelerating = false;
 		timeSinceLastShot = 0.0f;
 
@@ -153,6 +177,8 @@ namespace Gameplay
 		{
 			timeSinceLastShot += deltaTime;
 
+			UpdateBackground();
+
 			Nave::Update(nave, deltaTime, isAccelerating);
 			UpdateAllProjectiles();
 			UpdateAllSpecimens();
@@ -182,6 +208,8 @@ namespace Gameplay
 		BeginDrawing();
 		ClearBackground(BLACK);
 
+		DrawBackground();
+
 		Nave::Draw(nave);
 		DrawAllProjectiles();
 		DrawAllSpecimens();
@@ -197,6 +225,8 @@ namespace Gameplay
 
 	void Close()
 	{
+		CloseBackground();
+
 		Nave::Close();
 		Projectile::Close();
 		Specimen::Close();
@@ -206,6 +236,44 @@ namespace Gameplay
 		PausePanel::Close();
 		GameOverPanel::Close();
 		SporePanel::Close();
+	}
+
+	static void InitBackground()
+	{
+		backgroundOne.texture = LoadTexture("res/backgrounds/gameplay_01.png");
+		backgroundOne.position = { 0.0f, 0.0f };
+		backgroundOne.tint = WHITE;
+
+
+		backgroundTwo.texture = LoadTexture("res/backgrounds/gameplay_02.png");
+		backgroundTwo.position = { 0.0f, 0.0f };
+		backgroundTwo.tint = WHITE;
+	}
+
+	static void UpdateBackground()
+	{
+		backgroundTime += deltaTime;
+
+		backgroundOffsetX = sinf(backgroundTime * BACKGROUND_MOVE_SPEED_X) * BACKGROUND_MOVE_AMPLITUDE_X;
+		backgroundOffsetY = cosf(backgroundTime * BACKGROUND_MOVE_SPEED_Y) * BACKGROUND_MOVE_AMPLITUDE_Y;
+	}
+
+	static void DrawBackground()
+	{
+		DrawTexture(backgroundOne.texture, 0, 0, backgroundOne.tint);
+
+		float baseX = static_cast<float>(SCREEN_WIDTH) / 2.0f - static_cast<float>(backgroundTwo.texture.width) / 2.0f;
+		float baseY = static_cast<float>(SCREEN_HEIGHT) / 2.0f - static_cast<float>(backgroundTwo.texture.height) / 2.0f;
+
+		DrawTexture(backgroundTwo.texture, static_cast<int>(baseX + backgroundOffsetX), static_cast<int>(baseY + backgroundOffsetY), backgroundTwo.tint);
+
+		DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_OVERLAY_COLOR);
+	}
+
+	static void CloseBackground()
+	{
+		UnloadTexture(backgroundOne.texture);
+		UnloadTexture(backgroundTwo.texture);
 	}
 
 	void CreateInitialSpecimen()
@@ -644,4 +712,6 @@ namespace Gameplay
 
 		return 0;
 	}
+
+
 }
