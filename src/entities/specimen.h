@@ -32,6 +32,9 @@ namespace Specimen
 		float velocityY;
 		bool isActive;
 		Type type;
+
+		float frameTime;
+		int currentFrame;
 	};
 
 	void Init();
