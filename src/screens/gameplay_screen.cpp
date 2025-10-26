@@ -82,6 +82,8 @@ namespace Gameplay
 	static void SplitSpecimen(Specimen::Specimen& specimen, Specimen::Type type);
 	static int GetEmptyIndexSpecimens();
 	static void HandleNaveSporeCollision();
+	static void HandleProjectileFungusCollisions();
+	static void HandleNaveFungusCollisions();
 
 	// SPAWNEO FUNCTIONS
 
@@ -162,6 +164,8 @@ namespace Gameplay
 			HandleProjectileSpecimenCollisions();
 			HandleNaveSpecimenCollisions();
 			HandleNaveSporeCollision();
+			HandleProjectileFungusCollisions();
+			HandleNaveFungusCollisions();
 
 			HandleSpawningSpecimens();
 			HandleSpawningSpores();
@@ -444,6 +448,59 @@ namespace Gameplay
 			{
 				spores[i].isActive = false;
 				SporePanel::isActive = true;
+			}
+		}
+	}
+
+	static void HandleProjectileFungusCollisions()
+	{
+		for (int i = 0; i < MAX_PROJECTILE; i++)
+		{
+			if (!projectiles[i].isActive)
+			{
+				continue;
+			}
+
+			for (int j = 0; j < MAX_FUNGI; j++)
+			{
+				if (!fungi[j].isActive)
+				{
+					continue;
+				}
+
+				if (CheckCircleCollision(projectiles[i].x, projectiles[i].y, projectiles[i].radius, fungi[j].x, fungi[j].y, fungi[j].radius))
+				{
+					projectiles[i].isActive = false;
+
+					Nave::AddScore(nave);
+
+					fungi[j].isActive = false;
+
+					break;
+				}
+			}
+		}
+	}
+
+	static void HandleNaveFungusCollisions()
+	{
+		for (int i = 0; i < MAX_FUNGI; i++)
+		{
+			if (!fungi[i].isActive)
+			{
+				continue;
+			}
+
+			if (CheckCircleCollision(nave.x, nave.y, nave.radius, fungi[i].x, fungi[i].y, fungi[i].radius))
+			{
+				fungi[i].isActive = false;
+
+				if (!nave.isImmune)
+				{
+					Nave::TakeDamage(nave);
+				}
+
+				break;
 			}
 		}
 	}
