@@ -8,6 +8,7 @@
 #include "entities/projectile.h"
 #include "entities/specimen.h"
 #include "entities/spore.h"
+#include "entities/fungus.h"
 #include "collision/collisions.h"
 #include "game/game.h"
 #include "panels/pause_panel.h"
@@ -35,6 +36,9 @@ namespace Gameplay
 	static const int MAX_SPORES = 5;
 	static Spore::Spore spores[MAX_SPORES];
 
+	static const int MAX_FUNGI = 10;
+	static Fungus::Fungus fungi[MAX_FUNGI];
+
 	static float deltaTime;
 
 	static bool isAccelerating;
@@ -45,6 +49,9 @@ namespace Gameplay
 
 	static float sporesSpawnTimer;
 	static const float SPORES_SPAWN_INTERVAL = 12.5f;
+
+	static float fungiSpawnTimer;
+	static const float FUNGI_SPAWN_INTERVAL = 3.5f;
 
 	// FUNCTIONS OF PROJECTILES
 
@@ -61,6 +68,11 @@ namespace Gameplay
 
 	static void UpdateAllSpores();
 	static void DrawAllSpores();
+
+	// FUNCTIONS OF FUNGU
+
+	static void UpdateAllFungi();
+	static void DrawAllFungi();
 
 	// FUNCTIONS TO DETECT COLLISIONS BETWEEN ENTITIES
 
@@ -82,6 +94,11 @@ namespace Gameplay
 	static void SpawnSpore();
 	static int GetEmptyIndexSpore();
 
+	static void HandleSpawningFungi();
+	static int GetActiveFungi();
+	static void SpawnFungus();
+	static int GetEmptyIndexFungus();
+
 	void Init()
 	{
 		isAccelerating = false;
@@ -93,6 +110,7 @@ namespace Gameplay
 		Projectile::Init();
 		Specimen::Init();
 		Spore::Init();
+		Fungus::Init();
 
 		PausePanel::Init();
 		GameOverPanel::Init();
@@ -137,6 +155,7 @@ namespace Gameplay
 			UpdateAllProjectiles();
 			UpdateAllSpecimens();
 			UpdateAllSpores();
+			UpdateAllFungi();
 
 			GameOverPanel::isActive = !nave.isActive;
 
@@ -146,6 +165,7 @@ namespace Gameplay
 
 			HandleSpawningSpecimens();
 			HandleSpawningSpores();
+			HandleSpawningFungi();
 		}
 
 		PausePanel::Update();
@@ -162,6 +182,7 @@ namespace Gameplay
 		DrawAllProjectiles();
 		DrawAllSpecimens();
 		DrawAllSpores();
+		DrawAllFungi();
 
 		PausePanel::Draw();
 		GameOverPanel::Draw();
@@ -176,6 +197,7 @@ namespace Gameplay
 		Projectile::Close();
 		Specimen::Close();
 		Spore::Close();
+		Fungus::Close();
 
 		PausePanel::Close();
 		GameOverPanel::Close();
@@ -213,6 +235,11 @@ namespace Gameplay
 		for (int i = 0; i < MAX_SPORES; i++)
 		{
 			Spore::Reset(spores[i]);
+		}
+
+		for (int i = 0; i < MAX_FUNGI; i++)
+		{
+			Fungus::Reset(fungi[i]);
 		}
 
 		CreateInitialSpecimen();
@@ -275,6 +302,22 @@ namespace Gameplay
 		for (int i = 0; i < MAX_SPORES; i++)
 		{
 			Spore::Draw(spores[i]);
+		}
+	}
+
+	static void UpdateAllFungi()
+	{
+		for (int i = 0; i < MAX_FUNGI; i++)
+		{
+			Fungus::Update(fungi[i], deltaTime);
+		}
+	}
+
+	static void DrawAllFungi()
+	{
+		for (int i = 0; i < MAX_FUNGI; i++)
+		{
+			Fungus::Draw(fungi[i]);
 		}
 	}
 
@@ -488,6 +531,55 @@ namespace Gameplay
 		for (int i = 0; i < MAX_SPORES; i++)
 		{
 			if (!spores[i].isActive)
+			{
+				return i;
+			}
+		}
+
+		return 0;
+	}
+
+	static void HandleSpawningFungi()
+	{
+		fungiSpawnTimer += deltaTime;
+
+		if (fungiSpawnTimer >= FUNGI_SPAWN_INTERVAL && GetActiveFungi() < MAX_FUNGI)
+		{
+			SpawnFungus();
+			fungiSpawnTimer = 0.0f;
+		}
+	}
+
+	static int GetActiveFungi()
+	{
+		int counter = 0;
+
+		for (int i = 0; i < MAX_FUNGI; i++)
+		{
+			if (fungi[i].isActive)
+			{
+				counter++;
+			}
+		}
+
+		return counter;
+	}
+
+	static void SpawnFungus()
+	{
+		int emptyIndex = GetEmptyIndexFungus();
+
+		int sideRandom = rand() % static_cast<int>(Fungus::SpawnSide::Left) + static_cast<int>(Fungus::SpawnSide::Top);
+		Fungus::SpawnSide side = static_cast<Fungus::SpawnSide>(sideRandom);
+
+		fungi[emptyIndex] = Fungus::SpawnAtSide(side);
+	}
+
+	static int GetEmptyIndexFungus()
+	{
+		for (int i = 0; i < MAX_FUNGI; i++)
+		{
+			if (!fungi[i].isActive)
 			{
 				return i;
 			}

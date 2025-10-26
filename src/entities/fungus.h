@@ -25,7 +25,11 @@ namespace Fungus
 	};
 
 	void Init();
-	void Update();
-	void Draw();
+	void Update(Fungus& fungus, float deltaTime);
+	void Draw(Fungus fungus);
 	void Close();
+
+	Fungus Create(float x, float y, float velocityX, float velocityY);
+	Fungus SpawnAtSide(SpawnSide side);
+	void Reset(Fungus& fungus);
 }

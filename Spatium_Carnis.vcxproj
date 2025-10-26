@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\collision\collisions.h" />
+    <ClInclude Include="src\entities\fungus.h" />
     <ClInclude Include="src\entities\nave.h" />
     <ClInclude Include="src\entities\spore.h" />
     <ClInclude Include="src\entities\projectile.h" />
