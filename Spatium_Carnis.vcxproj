@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\collision\collisions.cpp" />
+    <ClCompile Include="src\entities\fungus.cpp" />
     <ClCompile Include="src\entities\nave.cpp" />
     <ClCompile Include="src\entities\spore.cpp" />
     <ClCompile Include="src\entities\projectile.cpp" />
