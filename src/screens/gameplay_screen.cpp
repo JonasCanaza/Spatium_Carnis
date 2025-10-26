@@ -309,7 +309,7 @@ namespace Gameplay
 	{
 		for (int i = 0; i < MAX_FUNGI; i++)
 		{
-			Fungus::Update(fungi[i], deltaTime);
+			Fungus::Update(fungi[i], deltaTime, nave);
 		}
 	}
 

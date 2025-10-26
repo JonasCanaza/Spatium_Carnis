@@ -1,37 +1,43 @@
 #include "fungus.h"
 
+#include <cmath>
+
 #include "raylib.h"
 
+#include "nave.h"
 #include "game/game_constants.h"
 #include "utilities/math_utils.h"
 
 namespace Fungus
 {
 	static const float VELOCITY_MIN = 35.0f;
-	static const float VELOCITY_MAX = 70.0f;
+	static const float VELOCITY_MAX = 60.0f;
 
 	static const float SCREEN_BUFFER = 50.0f;
-	static const float RADIUS = 35.0f;
+	static const float RADIUS = 30.0f;
+	static const float MIN_DISTANCE_EPSILON = 0.0001f;
 
+	static void UpdateRotation(Fungus& fungus, Nave::Nave nave);
+	static void UpdateSpeedTowardsNave(Fungus& fungus, Nave::Nave nave);
 	static void WrapAroundScreen(Fungus& fungus);
+	static void Move(Fungus& fungus, float deltaTime);
 
 	void Init()
 	{
 
 	}
 
-	void Update(Fungus& fungus, float deltaTime)
+	void Update(Fungus& fungus, float deltaTime, Nave::Nave nave)
 	{
 		if (!fungus.isActive)
 		{
 			return;
 		}
 
-		fungus.x += fungus.velocityX * deltaTime;
-		fungus.y += fungus.velocityY * deltaTime;
-
+		UpdateRotation(fungus, nave);
+		UpdateSpeedTowardsNave(fungus, nave);
+		Move(fungus, deltaTime);
 		WrapAroundScreen(fungus);
-
 	}
 
 	void Draw(Fungus fungus)
@@ -45,6 +51,10 @@ namespace Fungus
 		int y = static_cast<int>(fungus.y);
 
 		DrawCircle(x, y, fungus.radius, RED);
+
+		Rectangle body = { fungus.x, fungus.y, fungus.radius * 2.0f, fungus.radius * 2.0f };
+		Vector2 originBody = { body.width / 2.0f, body.height / 2.0f };
+		DrawRectanglePro(body, originBody, fungus.rotation, WHITE);
 	}
 
 	void Close()
@@ -59,6 +69,7 @@ namespace Fungus
 		newFungus.x = x;
 		newFungus.y = y;
 		newFungus.radius = RADIUS;
+		newFungus.speedMax = 50.0f;
 		newFungus.rotation = 0.0f;
 		newFungus.velocityX = velocityX;
 		newFungus.velocityY = velocityY;
@@ -123,6 +134,37 @@ namespace Fungus
 		fungus.isActive = false;
 	}
 
+	static void UpdateRotation(Fungus& fungus, Nave::Nave nave)
+	{
+		float deltaX = nave.x - fungus.x;
+		float deltaY = nave.y - fungus.y;
+
+		float angleRadians = atan2(deltaY, deltaX);
+		float angleDegrees = angleRadians * RAD2DEG;
+
+		fungus.rotation = angleDegrees;
+	}
+
+	static void UpdateSpeedTowardsNave(Fungus& fungus, Nave::Nave nave)
+	{
+		float toNaveX = nave.x - fungus.x;
+		float toNaveY = nave.y - fungus.y;
+
+		float distanceSq = toNaveX * toNaveX + toNaveY * toNaveY;
+
+		if (distanceSq < MIN_DISTANCE_EPSILON)
+		{
+			return;
+		}
+
+		float invMagnitude = 1.0f / (fabsf(toNaveX) + fabsf(toNaveY));
+		float normalizedX = toNaveX * invMagnitude;
+		float normalizedY = toNaveY * invMagnitude;
+
+		fungus.velocityX = normalizedX * fungus.speedMax;
+		fungus.velocityY = normalizedY * fungus.speedMax;
+	}
+
 	static void WrapAroundScreen(Fungus& fungus)
 	{
 		if (fungus.x + fungus.radius < 0)
@@ -144,4 +186,9 @@ namespace Fungus
 		}
 	}
 
+	static void Move(Fungus& fungus, float deltaTime)
+	{
+		fungus.x += fungus.velocityX * deltaTime;
+		fungus.y += fungus.velocityY * deltaTime;
+	}
 }

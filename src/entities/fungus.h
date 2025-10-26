@@ -1,5 +1,10 @@
 #pragma once
 
+namespace Nave
+{
+	struct Nave;
+}
+
 namespace Fungus
 {
 	enum class SpawnSide
@@ -17,7 +22,6 @@ namespace Fungus
 		float y;
 		float radius;
 		float speedMax;
-		float acceleration;
 		float rotation;
 		float velocityX;
 		float velocityY;
@@ -25,7 +29,7 @@ namespace Fungus
 	};
 
 	void Init();
-	void Update(Fungus& fungus, float deltaTime);
+	void Update(Fungus& fungus, float deltaTime, Nave::Nave nave);
 	void Draw(Fungus fungus);
 	void Close();
 
