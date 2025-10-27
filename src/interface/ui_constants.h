@@ -16,7 +16,7 @@ namespace UIConstants
 
     // LOGO
 
-    const float LOGO_WIDTH = 500.0f;
-    const float LOGO_HEIGHT = 300.0f;
+    const float LOGO_WIDTH = 600.0f;
+    const float LOGO_HEIGHT = 350.0f;
     const float LOGO_TO_BUTTONS_MARGIN = 40.0f;
 }
