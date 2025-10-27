@@ -111,7 +111,8 @@ namespace MainMenu
 
 		for (int i = 0; i < MAX_BUTTONS; i++)
 		{
-			const float buttonX = 0.0f;
+			const float buttonCenterX = logo.x + LOGO_WIDTH / 2.0f;
+			const float buttonX = buttonCenterX - BUTTON_WIDTH / 2.0f;
 			const float buttonY = buttonsStartY + (BUTTON_HEIGHT + BUTTON_MARGIN_Y) * i;
 
 			buttons[i] = Button::Create(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT, buttonNames[i]);
