@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\audio\audio_manager.cpp" />
     <ClCompile Include="src\collision\collisions.cpp" />
     <ClCompile Include="src\entities\fungus.cpp" />
     <ClCompile Include="src\entities\nave.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="src\utilities\math_utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\audio\audio_manager.h" />
     <ClInclude Include="src\collision\collisions.h" />
     <ClInclude Include="src\entities\fungus.h" />
     <ClInclude Include="src\entities\nave.h" />

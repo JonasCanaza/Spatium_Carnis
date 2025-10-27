@@ -9,6 +9,7 @@
 #include "screens/how_to_play_screen.h"
 #include "screens/credits_screen.h"
 #include "game/game_constants.h"
+#include "audio/audio_manager.h"
 
 namespace SpatiumCarnis
 {
@@ -29,6 +30,8 @@ namespace SpatiumCarnis
 		Init();
 		SetExitKey(KEY_NULL);
 
+		AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_MENU);
+
 		while (!WindowShouldClose() && isRunning)
 		{
 			Input();
@@ -41,6 +44,8 @@ namespace SpatiumCarnis
 
 	static void Init()
 	{
+		AudioManager::Init();
+
 		MainMenu::Init();
 		Gameplay::Init();
 		HowToPlay::Init();
@@ -81,6 +86,8 @@ namespace SpatiumCarnis
 
 	static void Update()
 	{
+		AudioManager::Update();
+
 		switch (currentScene)
 		{
 		case SpatiumCarnis::Scenes::MainMenu:
@@ -145,6 +152,8 @@ namespace SpatiumCarnis
 
 	static void Close()
 	{
+		AudioManager::Close();
+
 		MainMenu::Close();
 		Gameplay::Close();
 		HowToPlay::Close();

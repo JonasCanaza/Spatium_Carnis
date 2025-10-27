@@ -7,6 +7,7 @@
 #include "game/game_constants.h"
 #include "game/game.h"
 #include "screens/gameplay_screen.h"
+#include "audio/audio_manager.h"
 
 using namespace UIConstants;
 
@@ -67,6 +68,8 @@ namespace PausePanel
 
 		if (buttons[Exit].clicked)
 		{
+			AudioManager::StopMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
+			AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_MENU);
 			isActive = false;
 			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::MainMenu;
 		}

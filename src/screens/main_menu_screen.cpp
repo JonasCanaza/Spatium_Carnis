@@ -7,6 +7,7 @@
 #include "interface/ui_constants.h"
 #include "game/game_constants.h"
 #include "panels/exit_panel.h"
+#include "audio/audio_manager.h"
 
 using namespace UIConstants;
 
@@ -129,6 +130,8 @@ namespace MainMenu
 
 		if (buttons[Play].clicked)
 		{
+			AudioManager::StopMusic(AudioManager::MusicID::MUSIC_MENU);
+			AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
 			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::Gameplay;
 		}
 
