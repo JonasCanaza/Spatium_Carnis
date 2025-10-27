@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 
+#include "sprite/sprite.h"
 #include "game/game.h"
 #include "interface/button.h"
 #include "interface/ui_constants.h"
@@ -13,6 +14,9 @@ using namespace UIConstants;
 
 namespace MainMenu
 {
+	static const Color BACKGROUND_OVERLAY_COLOR = { 0, 0, 0, 60 };
+	static Sprite::Sprite background{};
+
 	static const int MAX_BUTTONS = 4;
 	static Button::Button buttons[MAX_BUTTONS];
 	static std::string buttonNames[MAX_BUTTONS] = { "Play", "How To Play", "Credits", "Exit" };
@@ -28,8 +32,10 @@ namespace MainMenu
 	// TEST LOGO!!!
 	static Rectangle logo = { 0.0f, 0.0f, LOGO_WIDTH, LOGO_HEIGHT };
 
+	static void InitBackground();
 	static void InitLogo();
 	static void InitButtons();
+	static void DrawBackground();
 	static void DrawLogo();
 	static void DrawButtons();
 	static void UpdateButtons();
@@ -37,6 +43,7 @@ namespace MainMenu
 
 	void Init()
 	{
+		InitBackground();
 		InitLogo();
 		InitButtons();
 
@@ -66,6 +73,7 @@ namespace MainMenu
 		BeginDrawing();
 		ClearBackground(BLACK);
 
+		DrawBackground();
 		DrawLogo();
 		DrawButtons();
 
@@ -77,6 +85,13 @@ namespace MainMenu
 	void Close()
 	{
 		ExitPanel::Close();
+	}
+
+	static void InitBackground()
+	{
+		background.texture = LoadTexture("res/backgrounds/menu.png");
+		background.position = { 0.0f, 0.0f };
+		background.tint = WHITE;
 	}
 
 	static void InitLogo()
@@ -101,6 +116,15 @@ namespace MainMenu
 
 			buttons[i] = Button::Create(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT, buttonNames[i]);
 		}
+	}
+
+	static void DrawBackground()
+	{
+		int x = static_cast<int>(background.position.x);
+		int y = static_cast<int>(background.position.y);
+
+		DrawTexture(background.texture, x, y, background.tint);
+		DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_OVERLAY_COLOR);
 	}
 
 	static void DrawLogo()
