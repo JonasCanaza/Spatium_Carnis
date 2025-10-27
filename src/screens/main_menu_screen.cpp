@@ -17,6 +17,8 @@ namespace MainMenu
 	static const Color BACKGROUND_OVERLAY_COLOR = { 0, 0, 0, 60 };
 	static Sprite::Sprite background{};
 
+	static Sprite::Sprite logo{};
+
 	static const int MAX_BUTTONS = 4;
 	static Button::Button buttons[MAX_BUTTONS];
 	static std::string buttonNames[MAX_BUTTONS] = { "Play", "How To Play", "Credits", "Exit" };
@@ -28,9 +30,6 @@ namespace MainMenu
 		Credits,
 		Exit,
 	};
-
-	// TEST LOGO!!!
-	static Rectangle logo = { 0.0f, 0.0f, LOGO_WIDTH, LOGO_HEIGHT };
 
 	static void InitBackground();
 	static void InitLogo();
@@ -84,6 +83,8 @@ namespace MainMenu
 
 	void Close()
 	{
+		UnloadTexture(logo.texture);
+
 		ExitPanel::Close();
 	}
 
@@ -96,11 +97,13 @@ namespace MainMenu
 
 	static void InitLogo()
 	{
+		logo.texture = LoadTexture("res/textures/ui/logo.png");
+
 		const float totalMenuHeight = GetTotalMenuHeight();
 		const float logoStartY = (SCREEN_HEIGHT - totalMenuHeight) / 2.0f;
 
-		logo.x = 0.0f;
-		logo.y = logoStartY;
+		logo.position.x = 0.0f;
+		logo.position.y = logoStartY;
 	}
 
 	static void InitButtons()
@@ -111,7 +114,7 @@ namespace MainMenu
 
 		for (int i = 0; i < MAX_BUTTONS; i++)
 		{
-			const float buttonCenterX = logo.x + LOGO_WIDTH / 2.0f;
+			const float buttonCenterX = logo.position.x + LOGO_WIDTH / 2.0f;
 			const float buttonX = buttonCenterX - BUTTON_WIDTH / 2.0f;
 			const float buttonY = buttonsStartY + (BUTTON_HEIGHT + BUTTON_MARGIN_Y) * i;
 
@@ -130,12 +133,11 @@ namespace MainMenu
 
 	static void DrawLogo()
 	{
-		int x = static_cast<int>(logo.x);
-		int y = static_cast<int>(logo.y);
-		int width = static_cast<int>(logo.width);
-		int height = static_cast<int>(logo.height);
+		Rectangle source = { 0.0f, 0.0f, static_cast<float>(logo.texture.width), static_cast<float>(logo.texture.height) };
+		Rectangle dest = { logo.position.x, logo.position.y, LOGO_WIDTH, LOGO_HEIGHT };
+		Vector2 origin = { 0.0f, 0.0f };
 
-		DrawRectangle(x, y, width, height, WHITE);
+		DrawTexturePro(logo.texture, source, dest, origin, 0.0f, WHITE);
 	}
 	
 	static void DrawButtons()
