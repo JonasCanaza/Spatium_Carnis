@@ -83,6 +83,7 @@ namespace MainMenu
 
 	void Close()
 	{
+		UnloadTexture(background.texture);
 		UnloadTexture(logo.texture);
 
 		ExitPanel::Close();
