@@ -10,6 +10,7 @@
 #include "screens/credits_screen.h"
 #include "game/game_constants.h"
 #include "audio/audio_manager.h"
+#include "interface/button.h"
 
 namespace SpatiumCarnis
 {
@@ -45,6 +46,7 @@ namespace SpatiumCarnis
 	static void Init()
 	{
 		AudioManager::Init();
+		Button::Init();
 
 		MainMenu::Init();
 		Gameplay::Init();
@@ -153,6 +155,7 @@ namespace SpatiumCarnis
 	static void Close()
 	{
 		AudioManager::Close();
+		Button::Close();
 
 		MainMenu::Close();
 		Gameplay::Close();
