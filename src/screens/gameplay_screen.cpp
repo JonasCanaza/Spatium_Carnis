@@ -240,12 +240,12 @@ namespace Gameplay
 
 	static void InitBackground()
 	{
-		backgroundOne.texture = LoadTexture("res/backgrounds/gameplay_01.png");
+		backgroundOne.texture = LoadTexture("res/textures/backgrounds/gameplay_01.png");
 		backgroundOne.position = { 0.0f, 0.0f };
 		backgroundOne.tint = WHITE;
 
 
-		backgroundTwo.texture = LoadTexture("res/backgrounds/gameplay_02.png");
+		backgroundTwo.texture = LoadTexture("res/textures/backgrounds/gameplay_02.png");
 		backgroundTwo.position = { 0.0f, 0.0f };
 		backgroundTwo.tint = WHITE;
 	}

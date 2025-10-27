@@ -89,7 +89,7 @@ namespace MainMenu
 
 	static void InitBackground()
 	{
-		background.texture = LoadTexture("res/backgrounds/menu.png");
+		background.texture = LoadTexture("res/textures/backgrounds/menu.png");
 		background.position = { 0.0f, 0.0f };
 		background.tint = WHITE;
 	}

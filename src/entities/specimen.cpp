@@ -27,11 +27,11 @@ namespace Specimen
 
 	void Init()
 	{
-		textures[FrameOne] = LoadTexture("res/entities/specimen/specimen_01.png");
-		textures[FrameTwo] = LoadTexture("res/entities/specimen/specimen_02.png");
-		textures[FrameThree] = LoadTexture("res/entities/specimen/specimen_03.png");
-		textures[FrameFour] = LoadTexture("res/entities/specimen/specimen_04.png");
-		textures[FrameFive] = LoadTexture("res/entities/specimen/specimen_05.png");
+		textures[FrameOne] = LoadTexture("res/textures/entities/specimen/specimen_01.png");
+		textures[FrameTwo] = LoadTexture("res/textures/entities/specimen/specimen_02.png");
+		textures[FrameThree] = LoadTexture("res/textures/entities/specimen/specimen_03.png");
+		textures[FrameFour] = LoadTexture("res/textures/entities/specimen/specimen_04.png");
+		textures[FrameFive] = LoadTexture("res/textures/entities/specimen/specimen_05.png");
 	}
 
 	void Update(Specimen& specimen, float deltaTime)
