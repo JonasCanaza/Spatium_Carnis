@@ -1,5 +1,8 @@
 #include "audio_manager.h"
 
+#include <vector>
+#include <string>
+
 #include <raylib.h>
 
 namespace AudioManager
@@ -12,8 +15,8 @@ namespace AudioManager
 
     struct SfxData
     {
-        Sound sound;
-        bool isPaused;
+        std::string sourceFile;
+        std::vector<Sound> instances;
     };
 
     static MusicData musicTracks[MusicID::MUSIC_COUNT];
@@ -31,6 +34,9 @@ namespace AudioManager
 
         musicTracks[MusicID::MUSIC_GAMEPLAY] = { LoadMusicStream("res/sounds/music/gameplay.mp3"), false };
         musicTracks[MusicID::MUSIC_GAMEPLAY].music.looping = true;
+
+        sfxTracks[SFX_BUTTON_HOVER].sourceFile = "res/sounds/sfx/button/hover.wav";
+        sfxTracks[SFX_BUTTON_PRESSED].sourceFile = "res/sounds/sfx/button/pressed.wav";
     }
 
     void Update()
@@ -50,7 +56,12 @@ namespace AudioManager
 
         for (int i = 0; i < SFX_COUNT; i++)
         {
-            UnloadSound(sfxTracks[i].sound);
+            for (int j = 0; j < static_cast<int>(sfxTracks[i].instances.size()); j++)
+            {
+                UnloadSound(sfxTracks[i].instances[j]);
+            }
+
+            sfxTracks[i].instances.clear();
         }
 
         CloseAudioDevice();
@@ -123,8 +134,38 @@ namespace AudioManager
             return;
         }
 
-        PlaySound(sfxTracks[sfxID].sound);
-        sfxTracks[sfxID].isPaused = false;
+        bool played = false;
+        SfxData& track = sfxTracks[sfxID];
+
+        for (int i = 0; i < static_cast<int>(track.instances.size()); i++)
+        {
+            if (!IsSoundPlaying(track.instances[i]))
+            {
+                PlaySound(track.instances[i]);
+                played = true;
+                break;
+            }
+        }
+
+        if (!played)
+        {
+            Sound newSound = LoadSound(track.sourceFile.c_str());
+            PlaySound(newSound);
+            track.instances.push_back(newSound);
+        }
+
+        for (int i = 0; i < static_cast<int>(track.instances.size());)
+        {
+            if (!IsSoundPlaying(track.instances[i]) && i != track.instances.size() - 1)
+            {
+                UnloadSound(track.instances[i]);
+                track.instances.erase(track.instances.begin() + i);
+            }
+            else
+            {
+                i++;
+            }
+        }
     }
 
     static bool IsValidMusicIndex(int id)
