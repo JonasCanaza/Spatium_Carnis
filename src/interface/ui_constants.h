@@ -5,7 +5,7 @@ namespace UIConstants
     // BUTTON
 
     const float BUTTON_WIDTH = 350.0f;
-    const float BUTTON_HEIGHT = 60.0f;
+    const float BUTTON_HEIGHT = 65.0f;
     const float BUTTON_MARGIN_Y = 10.0f;
 
     // TITLE
