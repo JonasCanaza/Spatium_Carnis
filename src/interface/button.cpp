@@ -2,6 +2,8 @@
 
 #include "raylib.h"
 
+#include "audio/audio_manager.h"
+
 namespace Button
 {
 	static Texture normal;
@@ -20,6 +22,7 @@ namespace Button
 	void Update(Button& button)
 	{
 		button.clicked = false;
+		ButtonState previousState = button.state;
 
 		if (IsMouseOverButton(button))
 		{
@@ -32,6 +35,7 @@ namespace Button
 				if (button.state == ButtonState::Pressed)
 				{
 					button.clicked = true;
+					AudioManager::PlaySfx(AudioManager::SfxID::SFX_BUTTON_PRESSED);
 				}
 
 				button.state = ButtonState::Hover;
@@ -40,6 +44,13 @@ namespace Button
 		else
 		{
 			button.state = ButtonState::Normal;
+		}
+
+		if (button.state == ButtonState::Hover &&
+			previousState != ButtonState::Hover &&
+			previousState != ButtonState::Pressed)
+		{
+			AudioManager::PlaySfx(AudioManager::SFX_BUTTON_HOVER);
 		}
 	}
 

@@ -13,7 +13,8 @@ namespace AudioManager
     {
         SFX_SHOOT,
         SFX_EXPLOSION,
-        SFX_BUTTON,
+        SFX_BUTTON_HOVER,
+        SFX_BUTTON_PRESSED,
         SFX_COUNT
     };
 
