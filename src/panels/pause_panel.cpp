@@ -8,12 +8,15 @@
 #include "game/game.h"
 #include "screens/gameplay_screen.h"
 #include "audio/audio_manager.h"
+#include "sprite/sprite.h"
 
 using namespace UIConstants;
 
 namespace PausePanel
 {
 	bool isActive;
+
+	Sprite::Sprite title;
 
 	static const int MAX_BUTTONS = 3;
 	static Button::Button buttons[MAX_BUTTONS];
@@ -25,9 +28,6 @@ namespace PausePanel
 		Restart,
 		Exit
 	};
-
-	// TEST TITLE!!!
-	static Rectangle title = { 0.0f, 0.0f, TITLE_WIDTH, TITLE_HEIGHT };
 
 	static void InitTitle();
 	static void InitButtons();
@@ -91,16 +91,19 @@ namespace PausePanel
 
 	void Close()
 	{
-
+		UnloadTexture(title.texture);
 	}
 
 	static void InitTitle()
 	{
+		title.texture = LoadTexture("res/textures/ui/titles/paused.png");
+
 		const float totalPanelHeight = GetTotalPanelHeight();
 		const float titleStartY = (SCREEN_HEIGHT - totalPanelHeight) / 2.0f;
 
-		title.x = (SCREEN_WIDTH - TITLE_WIDTH) / 2.0f;
-		title.y = titleStartY;
+		title.position.x = (SCREEN_WIDTH - TITLE_WIDTH) / 2.0f;
+		title.position.y = titleStartY;
+		title.tint = WHITE;
 	}
 
 	static void InitButtons()
@@ -120,12 +123,10 @@ namespace PausePanel
 
 	static void DrawTitle()
 	{
-		int x = static_cast<int>(title.x);
-		int y = static_cast<int>(title.y);
-		int width = static_cast<int>(title.width);
-		int height = static_cast<int>(title.height);
+		int x = static_cast<int>(title.position.x);
+		int y = static_cast<int>(title.position.y);
 
-		DrawRectangle(x, y, width, height, WHITE);
+		DrawTexture(title.texture, x, y, title.tint);
 	}
 
 	static void DrawButtons()

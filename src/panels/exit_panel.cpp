@@ -7,12 +7,15 @@
 #include "game/game_constants.h"
 #include "game/game.h"
 #include "screens/gameplay_screen.h"
+#include "sprite/sprite.h"
 
 using namespace UIConstants;
 
 namespace ExitPanel
 {
 	bool isActive;
+
+	Sprite::Sprite title;
 
 	static const int MAX_BUTTONS = 2;
 	static Button::Button buttons[MAX_BUTTONS];
@@ -23,9 +26,6 @@ namespace ExitPanel
 		Return,
 		Exit
 	};
-
-	// TEST TITLE!!!
-	static Rectangle title = { 0.0f, 0.0f, TITLE_WIDTH, TITLE_HEIGHT };
 
 	static void InitTitle();
 	static void InitButtons();
@@ -80,16 +80,19 @@ namespace ExitPanel
 
 	void Close()
 	{
-
+		UnloadTexture(title.texture);
 	}
 
 	static void InitTitle()
 	{
+		title.texture = LoadTexture("res/textures/ui/titles/exit_game.png");
+
 		const float totalPanelHeight = GetTotalPanelHeight();
 		const float titleStartY = (SCREEN_HEIGHT - totalPanelHeight) / 2.0f;
 
-		title.x = (SCREEN_WIDTH - TITLE_WIDTH) / 2.0f;
-		title.y = titleStartY;
+		title.position.x = (SCREEN_WIDTH - TITLE_WIDTH) / 2.0f;
+		title.position.y = titleStartY;
+		title.tint = WHITE;
 	}
 
 	static void InitButtons()
@@ -109,12 +112,10 @@ namespace ExitPanel
 
 	static void DrawTitle()
 	{
-		int x = static_cast<int>(title.x);
-		int y = static_cast<int>(title.y);
-		int width = static_cast<int>(title.width);
-		int height = static_cast<int>(title.height);
+		int x = static_cast<int>(title.position.x);
+		int y = static_cast<int>(title.position.y);
 
-		DrawRectangle(x, y, width, height, WHITE);
+		DrawTexture(title.texture, x, y, title.tint);
 	}
 
 	static void DrawButtons()
