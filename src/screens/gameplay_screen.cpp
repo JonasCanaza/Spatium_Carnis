@@ -19,6 +19,7 @@
 #include "game/game_constants.h"
 #include "interface/button.h"
 #include "audio/audio_manager.h"
+#include "interface/ui_constants.h"
 
 using namespace Collisions;
 using namespace MathUtils;
@@ -135,6 +136,10 @@ namespace Gameplay
 	static void UpdateButton();
 	static void DrawButton();
 
+	// INTERFACE FUNCTIONS
+
+	static void DrawInterface();
+
 	void Init()
 	{
 		InitBackground();
@@ -235,9 +240,10 @@ namespace Gameplay
 		DrawAllFungi();
 
 		DrawButton();
+		DrawInterface();
 
 		PausePanel::Draw();
-		GameOverPanel::Draw();
+		GameOverPanel::Draw(nave);
 		SporePanel::Draw();
 
 		EndDrawing();
@@ -764,5 +770,28 @@ namespace Gameplay
 	static void DrawButton()
 	{
 		Button::Draw(pauseButton);
+	}
+
+	static void DrawInterface()
+	{
+		if (GameOverPanel::isActive)
+		{
+			return;
+		}
+
+		int screenCenterX = SCREEN_WIDTH / 2;
+		int margin = 20;
+
+		std::string scoreText = "Score: " + std::to_string(nave.score);
+		int scoreTextWidth = MeasureText(scoreText.c_str(), UIConstants::USER_INTERFACE_FONT_SIZE);
+		int scoreX = screenCenterX - scoreTextWidth / 2;
+
+		std::string liveText = "Lives: " + std::to_string(nave.lives);
+		int lifeTextWidth = MeasureText(liveText.c_str(), UIConstants::USER_INTERFACE_FONT_SIZE);
+		int lifeX = screenCenterX - lifeTextWidth / 2;
+		int lifeY = SCREEN_HEIGHT - UIConstants::USER_INTERFACE_FONT_SIZE - margin;
+
+		DrawText(scoreText.c_str(), scoreX, margin, UIConstants::USER_INTERFACE_FONT_SIZE, WHITE);
+		DrawText(liveText.c_str(), lifeX, lifeY, UIConstants::USER_INTERFACE_FONT_SIZE, WHITE);
 	}
 }

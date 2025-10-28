@@ -8,6 +8,7 @@
 #include "game/game.h"
 #include "screens/gameplay_screen.h"
 #include "sprite/sprite.h"
+#include "entities/nave.h"
 
 using namespace UIConstants;
 
@@ -33,6 +34,7 @@ namespace GameOverPanel
 	static void DrawTitle();
 	static void DrawButtons();
 	static float GetTotalPanelHeight();
+	static void DrawScore(Nave::Nave nave);
 
 	void Init()
 	{
@@ -74,7 +76,7 @@ namespace GameOverPanel
 		}
 	}
 
-	void Draw()
+	void Draw(Nave::Nave nave)
 	{
 		if (!isActive)
 		{
@@ -86,6 +88,7 @@ namespace GameOverPanel
 
 		DrawTitle();
 		DrawButtons();
+		DrawScore(nave);
 	}
 
 	void Close()
@@ -139,5 +142,17 @@ namespace GameOverPanel
 	static float GetTotalPanelHeight()
 	{
 		return TITLE_HEIGHT + TITLE_TO_BUTTONS_MARGIN + (BUTTON_HEIGHT * MAX_BUTTONS) + (BUTTON_MARGIN_Y * (MAX_BUTTONS - 1));
+	}
+
+	static void DrawScore(Nave::Nave nave)
+	{
+		int screenCenterX = SCREEN_WIDTH / 2;
+
+		std::string scoreText = "Score: " + std::to_string(nave.score);
+		int scoreTextWidth = MeasureText(scoreText.c_str(), UIConstants::USER_INTERFACE_FONT_SIZE);
+		int scoreX = screenCenterX - scoreTextWidth / 2;
+		int scoreY = SCREEN_HEIGHT / 2 - static_cast<int>(BUTTON_HEIGHT) / 2;
+
+		DrawText(scoreText.c_str(), scoreX, scoreY, UIConstants::USER_INTERFACE_FONT_SIZE, WHITE);
 	}
 }
