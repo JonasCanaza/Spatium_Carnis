@@ -11,7 +11,7 @@ namespace AudioManager
 
     enum SfxID
     {
-        SFX_SHOOT,
+        SFX_NAVE_SHOOT,
         SFX_EXPLOSION,
         SFX_BUTTON_HOVER,
         SFX_BUTTON_PRESSED,

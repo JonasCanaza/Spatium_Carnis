@@ -18,6 +18,7 @@
 #include "utilities/math_utils.h"
 #include "game/game_constants.h"
 #include "interface/button.h"
+#include "audio/audio_manager.h"
 
 using namespace Collisions;
 using namespace MathUtils;
@@ -176,6 +177,7 @@ namespace Gameplay
 				if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && timeSinceLastShot >= nave.fireRate)
 				{
 					CreateProjectile();
+					AudioManager::PlaySfx(AudioManager::SfxID::SFX_NAVE_SHOOT);
 					timeSinceLastShot = 0.0f;
 				}
 			}

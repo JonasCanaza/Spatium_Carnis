@@ -35,6 +35,7 @@ namespace AudioManager
         musicTracks[MusicID::MUSIC_GAMEPLAY] = { LoadMusicStream("res/sounds/music/gameplay.mp3"), false };
         musicTracks[MusicID::MUSIC_GAMEPLAY].music.looping = true;
 
+        sfxTracks[SFX_NAVE_SHOOT].sourceFile = "res/sounds/sfx/entities/nave_shoot.wav";
         sfxTracks[SFX_BUTTON_HOVER].sourceFile = "res/sounds/sfx/button/hover.wav";
         sfxTracks[SFX_BUTTON_PRESSED].sourceFile = "res/sounds/sfx/button/pressed.wav";
     }
