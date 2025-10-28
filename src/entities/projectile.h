@@ -14,6 +14,7 @@ namespace Projectile
 		float radius;
 		float speedMax;
 		float rotation;
+		float rotationSpeed;
 		float velocityX;
 		float velocityY;
 		bool isActive;
