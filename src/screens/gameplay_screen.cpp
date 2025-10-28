@@ -174,6 +174,15 @@ namespace Gameplay
 			{
 				PausePanel::isActive = !PausePanel::isActive;
 				AudioManager::PlaySfx(AudioManager::SfxID::SFX_PANEL);
+
+				if (PausePanel::isActive)
+				{
+					AudioManager::PauseMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
+				}
+				else
+				{
+					AudioManager::ResumeMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
+				}
 			}
 
 			if (!PausePanel::isActive && !SporePanel::isActive)
@@ -183,7 +192,6 @@ namespace Gameplay
 				if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && timeSinceLastShot >= nave.fireRate)
 				{
 					CreateProjectile();
-					AudioManager::PlaySfx(AudioManager::SfxID::SFX_NAVE_SHOOT);
 					timeSinceLastShot = 0.0f;
 				}
 			}
@@ -359,6 +367,7 @@ namespace Gameplay
 			if (!projectiles[i].isActive)
 			{
 				projectiles[i] = Projectile::Create(nave);
+				AudioManager::PlaySfx(AudioManager::SfxID::SFX_NAVE_SHOOT);
 				break;
 			}
 		}
@@ -478,6 +487,12 @@ namespace Gameplay
 					Nave::TakeDamage(nave);
 
 					AudioManager::PlaySfx(AudioManager::SfxID::SFX_ENTITY_HIT);
+
+					if (nave.lives <= 0)
+					{
+						AudioManager::PlaySfx(AudioManager::SfxID::SFX_PANEL);
+						AudioManager::PauseMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
+					}
 				}
 
 				break;
@@ -557,6 +572,7 @@ namespace Gameplay
 				SporePanel::isActive = true;
 
 				AudioManager::PlaySfx(AudioManager::SfxID::SFX_PANEL);
+				AudioManager::PauseMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
 			}
 		}
 	}
@@ -611,6 +627,12 @@ namespace Gameplay
 					Nave::TakeDamage(nave);
 
 					AudioManager::PlaySfx(AudioManager::SfxID::SFX_ENTITY_HIT);
+
+					if (nave.lives <= 0)
+					{
+						AudioManager::PlaySfx(AudioManager::SfxID::SFX_PANEL);
+						AudioManager::PauseMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
+					}
 				}
 
 				break;
@@ -773,6 +795,7 @@ namespace Gameplay
 		if (pauseButton.clicked)
 		{
 			PausePanel::isActive = true;
+			AudioManager::PauseMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
 		}
 	}
 

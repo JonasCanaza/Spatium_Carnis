@@ -9,6 +9,7 @@
 #include "game/game_constants.h"
 #include "entities/nave.h"
 #include "sprite/sprite.h"
+#include "audio/audio_manager.h"
 
 using namespace UIConstants;
 
@@ -61,29 +62,34 @@ namespace SporePanel
 		{
 			Nave::ApplySpore(Nave::SporeType::MoreLife, nave);
 			isActive = false;
+			AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
 		}
 
 		if (buttons[ShootingSpeed].clicked)
 		{
 			Nave::ApplySpore(Nave::SporeType::MoreShootingSpeed, nave);
 			isActive = false;
+			AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
 		}
 
 		if (buttons[MovementSpeed].clicked)
 		{
 			Nave::ApplySpore(Nave::SporeType::MoreMovementSpeed, nave);
 			isActive = false;
+			AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
 		}
 
 		if (buttons[Immunity].clicked)
 		{
 			Nave::ApplySpore(Nave::SporeType::ApplyImmunity, nave);
 			isActive = false;
+			AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
 		}
 
 		if (buttons[Cancel].clicked)
 		{
 			isActive = false;
+			AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
 		}
 	}
 

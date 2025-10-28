@@ -9,6 +9,7 @@
 #include "screens/gameplay_screen.h"
 #include "sprite/sprite.h"
 #include "entities/nave.h"
+#include "audio/audio_manager.h"
 
 using namespace UIConstants;
 
@@ -60,12 +61,15 @@ namespace GameOverPanel
 		{
 			isActive = false;
 			Gameplay::Continue();
+			AudioManager::ResumeMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
 		}
 
 		if (buttons[Restart].clicked)
 		{
 			isActive = false;
 			Gameplay::Reset();
+			AudioManager::StopMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
+			AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
 		}
 
 		if (buttons[Exit].clicked)
@@ -73,6 +77,8 @@ namespace GameOverPanel
 			isActive = false;
 			Gameplay::Reset();
 			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::MainMenu;
+			AudioManager::StopMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
+			AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_MENU);
 		}
 	}
 

@@ -58,20 +58,23 @@ namespace PausePanel
 		if (buttons[Resume].clicked)
 		{
 			isActive = false;
+			AudioManager::ResumeMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
 		}
 
 		if (buttons[Restart].clicked)
 		{
 			isActive = false;
 			Gameplay::Reset();
+			AudioManager::StopMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
+			AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
 		}
 
 		if (buttons[Exit].clicked)
 		{
-			AudioManager::StopMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
-			AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_MENU);
 			isActive = false;
 			SpatiumCarnis::currentScene = SpatiumCarnis::Scenes::MainMenu;
+			AudioManager::PauseMusic(AudioManager::MusicID::MUSIC_GAMEPLAY);
+			AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_MENU);
 		}
 	}
 
