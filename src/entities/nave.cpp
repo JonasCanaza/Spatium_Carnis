@@ -60,9 +60,6 @@ namespace Nave
 
 	void Draw(Nave nave)
 	{
-		int navePosX = static_cast<int>(nave.x);
-		int navePosY = static_cast<int>(nave.y);
-
 		Rectangle source = { 0.0f, 0.0f, static_cast<float>(texture.width), static_cast<float>(texture.height) };
 		Rectangle dest = { nave.x, nave.y, nave.radius * 2.0f, nave.radius * 2.0f };
 		Vector2 origin = { nave.radius, nave.radius };
