@@ -11,6 +11,8 @@ using namespace MathUtils;
 
 namespace Nave
 {
+	static Texture texture;
+
 	static const int DEFAULT_LIFE = 3;
 	static const int INCREASE_LIFE = 1;
 	static const int REDUCE_LIFE = 1;
@@ -41,7 +43,7 @@ namespace Nave
 
 	void Init()
 	{
-
+		texture = LoadTexture("res/textures/entities/nave/nave.png");
 	}
 
 	void Update(Nave& nave, float deltaTime, bool isAccelerating)
@@ -61,16 +63,16 @@ namespace Nave
 		int navePosX = static_cast<int>(nave.x);
 		int navePosY = static_cast<int>(nave.y);
 
-		DrawCircle(navePosX, navePosY, nave.radius, RED); // COLLISION
+		Rectangle source = { 0.0f, 0.0f, static_cast<float>(texture.width), static_cast<float>(texture.height) };
+		Rectangle dest = { nave.x, nave.y, nave.radius * 2.0f, nave.radius * 2.0f };
+		Vector2 origin = { nave.radius, nave.radius };
 
-		Rectangle body = { nave.x, nave.y, nave.radius * 2.0f, nave.radius * 2.0f };
-		Vector2 originBody = { body.width / 2.0f, body.height / 2.0f };
-		DrawRectanglePro(body, originBody, nave.rotation, WHITE);
+		DrawTexturePro(texture, source, dest, origin, nave.rotation, WHITE);
 	}
 
 	void Close()
 	{
-
+		UnloadTexture(texture);
 	}
 
 	Nave Create()
