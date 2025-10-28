@@ -1,4 +1,4 @@
-#include "spore.h"
+﻿#include "spore.h"
 
 #include "raylib.h"
 
@@ -9,6 +9,11 @@ using namespace MathUtils;
 
 namespace Spore
 {
+	static Texture texture;
+
+	static const float HALF_FACTOR = 0.5f;
+	static const float MAX_ROTATION = 360.0f;
+
 	static const float MIN_VELOCITY_X = 25.0f;
 	static const float MAX_VELOCITY_X = 100.0f;
 	static const float MIN_VELOCITY_Y = 25.0f;
@@ -17,12 +22,15 @@ namespace Spore
 
 	static const float SCREEN_BUFFER = 50.0f;
 	static const float RADIUS = 25.0f;
+	static const float MIN_ROTATION_RANDOM = 25.0f;
+	static const float MAX_ROTATION_RANDOM = 50.0f;
 
+	static void UpdateRotation(Spore& spore, float deltaTime);
 	static void WrapAroundScreen(Spore& spore);
 
 	void Init()
 	{
-
+		texture = LoadTexture("res/textures/entities/spore/spore.png");
 	}
 
 	void Update(Spore& spore, float deltaTime)
@@ -35,6 +43,7 @@ namespace Spore
 		spore.x += spore.velocityX * deltaTime;
 		spore.y += spore.velocityY * deltaTime;
 
+		UpdateRotation(spore, deltaTime);
 		WrapAroundScreen(spore);
 
 		spore.timerLife += deltaTime;
@@ -52,15 +61,25 @@ namespace Spore
 			return;
 		}
 
-		int x = static_cast<int>(spore.x);
-		int y = static_cast<int>(spore.y);
+		float textureWidth = static_cast<float>(texture.width);
+		float textureHeight = static_cast<float>(texture.height);
 
-		DrawCircle(x, y, spore.radius, GREEN);
+		float halfWidth = textureWidth * HALF_FACTOR;
+		float halfHeight = textureHeight * HALF_FACTOR;
+
+		float scaleX = spore.radius / halfWidth;
+		float scaleY = spore.radius / halfHeight;
+
+		Rectangle source = { 0.0f, 0.0f, textureWidth, textureHeight };
+		Rectangle dest = { spore.x, spore.y, textureWidth * scaleX, textureHeight * scaleY };
+		Vector2 origin = { (textureWidth * scaleX) * HALF_FACTOR, (textureHeight * scaleY) * HALF_FACTOR };
+
+		DrawTexturePro(texture, source, dest, origin, spore.rotation, WHITE);
 	}
 
 	void Close()
 	{
-
+		UnloadTexture(texture);
 	}
 
 	Spore Create(float x, float y, float velocityX, float velocityY)
@@ -75,6 +94,10 @@ namespace Spore
 		newSpore.velocityY = velocityY;
 		newSpore.timerLife = 0.0f;
 		newSpore.isActive = true;
+
+		float speed = GetFloatRandomBetween(MIN_ROTATION_RANDOM, MAX_ROTATION_RANDOM);
+		int sign = (rand() % 2 == 0) ? 1 : -1;
+		newSpore.rotationSpeed = speed * sign;
 
 		return newSpore;
 	}
@@ -133,6 +156,20 @@ namespace Spore
 	void Reset(Spore& spore)
 	{
 		spore.isActive = false;
+	}
+
+	static void UpdateRotation(Spore& spore, float deltaTime)
+	{
+		spore.rotation += spore.rotationSpeed * deltaTime;
+
+		if (spore.rotation > MAX_ROTATION)
+		{
+			spore.rotation -= MAX_ROTATION;
+		}
+		else if (spore.rotation < 0.0f)
+		{
+			spore.rotation += MAX_ROTATION;
+		}
 	}
 
 	static void WrapAroundScreen(Spore& spore)

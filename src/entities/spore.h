@@ -20,6 +20,7 @@ namespace Spore
 		float y;
 		float radius;
 		float rotation;
+		float rotationSpeed;
 		float velocityX;
 		float velocityY;
 		float timerLife;
