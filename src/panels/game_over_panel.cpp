@@ -59,7 +59,7 @@ namespace GameOverPanel
 		if (buttons[Continue].clicked)
 		{
 			isActive = false;
-			Gameplay::Reset();
+			Gameplay::Continue();
 		}
 
 		if (buttons[Restart].clicked)

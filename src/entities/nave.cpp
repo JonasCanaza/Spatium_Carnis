@@ -93,17 +93,26 @@ namespace Nave
 		return newNave;
 	}
 
-	void Reset(Nave& nave)
+	void ResetAll(Nave& nave)
 	{
 		nave.x = static_cast<float>(SCREEN_WIDTH / 2);
 		nave.y = static_cast<float>(SCREEN_HEIGHT / 2);
 		nave.rotation = 0.0f;
+		nave.speedMax = DEFAULT_SPEED;
+		nave.acceleration = DEFAULT_SPEED;
 		nave.velocityX = 0.0f;
 		nave.velocityY = 0.0f;
+		nave.fireRate = DEFAULT_FIRE_RATE;
 		nave.lives = DEFAULT_LIFE;
 		nave.score = 0;
 		nave.isActive = true;
 		nave.isImmune = false;
+	}
+
+	void ResetLives(Nave& nave)
+	{
+		nave.lives = DEFAULT_LIFE;
+		nave.isActive = true;
 	}
 
 	void TakeDamage(Nave& nave)

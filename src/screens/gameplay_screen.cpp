@@ -318,7 +318,11 @@ namespace Gameplay
 
 	void Reset()
 	{
-		Nave::Reset(nave);
+		specimensSpawnTimer = 0.0f;
+		sporesSpawnTimer = 0.0f;
+		fungiSpawnTimer = 0.0f;
+
+		Nave::ResetAll(nave);
 
 		for (int i = 0; i < MAX_PROJECTILE; i++)
 		{
@@ -341,6 +345,11 @@ namespace Gameplay
 		}
 
 		CreateInitialSpecimen();
+	}
+
+	void Continue()
+	{
+		Nave::ResetLives(nave);
 	}
 
 	static void CreateProjectile()

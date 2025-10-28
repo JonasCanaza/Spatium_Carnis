@@ -34,7 +34,8 @@ namespace Nave
 	void Close();
 
 	Nave Create();
-	void Reset(Nave& nave);
+	void ResetAll(Nave& nave);
+	void ResetLives(Nave& nave);
 	void TakeDamage(Nave& nave);
 	void AddScore(Nave& nave);
 	void ApplySpore(SporeType type, Nave& nave);

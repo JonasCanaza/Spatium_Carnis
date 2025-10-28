@@ -10,4 +10,5 @@ namespace Gameplay
 
 	void CreateInitialSpecimen();
 	void Reset();
+	void Continue();
 }
