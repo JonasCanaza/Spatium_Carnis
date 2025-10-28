@@ -116,7 +116,7 @@ namespace GameOverPanel
 		for (int i = 0; i < MAX_BUTTONS; i++)
 		{
 			const float buttonY = buttonsStartY + (BUTTON_HEIGHT + BUTTON_MARGIN_Y) * i;
-			buttons[i] = Button::Create(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT, buttonNames[i]);
+			buttons[i] = Button::Create(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT, buttonNames[i], Button::Type::Common);
 		}
 	}
 

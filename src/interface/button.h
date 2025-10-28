@@ -38,5 +38,5 @@ namespace Button
     void Update(Button& button);
     void Draw(Button button);
     void Close();
-    Button Create(float x, float y, float width, float height, std::string text);
+    Button Create(float x, float y, float width, float height, std::string text, Type type);
 }

@@ -90,12 +90,13 @@ namespace Button
 		UnloadTexture(pausePressed);
 	}
 
-	Button Create(float x, float y, float width, float height, std::string text)
+	Button Create(float x, float y, float width, float height, std::string text, Type type)
 	{
 		Button button;
 
 		button.layout = { x, y, width, height };
 		button.text = text;
+		button.type = type;
 		button.state = ButtonState::Normal;
 		button.clicked = false;
 

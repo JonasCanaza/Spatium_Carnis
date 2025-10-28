@@ -119,7 +119,7 @@ namespace MainMenu
 			const float buttonX = buttonCenterX - BUTTON_WIDTH / 2.0f;
 			const float buttonY = buttonsStartY + (BUTTON_HEIGHT + BUTTON_MARGIN_Y) * i;
 
-			buttons[i] = Button::Create(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT, buttonNames[i]);
+			buttons[i] = Button::Create(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT, buttonNames[i], Button::Type::Common);
 		}
 	}
 

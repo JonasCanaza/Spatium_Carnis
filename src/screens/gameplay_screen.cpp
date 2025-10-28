@@ -17,6 +17,7 @@
 #include "panels/spore_panel.h"
 #include "utilities/math_utils.h"
 #include "game/game_constants.h"
+#include "interface/button.h"
 
 using namespace Collisions;
 using namespace MathUtils;
@@ -67,6 +68,10 @@ namespace Gameplay
 
 	static float fungiSpawnTimer;
 	static const float FUNGI_SPAWN_INTERVAL = 3.5f;
+
+	static const float BUTTON_SIZE = 65;
+	static const float BUTTON_MARGIN = 15;
+	static Button::Button pauseButton;
 
 	// BACKGROUND FUNCTIONS
 
@@ -123,6 +128,12 @@ namespace Gameplay
 	static void SpawnFungus();
 	static int GetEmptyIndexFungus();
 
+	// FUNCTION BUTTON
+
+	static void InitButton();
+	static void UpdateButton();
+	static void DrawButton();
+
 	void Init()
 	{
 		InitBackground();
@@ -137,6 +148,8 @@ namespace Gameplay
 		Specimen::Init();
 		Spore::Init();
 		Fungus::Init();
+
+		InitButton();
 
 		PausePanel::Init();
 		GameOverPanel::Init();
@@ -196,6 +209,8 @@ namespace Gameplay
 			HandleSpawningSpecimens();
 			HandleSpawningSpores();
 			HandleSpawningFungi();
+
+			UpdateButton();
 		}
 
 		PausePanel::Update();
@@ -215,6 +230,8 @@ namespace Gameplay
 		DrawAllSpecimens();
 		DrawAllSpores();
 		DrawAllFungi();
+
+		DrawButton();
 
 		PausePanel::Draw();
 		GameOverPanel::Draw();
@@ -713,5 +730,26 @@ namespace Gameplay
 		return 0;
 	}
 
+	static void InitButton()
+	{
+		float x = static_cast<float>(SCREEN_WIDTH) - BUTTON_SIZE - BUTTON_MARGIN;
+		float y = BUTTON_MARGIN;
 
+		pauseButton = Button::Create(x, y, BUTTON_SIZE, BUTTON_SIZE, " ", Button::Type::Pause);
+	}
+
+	static void UpdateButton()
+	{
+		Button::Update(pauseButton);
+
+		if (pauseButton.clicked)
+		{
+			PausePanel::isActive = true;
+		}
+	}
+
+	static void DrawButton()
+	{
+		Button::Draw(pauseButton);
+	}
 }
