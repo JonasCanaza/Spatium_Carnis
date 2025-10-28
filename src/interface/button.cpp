@@ -3,6 +3,8 @@
 #include "raylib.h"
 
 #include "audio/audio_manager.h"
+#include "game/game.h"
+#include "ui_constants.h"
 
 namespace Button
 {
@@ -73,10 +75,14 @@ namespace Button
 
 		DrawTexturePro(texture, source, dest, origin, 0.0f, WHITE);
 
-		int fontSize = 20;
-		int textWidth = MeasureText(button.text.c_str(), fontSize);
+		float fontSize = UIConstants::USER_INTERFACE_FONT_SIZE;
+		float spacing = UIConstants::SPACING;
 
-		DrawText(button.text.c_str(), static_cast<int>(button.layout.x + (button.layout.width - textWidth) / 2), static_cast<int>(button.layout.y + (button.layout.height - fontSize) / 2), fontSize, WHITE);
+		Vector2 textSize = MeasureTextEx(SpatiumCarnis::font, button.text.c_str(), fontSize, spacing);
+		float textX = button.layout.x + (button.layout.width - textSize.x) / 2.0f;
+		float textY = button.layout.y + (button.layout.height - textSize.y) / 2.0f;
+
+		DrawTextEx(SpatiumCarnis::font, button.text.c_str(), { textX, textY }, fontSize, spacing, WHITE);
 	}
 
 	void Close() // IMPORTANT: ONLY DO "Close();" IN "game.cpp"

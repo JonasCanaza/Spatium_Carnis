@@ -783,15 +783,15 @@ namespace Gameplay
 		int margin = 20;
 
 		std::string scoreText = "Score: " + std::to_string(nave.score);
-		int scoreTextWidth = MeasureText(scoreText.c_str(), UIConstants::USER_INTERFACE_FONT_SIZE);
-		int scoreX = screenCenterX - scoreTextWidth / 2;
+		Vector2 scoreSize = MeasureTextEx(SpatiumCarnis::font, scoreText.c_str(), UIConstants::USER_INTERFACE_FONT_SIZE, UIConstants::SPACING);
+		float scoreX = static_cast<float>(screenCenterX) - scoreSize.x / 2.0f;
+		float scoreY = static_cast<float>(margin);
+		DrawTextEx(SpatiumCarnis::font, scoreText.c_str(), { scoreX, scoreY }, UIConstants::USER_INTERFACE_FONT_SIZE, UIConstants::SPACING, WHITE);
 
 		std::string liveText = "Lives: " + std::to_string(nave.lives);
-		int lifeTextWidth = MeasureText(liveText.c_str(), UIConstants::USER_INTERFACE_FONT_SIZE);
-		int lifeX = screenCenterX - lifeTextWidth / 2;
-		int lifeY = SCREEN_HEIGHT - UIConstants::USER_INTERFACE_FONT_SIZE - margin;
-
-		DrawText(scoreText.c_str(), scoreX, margin, UIConstants::USER_INTERFACE_FONT_SIZE, WHITE);
-		DrawText(liveText.c_str(), lifeX, lifeY, UIConstants::USER_INTERFACE_FONT_SIZE, WHITE);
+		Vector2 lifeSize = MeasureTextEx(SpatiumCarnis::font, liveText.c_str(), UIConstants::USER_INTERFACE_FONT_SIZE, UIConstants::SPACING);
+		float lifeX = static_cast<float>(screenCenterX) - lifeSize.x / 2.0f;
+		float lifeY = static_cast<float>(SCREEN_HEIGHT) - lifeSize.y - margin;
+		DrawTextEx(SpatiumCarnis::font, liveText.c_str(), { lifeX, lifeY }, UIConstants::USER_INTERFACE_FONT_SIZE, UIConstants::SPACING, WHITE);
 	}
 }

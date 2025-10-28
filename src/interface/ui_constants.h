@@ -22,5 +22,6 @@ namespace UIConstants
 
     // TEXT INTERFACE
 
-    const int USER_INTERFACE_FONT_SIZE = 30;
+    const float USER_INTERFACE_FONT_SIZE = 30;
+    const float SPACING = 5;
 }

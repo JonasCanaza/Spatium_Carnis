@@ -20,7 +20,7 @@ namespace SporePanel
 
 	static const int MAX_BUTTONS = 5;
 	static Button::Button buttons[MAX_BUTTONS];
-	static std::string buttonNames[MAX_BUTTONS] = { "+ Life", "+ Shooting speed", "+ Movement speed", "Immunity", "Cancel" };
+	static std::string buttonNames[MAX_BUTTONS] = { "+Life", "+Shooting speed", "+Movement speed", "Immunity", "Cancel" };
 
 	enum ButtonID
 	{

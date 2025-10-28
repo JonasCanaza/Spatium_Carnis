@@ -17,6 +17,8 @@ namespace SpatiumCarnis
 	Scenes currentScene = Scenes::MainMenu;
 	bool isRunning = true;
 
+	Font font;
+
 	static void Init();
 	static void Input();
 	static void Update();
@@ -32,6 +34,7 @@ namespace SpatiumCarnis
 		SetExitKey(KEY_NULL);
 
 		AudioManager::PlayMusic(AudioManager::MusicID::MUSIC_MENU);
+		font = LoadFont("res/font/League_Spartan/LeagueSpartan-SemiBold.ttf");
 
 		while (!WindowShouldClose() && isRunning)
 		{
@@ -156,6 +159,7 @@ namespace SpatiumCarnis
 	{
 		AudioManager::Close();
 		Button::Close();
+		UnloadFont(font);
 
 		MainMenu::Close();
 		Gameplay::Close();

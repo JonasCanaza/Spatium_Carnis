@@ -149,10 +149,12 @@ namespace GameOverPanel
 		int screenCenterX = SCREEN_WIDTH / 2;
 
 		std::string scoreText = "Score: " + std::to_string(nave.score);
-		int scoreTextWidth = MeasureText(scoreText.c_str(), UIConstants::USER_INTERFACE_FONT_SIZE);
-		int scoreX = screenCenterX - scoreTextWidth / 2;
-		int scoreY = SCREEN_HEIGHT / 2 - static_cast<int>(BUTTON_HEIGHT) / 2;
 
-		DrawText(scoreText.c_str(), scoreX, scoreY, UIConstants::USER_INTERFACE_FONT_SIZE, WHITE);
+		Vector2 textSize = MeasureTextEx(SpatiumCarnis::font, scoreText.c_str(), UIConstants::USER_INTERFACE_FONT_SIZE, UIConstants::SPACING);
+
+		float scoreX = static_cast<float>(screenCenterX) - textSize.x / 2.0f;
+		float scoreY = static_cast<float>(SCREEN_HEIGHT) / 2.0f - BUTTON_HEIGHT / 2.0f;
+
+		DrawTextEx(SpatiumCarnis::font, scoreText.c_str(), { scoreX, scoreY }, UIConstants::USER_INTERFACE_FONT_SIZE, UIConstants::SPACING, WHITE);
 	}
 }

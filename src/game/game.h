@@ -1,5 +1,7 @@
 #pragma once
 
+#include "raylib.h"
+
 namespace SpatiumCarnis
 {
 	enum class Scenes
@@ -12,6 +14,8 @@ namespace SpatiumCarnis
 
 	extern Scenes currentScene;
 	extern bool isRunning;
+
+	extern Font font;
 
 	void Play();
 }
