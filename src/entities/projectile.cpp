@@ -18,7 +18,7 @@ namespace Projectile
 	static const float MAX_ROTATION = 360.0f;
 
 	static const float RADIUS = 10.0f;
-	static const float PROJECTILE_SPEED = 1000.0f;
+	static const float PROJECTILE_SPEED = 700.0f;
 
 	static const float MIN_ROTATION_RANDOM = 250.0f;
 	static const float MAX_ROTATION_RANDOM = 350.0f;
@@ -70,7 +70,6 @@ namespace Projectile
 		Vector2 origin = { (textureWidth * scaleX) * HALF_FACTOR, (textureHeight * scaleY) * HALF_FACTOR };
 
 		DrawTexturePro(texture, source, dest, origin, projectile.rotation, WHITE);
-		DrawCircleLines(static_cast<int>(projectile.x), static_cast<int>(projectile.y), projectile.radius, RED);
 	}
 
 	void Close()
