@@ -15,6 +15,7 @@ namespace AudioManager
         SFX_ENTITY_HIT,
         SFX_BUTTON_HOVER,
         SFX_BUTTON_PRESSED,
+        SFX_PANEL,
         SFX_COUNT
     };
 

@@ -39,6 +39,7 @@ namespace AudioManager
         sfxTracks[SFX_ENTITY_HIT].sourceFile = "res/sounds/sfx/entities/hit.wav";
         sfxTracks[SFX_BUTTON_HOVER].sourceFile = "res/sounds/sfx/button/hover.wav";
         sfxTracks[SFX_BUTTON_PRESSED].sourceFile = "res/sounds/sfx/button/pressed.wav";
+        sfxTracks[SFX_PANEL].sourceFile = "res/sounds/sfx/panel/panel.wav";
     }
 
     void Update()

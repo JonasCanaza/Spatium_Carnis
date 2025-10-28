@@ -54,6 +54,7 @@ namespace MainMenu
 		if (IsKeyPressed(KEY_ESCAPE))
 		{
 			ExitPanel::isActive = !ExitPanel::isActive;
+			AudioManager::PlaySfx(AudioManager::SfxID::SFX_PANEL);
 		}
 	}
 

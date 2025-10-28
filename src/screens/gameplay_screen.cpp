@@ -168,6 +168,7 @@ namespace Gameplay
 			if (IsKeyPressed(KEY_ESCAPE) && !SporePanel::isActive)
 			{
 				PausePanel::isActive = !PausePanel::isActive;
+				AudioManager::PlaySfx(AudioManager::SfxID::SFX_PANEL);
 			}
 
 			if (!PausePanel::isActive && !SporePanel::isActive)
@@ -539,6 +540,8 @@ namespace Gameplay
 			{
 				spores[i].isActive = false;
 				SporePanel::isActive = true;
+
+				AudioManager::PlaySfx(AudioManager::SfxID::SFX_PANEL);
 			}
 		}
 	}
