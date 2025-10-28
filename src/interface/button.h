@@ -4,6 +4,12 @@
 
 namespace Button
 {
+    enum class Type
+    {
+        Common,
+        Pause
+    };
+
     enum class ButtonState
     {
         Normal,
@@ -21,6 +27,7 @@ namespace Button
 
     struct Button
     {
+        Type type = Type::Common;
         ButtonState state = ButtonState::Normal;
         Layout layout = {};
         std::string text = "No text";

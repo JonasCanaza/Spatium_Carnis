@@ -6,17 +6,26 @@
 
 namespace Button
 {
-	static Texture normal;
-	static Texture hover;
-	static Texture pressed;
+	static Texture commonNormal;
+	static Texture commonHover;
+	static Texture commonPressed;
+
+	static Texture pauseNormal;
+	static Texture pauseHover;
+	static Texture pausePressed;
 
 	static bool IsMouseOverButton(Button button);
+	static Texture GetButtonTexture(Button button);
 
 	void Init() // IMPORTANT: ONLY DO "Init();" IN "game.cpp"
 	{
-		normal = LoadTexture("res/textures/ui/buttons/normal.png");
-		hover = LoadTexture("res/textures/ui/buttons/hover.png");
-		pressed = LoadTexture("res/textures/ui/buttons/pressed.png");
+		commonNormal = LoadTexture("res/textures/ui/buttons/common_normal.png");
+		commonHover = LoadTexture("res/textures/ui/buttons/common_hover.png");
+		commonPressed = LoadTexture("res/textures/ui/buttons/common_pressed.png");
+
+		pauseNormal = LoadTexture("res/textures/ui/buttons/pause_normal.png");
+		pauseHover = LoadTexture("res/textures/ui/buttons/pause_hover.png");
+		pausePressed = LoadTexture("res/textures/ui/buttons/pause_pressed.png");
 	}
 
 	void Update(Button& button)
@@ -56,31 +65,7 @@ namespace Button
 
 	void Draw(Button button)
 	{
-		Texture texture = normal;
-
-		switch (button.state)
-		{
-		case ButtonState::Normal:
-
-			texture = normal;
-
-			break;
-		case ButtonState::Hover:
-
-			texture = hover;
-
-			break;
-		case ButtonState::Pressed:
-
-			texture = pressed;
-
-			break;
-		default:
-
-			// NO MORE BUTTON STATES
-
-			break;
-		}
+		Texture texture = GetButtonTexture(button);
 
 		Rectangle source = { 0.0f, 0.0f, static_cast<float>(texture.width), static_cast<float>(texture.height) };
 		Rectangle dest = { button.layout.x, button.layout.y, button.layout.width, button.layout.height };
@@ -96,9 +81,13 @@ namespace Button
 
 	void Close() // IMPORTANT: ONLY DO "Close();" IN "game.cpp"
 	{
-		UnloadTexture(normal);
-		UnloadTexture(hover);
-		UnloadTexture(pressed);
+		UnloadTexture(commonNormal);
+		UnloadTexture(commonHover);
+		UnloadTexture(commonPressed);
+
+		UnloadTexture(pauseNormal);
+		UnloadTexture(pauseHover);
+		UnloadTexture(pausePressed);
 	}
 
 	Button Create(float x, float y, float width, float height, std::string text)
@@ -121,5 +110,85 @@ namespace Button
 			mouse.x <= button.layout.x + button.layout.width &&
 			mouse.y >= button.layout.y &&
 			mouse.y <= button.layout.y + button.layout.height);
+	}
+
+	static Texture GetButtonTexture(Button button)
+	{
+		switch (button.state)
+		{
+		case ButtonState::Normal:
+
+			switch (button.type)
+			{
+			case Type::Common:
+
+				return commonNormal;
+
+				break;
+			case Type::Pause:
+
+				return pauseNormal;
+
+				break;
+			default:
+
+				// THERE ARE NO MORE TYPES OF BUTTONS
+
+				break;
+			}
+
+			break;
+		case ButtonState::Hover:
+
+			switch (button.type)
+			{
+			case Type::Common:
+
+				return commonHover;
+
+				break;
+			case Type::Pause:
+
+				return pauseHover;
+
+				break;
+			default:
+
+				// THERE ARE NO MORE TYPES OF BUTTONS
+
+				break;
+			}
+
+			break;
+		case ButtonState::Pressed:
+
+			switch (button.type)
+			{
+			case Type::Common:
+
+				return commonPressed;
+
+				break;
+			case Type::Pause:
+
+				return pausePressed;
+
+				break;
+			default:
+
+				// THERE ARE NO MORE TYPES OF BUTTONS
+
+				break;
+			}
+
+			break;
+		default:
+
+			// NO MORE BUTTON STATES
+
+			break;
+		}
+
+		return commonNormal;
 	}
 }
