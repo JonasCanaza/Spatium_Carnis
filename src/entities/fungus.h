@@ -26,6 +26,9 @@ namespace Fungus
 		float velocityX;
 		float velocityY;
 		bool isActive;
+
+		float frameTime;
+		int currentFrame;
 	};
 
 	void Init();

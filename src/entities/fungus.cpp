@@ -1,4 +1,4 @@
-#include "fungus.h"
+﻿#include "fungus.h"
 
 #include <cmath>
 
@@ -10,21 +10,46 @@
 
 namespace Fungus
 {
+	static const float FRAME_DURATION = 0.1f;
+	static const int MAX_FRAMES = 8;
+	static Texture2D textures[MAX_FRAMES];
+
+	enum FramesID
+	{
+		FrameOne,
+		FrameTwo,
+		FrameThree,
+		FrameFour,
+		FrameFive,
+		FrameSix,
+		FrameSeven,
+		FrameEight
+	};
+
 	static const float VELOCITY_MIN = 35.0f;
 	static const float VELOCITY_MAX = 60.0f;
 
 	static const float SCREEN_BUFFER = 50.0f;
 	static const float RADIUS = 30.0f;
 	static const float MIN_DISTANCE_EPSILON = 0.0001f;
+	static const float HALF_FACTOR = 0.5f;
 
 	static void UpdateRotation(Fungus& fungus, Nave::Nave nave);
 	static void UpdateSpeedTowardsNave(Fungus& fungus, Nave::Nave nave);
 	static void WrapAroundScreen(Fungus& fungus);
 	static void Move(Fungus& fungus, float deltaTime);
+	static Texture2D GetCurrentTexture(Fungus& fungus);
 
 	void Init()
 	{
-
+		textures[FrameOne] = LoadTexture("res/textures/entities/fungus/fungus_01.png");
+		textures[FrameTwo] = LoadTexture("res/textures/entities/fungus/fungus_02.png");
+		textures[FrameThree] = LoadTexture("res/textures/entities/fungus/fungus_03.png");
+		textures[FrameFour] = LoadTexture("res/textures/entities/fungus/fungus_04.png");
+		textures[FrameFive] = LoadTexture("res/textures/entities/fungus/fungus_05.png");
+		textures[FrameSix] = LoadTexture("res/textures/entities/fungus/fungus_06.png");
+		textures[FrameSeven] = LoadTexture("res/textures/entities/fungus/fungus_07.png");
+		textures[FrameEight] = LoadTexture("res/textures/entities/fungus/fungus_08.png");
 	}
 
 	void Update(Fungus& fungus, float deltaTime, Nave::Nave nave)
@@ -32,6 +57,14 @@ namespace Fungus
 		if (!fungus.isActive)
 		{
 			return;
+		}
+
+		fungus.frameTime += deltaTime;
+
+		if (fungus.frameTime >= FRAME_DURATION)
+		{
+			fungus.frameTime = 0.0f;
+			fungus.currentFrame = (fungus.currentFrame + 1) % MAX_FRAMES;
 		}
 
 		UpdateRotation(fungus, nave);
@@ -47,19 +80,30 @@ namespace Fungus
 			return;
 		}
 
-		int x = static_cast<int>(fungus.x);
-		int y = static_cast<int>(fungus.y);
+		Texture2D textureToDraw = GetCurrentTexture(fungus);
 
-		DrawCircle(x, y, fungus.radius, RED);
+		float textureWidth = static_cast<float>(textureToDraw.width);
+		float textureHeight = static_cast<float>(textureToDraw.height);
 
-		Rectangle body = { fungus.x, fungus.y, fungus.radius * 2.0f, fungus.radius * 2.0f };
-		Vector2 originBody = { body.width / 2.0f, body.height / 2.0f };
-		DrawRectanglePro(body, originBody, fungus.rotation, WHITE);
+		float halfWidth = textureWidth * HALF_FACTOR;
+		float halfHeight = textureHeight * HALF_FACTOR;
+
+		float scaleX = fungus.radius / halfWidth;
+		float scaleY = fungus.radius / halfHeight;
+
+		Rectangle source{ 0.0f, 0.0f, textureWidth, textureHeight };
+		Rectangle dest{ fungus.x, fungus.y, textureWidth * scaleX, textureHeight * scaleY };
+		Vector2 origin{ (textureWidth * scaleX) * HALF_FACTOR, (textureHeight * scaleY) * HALF_FACTOR };
+
+		DrawTexturePro(textureToDraw, source, dest, origin, fungus.rotation, WHITE);
 	}
 
 	void Close()
 	{
-
+		for (int i = 0; i < MAX_FRAMES; i++)
+		{
+			UnloadTexture(textures[i]);
+		}
 	}
 
 	Fungus Create(float x, float y, float velocityX, float velocityY)
@@ -190,5 +234,10 @@ namespace Fungus
 	{
 		fungus.x += fungus.velocityX * deltaTime;
 		fungus.y += fungus.velocityY * deltaTime;
+	}
+
+	static Texture2D GetCurrentTexture(Fungus& fungus)
+	{
+		return textures[fungus.currentFrame];
 	}
 }
