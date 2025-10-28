@@ -436,6 +436,8 @@ namespace Gameplay
 
 					HandleSpecimenDivision(specimens[j]);
 
+					AudioManager::PlaySfx(AudioManager::SfxID::SFX_ENTITY_HIT);
+
 					break;
 				}
 			}
@@ -458,6 +460,8 @@ namespace Gameplay
 				if (!nave.isImmune)
 				{
 					Nave::TakeDamage(nave);
+
+					AudioManager::PlaySfx(AudioManager::SfxID::SFX_ENTITY_HIT);
 				}
 
 				break;
@@ -563,6 +567,8 @@ namespace Gameplay
 
 					fungi[j].isActive = false;
 
+					AudioManager::PlaySfx(AudioManager::SfxID::SFX_ENTITY_HIT);
+
 					break;
 				}
 			}
@@ -585,6 +591,8 @@ namespace Gameplay
 				if (!nave.isImmune)
 				{
 					Nave::TakeDamage(nave);
+
+					AudioManager::PlaySfx(AudioManager::SfxID::SFX_ENTITY_HIT);
 				}
 
 				break;
