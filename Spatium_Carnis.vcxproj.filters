@@ -13,126 +13,154 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Screens">
+      <UniqueIdentifier>{d5d2e53c-4ca2-4100-99f9-3baa459498d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{587e9c65-46ab-48f2-b41b-a05c4503f0c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Panels">
+      <UniqueIdentifier>{3f71c7de-1a6b-4819-a93c-b7c9247b6c6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sprite">
+      <UniqueIdentifier>{60934688-5bd6-4001-91bd-0c954ab0a06c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{a532ec6a-9347-46c2-9200-438c82c02371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{9d368531-acb1-428d-8421-bc0d3bfc0aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{c9425011-eeed-44d1-81a1-00ad3d55c253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{7864ee28-3829-40da-9f40-006be896e02b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{d4b6e346-84e4-4fbd-88f2-9c9ed6371bf7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\game\game.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\screens\main_menu_screen.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\interface\button.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="src\screens\credits_screen.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Screens</Filter>
     </ClCompile>
     <ClCompile Include="src\screens\gameplay_screen.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Screens</Filter>
     </ClCompile>
     <ClCompile Include="src\screens\how_to_play_screen.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Screens</Filter>
     </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\nave.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\specimen.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\projectile.cpp">
-      <Filter>Archivos de origen</Filter>
+    <ClCompile Include="src\screens\main_menu_screen.cpp">
+      <Filter>Screens</Filter>
     </ClCompile>
     <ClCompile Include="src\panels\pause_panel.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\panels\exit_panel.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\collision\collisions.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utilities\math_utils.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\panels\game_over_panel.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\spore.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\panels\spore_panel.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Panels</Filter>
     </ClCompile>
+    <ClCompile Include="src\panels\exit_panel.cpp">
+      <Filter>Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\entities\fungus.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\nave.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\projectile.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\specimen.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\spore.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utilities\math_utils.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interface\button.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision\collisions.cpp">
+      <Filter>Collision</Filter>
     </ClCompile>
     <ClCompile Include="src\audio\audio_manager.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\game\game.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\screens\main_menu_screen.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\interface\button.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\screens\credits_screen.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="src\screens\gameplay_screen.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="src\screens\how_to_play_screen.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Screens</Filter>
     </ClInclude>
-    <ClInclude Include="src\entities\nave.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="src\screens\main_menu_screen.h">
+      <Filter>Screens</Filter>
     </ClInclude>
-    <ClInclude Include="src\entities\specimen.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entities\projectile.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\panels\pause_panel.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="src\screens\credits_screen.h">
+      <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="src\panels\exit_panel.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\interface\ui_constants.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\collision\collisions.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utilities\math_utils.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\panels\game_over_panel.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Panels</Filter>
     </ClInclude>
-    <ClInclude Include="src\entities\spore.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="src\panels\pause_panel.h">
+      <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\panels\spore_panel.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\fungus.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\nave.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\projectile.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\specimen.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\spore.h">
+      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="src\sprite\sprite.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utilities\math_utils.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interface\button.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interface\ui_constants.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision\collisions.h">
+      <Filter>Collision</Filter>
     </ClInclude>
     <ClInclude Include="src\audio\audio_manager.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game_constants.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
