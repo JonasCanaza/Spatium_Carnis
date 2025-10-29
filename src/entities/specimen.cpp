@@ -9,6 +9,10 @@ namespace Specimen
 	static const float SCREEN_BUFFER = 50.0f;
 	static const float HALF_FACTOR = 0.5f;
 
+	static const float BIG_RADIUS = 50.0f;
+	static const float MEDIUM_RADIUS = 35.0f;
+	static const float SMALL_RADIUS = 20.0f;
+
 	const float FRAME_DURATION = 0.1f;
 	const int MAX_FRAMES = 5;
 	static Texture2D textures[MAX_FRAMES];
@@ -110,17 +114,17 @@ namespace Specimen
 		{
 		case Type::Big:
 
-			newSpecimen.radius = 50.0f;
+			newSpecimen.radius = BIG_RADIUS;
 
 			break;
 		case Type::Medium:
 
-			newSpecimen.radius = 35.0f;
+			newSpecimen.radius = MEDIUM_RADIUS;
 
 			break;
 		case Type::Small:
 
-			newSpecimen.radius = 20.0f;
+			newSpecimen.radius = SMALL_RADIUS;
 
 			break;
 		default:

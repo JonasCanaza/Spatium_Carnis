@@ -22,6 +22,8 @@ namespace PausePanel
 	static Button::Button buttons[MAX_BUTTONS];
 	static std::string buttonNames[MAX_BUTTONS] = { "Resume", "Restart", "Exit" };
 
+	static Color backgroundColor = { 0, 0, 0, 150 };
+
 	enum ButtonID
 	{
 		Resume,
@@ -85,7 +87,6 @@ namespace PausePanel
 			return;
 		}
 
-		Color backgroundColor = { 0, 0, 0, 100 };
 		DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, backgroundColor);
 
 		DrawTitle();

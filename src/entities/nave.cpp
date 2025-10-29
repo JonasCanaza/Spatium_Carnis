@@ -13,6 +13,7 @@ namespace Nave
 {
 	static Texture texture;
 
+	static const float RADIUS = 30.0f;
 	static const int DEFAULT_LIFE = 3;
 	static const int INCREASE_LIFE = 1;
 	static const int REDUCE_LIFE = 1;
@@ -78,7 +79,7 @@ namespace Nave
 
 		newNave.x = static_cast<float>(SCREEN_WIDTH / 2);
 		newNave.y = static_cast<float>(SCREEN_HEIGHT / 2);
-		newNave.radius = 30.0f;
+		newNave.radius = RADIUS;
 		newNave.speedMax = DEFAULT_SPEED;
 		newNave.acceleration = DEFAULT_SPEED;
 		newNave.rotation = 0.0f;
@@ -184,10 +185,6 @@ namespace Nave
 		float angleDegrees = angleRadians * RAD2DEG;
 
 		nave.rotation = angleDegrees;
-
-		//std::cout << "Mouse X:" << mousePosX << "          Y: " << mousePosY << std::endl;
-		//std::cout << "Nave X:" << navePivotX << "          Y: " << navePivotY << std::endl;
-		//std::cout << "Rotation: " << nave.rotation << std::endl;
 	}
 
 	static void AccelerateTowardsMouse(Nave& nave, float deltaTime, bool isAccelerating)

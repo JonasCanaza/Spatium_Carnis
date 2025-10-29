@@ -6,7 +6,7 @@
 
 #include "nave.h"
 #include "game/game_constants.h"
-#include <utilities/math_utils.h>
+#include "utilities/math_utils.h"
 
 using namespace MathUtils;
 
