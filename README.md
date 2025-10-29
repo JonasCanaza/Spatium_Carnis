@@ -25,6 +25,3 @@ The game combines:
 - Direct inspiration from the *Vita Carnis* aesthetic.  
 
 ---
-
-## Screenshots
-
