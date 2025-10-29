@@ -159,7 +159,7 @@ namespace AudioManager
 
         for (int i = 0; i < static_cast<int>(track.instances.size());)
         {
-            if (!IsSoundPlaying(track.instances[i]) && i != track.instances.size() - 1)
+            if (!IsSoundPlaying(track.instances[i]) && i != static_cast<int>(track.instances.size()) - 1)
             {
                 UnloadSound(track.instances[i]);
                 track.instances.erase(track.instances.begin() + i);
